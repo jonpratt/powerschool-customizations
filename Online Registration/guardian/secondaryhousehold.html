@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Student Secondary Household Information</title>    
+    
+<!-- start of page body --> 
+~[wc:guardian_header] 
+	<h1>Student Secondary Household Information</h1> 
+    
+    ~[if#isstudent.isstudent]
+    
+            <table border="0" cellspacing="0" cellpadding="0" align="center">
+                <tr align="center">
+                    <td>Only parent-guardian accounts can submit secondary household information.</td>
+                </tr>
+            </table>
+    
+    [else#isstudent]
+            
+<!-- start student content -->
+    ~[if#existsecondaryhousehold.~([Students.U_Student_Demographics]HasSecondaryHousehold)=1]
+            
+    <div class="box-round" id="editSecondaryHouseholdDiv">
+        
+        <h2>Secondary Household</h2>
+        
+        <p>Please use the "Edit" link to review or submit updates to the Secondary Household information on file.</p>
+
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th>Legal Address</th>
+                    <th>Adult Contact 1</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+~[tlist_sql;
+
+SELECT
+   U_SECONDARY_HOUSEHOLD.STUDENTSDCID as DCID,
+   U_SECONDARY_HOUSEHOLD.ID as SHID,
+   U_SECONDARY_HOUSEHOLD.SH_STREET_LEGAL as SHStreetLegal,
+   U_SECONDARY_HOUSEHOLD.SH_CITY_LEGAL as SHCityLegal,
+   U_SECONDARY_HOUSEHOLD.SH_STATE_LEGAL as SHStateLegal,
+   U_SECONDARY_HOUSEHOLD.SH_ZIP_LEGAL as SHZipLegal,
+   U_SECONDARY_HOUSEHOLD.SHA1_FIRSTNAME as SHA1FirstName,
+   U_SECONDARY_HOUSEHOLD.SHA1_LASTNAME as SHA1LastName
+
+FROM
+   U_SECONDARY_HOUSEHOLD
+       
+WHERE
+   U_SECONDARY_HOUSEHOLD.STUDENTSDCID = ~(rn)
+                
+]
+                
+                <tr>
+                    <td><a href="editsecondaryhousehold.html?frn=001~(DCID)&shid=~(SHID)">Edit</a></td>
+                    <td>~(SHStreetLegal)<br>~(SHCityLegal) ~(SHStateLegal), ~(SHZipLegal)</td>
+                    <td>~(SHA1FirstName) ~(SHA1LastName)</td>
+                </tr>
+                
+[/tlist_sql]                    
+                
+            </tbody>
+        </table>
+        </div>
+	</div>
+        
+    [else#existsecondaryhousehold]
+    
+    ~[if#pendingsecondaryhousehold.~([Students.U_Student_Demographics]SHUpdatePending)=1]
+    
+    <div class="box-round" id="secondaryHouseholdUpdatePendingDiv">
+    
+        <br>
+        <p>Information for this student has been submitted for processing. To reduce the potential for error, we can only process one submission at a time per student. Please check back in 24-48 hours.</p>
+        <br>
+        <p><a href="formsoverview.html">Return to Digital Forms Overview</a></p>
+        <br>
+        
+    </div>
+    
+    [else#pendingsecondaryhousehold]
+    
+    <div class="box-round" id="addSecondaryHouseholdDiv">
+        
+        <br>
+        <p><a href="addsecondaryhousehold.html?frn=001~(rn)" title="Add">Add Secondary Household</a></p>
+        <br>
+    
+    </div>
+
+    [/if#pendingsecondaryhousehold]
+    
+    [/if#existsecondaryhousehold]
+    
+    [/if#isstudent]
+<!-- end student content --> 
+<!-- Sets the navigation highlighting: the value is the ID value of the navigation element you want to highlight--> 
+<input id="activeNav" type="hidden" value="#onlineregistration"/> 
+<!-- end of page body --> 
+~[wc:guardian_footer] 
+
+</body>
+</html>

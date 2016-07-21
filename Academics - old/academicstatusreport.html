@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Academic Status Report</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->Your breadcrumbs go here<!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Academic Status Report</h1> 
+<!-- start of content area --> 
+	<div class="box-round"> 
+		 <table border="0" cellspacing="0" cellpadding="0" class="tableToGrid">
+             <thead>
+                 <th>StudentID</th>
+                 <th>Name</th>
+                 <th>Boarding</th>
+                 <th>Gender</th>
+                 <th>GradeLevel</th>
+                 <th>SLE</th>
+                 <th>DFStatus</th>
+                 <th>TotalCredits</th>
+                 <th>AARP</th>
+             </thead>
+             <tbody>
+                 ~[tlist_sql;
+SELECT
+	students.id as StudentID,
+	students.lastfirst as Name,
+	CASE ps_customfields.getstudentscf(students.id, 'Area') WHEN 'NON-RESIDENT' THEN 'BOARDING' ELSE 'DAY' END as Boarding,
+	CASE students.gender WHEN 'F' THEN 'FEMALE' WHEN 'M' THEN 'MALE' ELSE 'NA' END as Gender,
+	storedgrades.grade_level as GradeLevel,
+	CASE ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig') WHEN 'F' THEN 'FR' WHEN 'R' THEN 'FR' ELSE 'NE' END as SLE,
+	CASE WHEN SUM(CASE storedgrades.grade WHEN 'D' THEN 1 WHEN 'F' THEN 2 WHEN 'WF' THEN 2 ELSE 0 END)>0 THEN 'DF' ELSE 'P' END as DFStatus,
+	SUM(courses.credit_hours) as TotalCredits,
+	SUM(CASE storedgrades.grade WHEN 'D' THEN 1 WHEN 'F' THEN 2 WHEN 'WF' THEN 2 ELSE 0 END) as AARP
+
+FROM
+	students
+
+INNER JOIN
+	storedgrades ON storedgrades.studentid=students.id
+  
+INNER JOIN
+	courses on storedgrades.course_number=courses.course_number
+
+INNER JOIN
+	terms on storedgrades.termid=terms.id
+
+WHERE
+	terms.yearid=~(curyearid)
+	AND terms.schoolid=1036
+	AND storedgrades.storecode='P4'
+
+GROUP BY
+	students.id, students.lastfirst, students.gender, storedgrades.grade_level
+
+ORDER BY
+	storedgrades.grade_level, students.lastfirst
+                 ]
+                 <tr>
+                     <td>~(StudentID)</td>
+                     <td>~(Name)</td>
+                     <td>~(Boarding)</td>
+                     <td>~(Gender)</td>
+                     <td>~(GradeLevel)</td>
+                     <td>~(SLE)</td>
+                     <td>~(DFStatus)</td>
+                     <td>~(TotalCredits)</td>
+                     <td>~(AARP)</td>
+                 </tr>
+                 [/tlist_sql]
+             </tbody>
+         </table>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

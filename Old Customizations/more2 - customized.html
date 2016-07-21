@@ -1,0 +1,159 @@
+
+~[frame_type:menu]<!DOCTYPE html>
+<html>
+<head><base target="content">
+~[get_js_texts:psx.jshtml.admin_students.more2.]
+<title>~[text:psx.html.admin_students.more2.students_menu]</title>
+~[wc:commonscripts]
+<script language="JavaScript">function newstudent() { us=prompt(pss_text('psx.jshtml.admin_students.more2.student_name'),""); if(us!=null){ window.document.forms[0].selectstudent.value=us; window.document.forms[0].submit(); }} </script>
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head>
+
+<body class="frameMenu">
+
+<form action="home.html" target="_top" method="POST">
+<input type="hidden" name="selectstudent" value="">
+
+<div id="container-frame-menu" class="group">
+
+<div id="nav-main-frame">
+<!-- start of links -->
+
+
+<div id="nav-main-frame-secondary">
+<a href="quicklookup.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.quick_lookup]</a><br>
+~[if.~(studentscreenaccess;printformletter.html)=1]<a href="printformletter.html?frn=~(studentfrn)&dothisfor=single">~[text:psx.html.admin_students.more2.print_a_report]</a><br />[/if]
+<a href="javascript:newstudent()" target="_self">~[text:psx.html.admin_students.more2.switch_student]</a><br>
+<a href="home.html?ac=jumpstudent-1&amp;rn=~(rn)" target="_top"><img src="/images/btn_left_arrow.gif" width="13" height="11" alt="" border="0"></a> <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.more2.list,param:(~[x:studsinset])]</a> <a href="home.html?ac=jumpstudent1&amp;rn=~(rn)" target="_top"><img src="/images/btn_right_arrow.gif" width="13" height="11" alt="" border="0"></a>
+</div>
+<table border=0 cellpadding=0 cellspacing=0 width="157">
+<tr>
+<td class="preference-g">~[text:psx.html.admin_students.more2.information]</td>
+</tr>
+<tr>
+<td>
+
+~[if.~(studentscreenaccess;accessaccounts.html)=1]<a href="accessaccounts.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.access_accounts]</a><br>[/if]
+~[if.~(studentscreenaccess;addresses.html)=1]<a href="addresses.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.addresses]</a><br>[/if]
+~[if.~(studentscreenaccess;morecustom.html)=1]<a href="morecustom.html?frn=~(studentfrn)" target="_self">~[text:psx.html.admin_students.more2.custom_screens]</a><br>[/if]
+~[if.~(studentscreenaccess;generaldemographics.html)=1]<a href="generaldemographics.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.demographics]</a><br>[/if]
+~[if.~(studentscreenaccess;emergency.html)=1]<a href="emergency.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.emergencymedical]</a><br>[/if]
+~[if.~(studentscreenaccess;family.html)=1]~[text]psx.html.admin_students.more2.family,param:~[x:fmly_more2tag][/text]</a><br>[/if]
+~[if.~(studentscreenaccess;health/home_health.html)=1]<a href="health/home_health.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.health]</a><br>[/if]
+~[if.~(studentscreenaccess;modifydata.html)=1]<a href="modifydata.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.modify_info]</a><br>[/if]
+~[if.~(studentscreenaccess;misc.html)=1]<a href="misc.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.other_information]</a><br>[/if]
+~[if.~(studentscreenaccess;parentsguardian.html)=1]<a href="emailconfig.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.student_email]</a><br>[/if]
+~[if.~(studentscreenaccess;parentsguardian.html)=1]<a href="parentsguardian.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.parentsguardian]</a><br>[/if]
+~[if.~(studentscreenaccess;photo.html)=1]<a href="photo.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.photo]</a><br>[/if]
+~[if.~(studentscreenaccess;state.html)=1]<a href="state/state~[displaypref:districtstate].html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.stateprovince_,param:~[displaypref:districtstate]]</a><br>[/if]
+~[if.~(studentscreenaccess;transportation.html)=1]<a href="transportation.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.transportation]</a><br>[/if]
+~[if.pref.credostatuscode=1]<a href="/admin/state/credo/credo_studentinfo.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.credo_student_info]</a><br>[/if]
+<br>
+</td>
+</tr>
+<tr>
+<td class="preference-g">~[text:psx.html.admin_students.more2.academics]</td>
+</tr>
+<tr>
+<td>
+~[brij_render:inform-ps;:inform-student-link]
+~[if.~(studentscreenaccess;attendance.html)=1]~(ATT_SetDefaultScreen)<br>[/if]
+~[if.~(studentscreenaccess;attendance.html)=1]~[wc:att_MeetingEntry][/if]
+<!--Start Custom-->
+~[if.~(studentscreenaccess;cumulative.html)=1]<a href="communityservice.html?frn=~(studentfrn)">Community Service</a><br>[/if]
+<!--End Custom-->
+~[if.~(studentscreenaccess;cumulative.html)=1]<a href="cumulative.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.cumulative_info]</a><br>[/if]
+~[if.~(studentscreenaccess;graduationcheck.html)=1]<a href="GraduationPlanner/GraduationProgress.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.graduation_plan_progress,param:]</a><br>[/if]
+<!--Start Custom-->
+~[if.~(studentscreenaccess;graduationcheck.html)=1]<a href="gradreqsmods.html?frn=~(studentfrn)">Modify Graduation Reqs</a><br>[/if]
+~[if.~(studentscreenaccess;graduationcheck.html)=1]<a href="postsecondaryplans.html?frn=~(studentfrn)">Post-Secondary Plans</a><br>[/if]
+<!--End Custom-->
+~[if.~(studentscreenaccess;graduationcheck.html)=1]<a href="GraduationPlanner/GradPlanSelect.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.graduation_plan_selection,param:]</a><br>[/if]
+~[if.~(studentscreenaccess;graduationcheck.html)=1]<a href="graduationcheck.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.graduation_progress]</a><br>[/if]
+~[if.~(studentscreenaccess;previousgrades.html)=1]<a href="previousgrades.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.historical_grades]</a><br>[/if]
+<!--Start Custom-->
+~[if.~(studentscreenaccess;cumulative.html)=1]<a href="officialgradereportap.html?frn=~(studentfrn)">Official Grade Report</a><br>[/if]
+<!--End Custom-->
+~[if.~(studentscreenaccess;honorroll.html)=1]<a href="honorroll.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.honor_roll]</a><br>[/if]
+~[if.~(studentscreenaccess;standards.html)=1]<a href="standards.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.standards]</a><br>[/if]
+~[if.~(studentscreenaccess;teachercomments.html)=1]<a href="teachercomments.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.teacher_comments]</a><br>[/if]
+~[if.~(studentscreenaccess;termgrades.html)=1]<a href="termgrades.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.term_grades]</a><br>[/if]
+~[if.~(studentscreenaccess;testlist.html)=1]<a href="testlist.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.test_scores]</a><br>[/if]
+~[if.~(studentscreenaccess;truancieslist.html)=1]<a href="truancieslist.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.truancies]</a><br><br>[/if]
+~[if.pref.district_cgiepaccess=1]<a href="iep-viewer.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.centris_group__iep_viewer]</a><br>[/if]
+</td>
+</tr>
+<tr>
+<td class="preference-g">~[text:psx.html.admin_students.more2.administration]</td>
+</tr>
+<tr>
+<td>
+~[if.~(studentscreenaccess;district/home.html)=1]<a href="district/home.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.district_specific]</a><br>[/if]
+~[if.~(studentscreenaccess;fees.html)=1]<a href="fees.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.fee_transactions]</a><br>[/if]
+~[if.~(studentscreenaccess;log.html)=1]<a href="log.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.log_entries]</a><br>[/if]
+~[if.~(studentscreenaccess;lunch.html)=1]<a href="lunch.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.lunch]</a><br>[/if]
+~[if.~(studentscreenaccess;transactions.html)=1]<a href="transactions.html?frn=~(studentfrn)&curstudid=~(curstudid)&colspec=date.time.debit.credit.descr.net.eb.">~[text:psx.html.admin_students.more2.lunch_transactions]</a><br>[/if]
+~[if.~(studentscreenaccess;parentaccess.html)=1]<a href="parentaccess.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.net_access]</a><br>[/if]
+~[if.~(studentscreenaccess;/admin/seop/home.html)=1]<a href="/admin/seop/home.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.seop_review]</a><br>[/if]
+~[if.~(studentscreenaccess;/admin/students/incidents/home_student.html)=1]<a href="/admin/students/incidents/home_student.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.incidents]</a><br>[/if]
+<br>
+</td>
+</tr>
+<tr>
+<td class="preference-g">~[text:psx.html.admin_students.more2.enrollment]</td>
+</tr>
+<tr>
+<td>
+~[if.~(studentscreenaccess;activities.html)=1]<a href="activities.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.activities]</a><br>[/if]
+~[if.~(studentscreenaccess;allenrollments.html)=1]<a href="allenrollments.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.all_enrollments]</a><br>[/if]
+~[if.~(studentscreenaccess;functions.html)=1]<a href="functions.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.functions]</a><br>[/if]
+~[if.~(studentscreenaccess;specialprograms.html)=1]<a href="specialprograms.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.special_programs]</a><br>[/if]
+~[if.~(studentscreenaccess;transferinfo.html)=1]<a href="transferinfo.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.transfer_info]</a><br>[/if]
+<br>
+</td>
+</tr>
+<tr>
+<td class="preference-g">~[text:psx.html.admin_students.more2.scheduling]</td>
+</tr>
+<tr>
+<td>
+~[if.~(studentscreenaccess;schedule.html)=1]<a href="schedule.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.bell_schedule_view]</a><br>[/if]
+~[if.~(studentscreenaccess;schedulelist.html)=1]<a href="schedulelist.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.list_view]</a><br>[/if]
+~[if.~(studentscreenaccess;schedulematrix.html)=1]<a href="schedulematrix.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.matrix_view]</a><br>[/if]
+~[if.~(studentscreenaccess;scheduleplusreq.html)=1]<a href="scheduleplusreq.html?frn=~(studentfrn)&schedulerequestyearid=~(schedule.yearidcurrent)">~[text:psx.html.admin_students.more2.modify_schedule]</a><br>[/if]
+~[if.~(studentscreenaccess;managerequests.html)=1]<a href="managerequests.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.request_management]</a><br>[/if]
+~[if.~(studentscreenaccess;schedulesetup.html)=1]<a href="schedulesetup.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.scheduling_setup]</a><br>[/if]
+<!-- Custom content
+https://foxcroftacademy.powerschool.com/admin/students/requests.html?frn=001544&schedulerequestyearid=2500
+-->
+~[if.~(studentscreenaccess;schedulesetup.html)=1]<a href="requests.html?frn=~(studentfrn)&schedulerequestyearid=2500">View 15-16 Requests</a><br>[/if]
+<!-- end custom content -->
+<br>
+</td>
+</tr>
+
+</table>
+<!-- end of links -->
+
+
+</div>
+</div>
+
+</form>
+
+<style>
+#menu-mask {
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 1;
+	background-color: #000000;
+	opacity: 0.25;
+	filter: alpha(opacity=25);
+}
+</style>
+<div id="menu-mask"></div>
+
+</body>
+</html>

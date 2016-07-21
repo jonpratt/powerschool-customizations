@@ -1,0 +1,61 @@
+----FIND DROPPED, For-Credit COURSES FROM YR, S1, Q1 on after 9/6---(153 records)
+select
+	cc.studentid as StudentID,
+	students.lastfirst as Name,
+	cc.course_number as CourseNumber,
+	courses.course_name as CourseName,
+	cc.sectionid as SectionID,
+	cc.termid as TermID,
+	cc.dateleft as DateLeft
+
+from
+	cc
+
+inner join
+	courses on cc.course_number=courses.course_number
+
+inner join
+	students on cc.studentid=students.id
+
+where
+	students.enroll_status=0 AND
+	(cc.termid=-2300 OR cc.termid=-2301 OR cc.termid=-2303 OR cc.termid=-2304) AND
+	cc.dateleft>='06-SEP-13' AND
+	courses.credit_hours>0
+
+order by
+	students.lastfirst
+	
+----FIND ABOVE, BUT WITH Q2 GRADE
+select
+	cc.studentid as StudentID,
+	students.lastfirst as Name,
+	cc.course_number as CourseNumber,
+	courses.course_name as CourseName,
+	cc.sectionid as SectionID,
+	cc.termid as TermID,
+	cc.dateleft as DateLeft,
+	storedgrades.grade as Grade,
+	storedgrades.storecode as StoreCode
+
+from
+	cc
+
+inner join
+	courses on cc.course_number=courses.course_number
+
+inner join
+	students on cc.studentid=students.id
+
+inner join
+	storedgrades on abs(cc.sectionid)=storedgrades.sectionid and cc.studentid=storedgrades.studentid
+
+where
+	students.enroll_status=2 AND
+	(cc.termid=-2300 OR cc.termid=-2301 OR cc.termid=-2303 OR cc.termid=-2304) AND
+	cc.dateleft>='06-SEP-13' AND
+	courses.credit_hours>0 AND
+	storedgrades.storecode='Q2'
+  
+order by
+  students.lastfirst

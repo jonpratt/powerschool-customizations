@@ -1,0 +1,44 @@
+<form id="ajaxSubmit">
+    ~[DirectTable.Select:U_IPAD;id:~[gpv:id;htmlencode]]
+    <fieldset id="ipadplansForm">
+        <div>
+            <table>
+                <tr>
+                    <td><label>Insurance</label></td>
+                    <td><input type="radio" name="[U_IPAD]Insurance" value="1" id="InsuranceYes" checked>Yes</input>
+                        <br>
+                        <input type="radio" name="[U_IPAD]Insurance" value="0" id="InsuranceNo">No</input></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td><label>Take-Home</label></td>
+                    <td><input type="radio" name="[U_IPAD]Takehome" value="1" id="TakehomeYes" checked>Yes</input>
+                        <br>
+                        <input type="radio" name="[U_IPAD]Takehome" value="0" id="TakehomeNo">No</input></td>
+                </tr>
+            </table>
+        </div>
+        <div class="button-row">
+            <input type="hidden" name="ac" value="prim" />
+            <button type="button" id="btnDelete" class="confirmationReq">Delete</button>
+            <button type="button" id="btnSubmit" name="btnSubmit">Submit</button>
+        </div>
+    </fieldset>    
+</form>
+<form id="ajaxDelete">
+    <input type="hidden" name="DD-U_IPAD.ID:~[gpv:id;htmlencode]" value="1" />
+    <input type="hidden" name="ac" value="prim" />
+</form>
+<script>
+    $j('#btnSubmit').click(function() {
+       var dataString = $j('#ajaxSubmit').serialize();
+        angular.element($j('#ipadplansCtrlDiv')).scope().ipadplansEdit(dataString);
+    });
+    $j('#btnDelete').click(function() {
+       var dataString = $j('#ajaxDelete').serialize();
+        angular.element($j('#ipadplansCtrlDiv')).scope().ipadplansEdit(dataString);
+    });
+</script>

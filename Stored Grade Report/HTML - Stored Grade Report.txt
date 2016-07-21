@@ -1,0 +1,15 @@
+Page elements: select reporting term from list
+Report default based on current reporting term (HOW?)
+
+Course
+Section
+Teacher
+Term
+Store Code
+Grade
+Comment
+
+Course
+Standards
+Term
+Grade

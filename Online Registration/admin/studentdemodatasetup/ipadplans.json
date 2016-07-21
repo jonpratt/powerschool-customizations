@@ -1,0 +1,8 @@
+[~[tlist_sql;
+select ID, INSURANCE, TAKEHOME
+from u_ipad]
+    {"id":~(id),
+     "Insurance":"~(insurance;js)",
+     "Takehome":"~(takehome;js)"
+    },
+[/tlist_sql]{}]

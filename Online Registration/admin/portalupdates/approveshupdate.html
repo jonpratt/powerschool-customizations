@@ -1,0 +1,355 @@
+<div style="width:1024px;">
+<form id="ajaxSubmit">
+    
+    ~[DirectTable.Select:U_SECONDARY_HOUSEHOLD;id:~(gpv.secondaryhouseholdid;htmlencode)]
+    
+    <div class="box-round" id="approveSHUpdateDiv"> 
+        <h2>Approve Secondary Household Information for ~([Students]LastFirst)</h2>
+            
+            ~[tlist_sql;
+                SELECT
+                    whocreated as who,
+                    whencreated as when
+                FROM
+                    u_portalupdate
+                WHERE
+                    id=~(gpv.updateid)
+            ]
+        
+            <p>This update submitted by ~(who) on ~(when).</p>
+        
+            [/tlist_sql]
+        
+            <h3>~([Students]First_Name)'s Secondary Household Details</h3>
+            
+            <table class="grid" id="SH_Details">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sh_custody IS NOT NULL THEN sh_custody ELSE 99 END as SHCustody,
+                            CASE WHEN sh_paper IS NOT NULL THEN sh_paper ELSE 0 END as SHPaper
+                        FROM
+                            u_portalupdate
+                        WHERE
+                            id=~(gpv.updateid)
+                    ]
+                    <tr>
+                        <td>Custody Type</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Custody" value="" id="fileSHCustody" /></td>
+                        <td><span id="button_updateSHCustody">
+                            <button type="button" id="approve_updateSHCustody" onClick="approveUpdate('updateSHCustody', 'fileSHCustody');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHCustody)" id="updateSHCustody" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Mass Mailing Preference (1=paper, 0=email)</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Paper" value="" id="fileSHPaper" /></td>
+                        <td><span id="button_updateSHPaper">
+                            <button type="button" id="approve_updateSHPaper" onClick="approveUpdate('updateSHPaper', 'fileSHPaper');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHPaper)" id="updateSHPaper" readonly/></td>
+                    </tr>
+                    [/tlist_sql]
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Secondary Household Legal Address</h3>
+            
+            <table class="grid" id="SH_Legal_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sh_street_legal IS NOT NULL THEN sh_street_legal ELSE 'No Update' END as SHStreetLegal,
+                            CASE WHEN sh_city_legal IS NOT NULL THEN sh_city_legal ELSE 'No Update' END as SHCityLegal,
+                            CASE WHEN sh_state_legal IS NOT NULL THEN sh_state_legal ELSE 'No Update' END as SHStateLegal,
+                            CASE WHEN sh_zip_legal IS NOT NULL THEN sh_zip_legal ELSE 'No Update' END as SHZipLegal
+                        FROM
+                            u_portalupdate
+                        WHERE
+                            id=~(gpv.updateid)                    
+                    ]
+                    <tr>
+                        <td>Legal Street Address</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Street_Legal" value="" id="fileSHStreetLegal" /></td>
+                        <td><span id="button_updateSHStreetLegal">
+                            <button type="button" id="approve_updateSHStreetLegal" onClick="approveUpdate('updateSHStreetLegal', 'fileSHStreetLegal');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHStreetLegal)" id="updateSHStreetLegal" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_City_Legal" value="" id="fileSHCityLegal" /></td>
+                        <td><span id="button_updateSHCityLegal">
+                            <button type="button" id="approve_updateSHCityLegal" onClick="approveUpdate('updateSHCityLegal', 'fileSHCityLegal');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHCityLegal)" id="updateSHCityLegal" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_State_Legal" value="" id="fileSHStateLegal" /></td>
+                        <td><span id="button_updateSHStateLegal">
+                            <button type="button" id="approve_updateSHStateLegal" onClick="approveUpdate('updateSHStateLegal', 'fileSHStateLegal');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHStateLegal)" id="updateSHStateLegal" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Zip_Legal" value="" id="fileSHZipLegal" /></td>
+                        <td><span id="button_updateSHZipLegal">
+                            <button type="button" id="approve_updateSHZipLegal" onClick="approveUpdate('updateSHZipLegal', 'fileSHZipLegal');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHZipLegal)" id="updateSHZipLegal" readonly/></td>
+                    </tr>
+                    [/tlist_sql]
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Secondary Household Mailing Address</h3>
+        
+            <table class="grid" id="SH_Mailing_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sh_street_mailing IS NOT NULL THEN sh_street_mailing ELSE 'No Update' END as SHStreetMailing,
+                            CASE WHEN sh_city_mailing IS NOT NULL THEN sh_city_mailing ELSE 'No Update' END as SHCityMailing,
+                            CASE WHEN sh_state_mailing IS NOT NULL THEN sh_state_mailing ELSE 'No Update' END as SHStateMailing,
+                            CASE WHEN sh_zip_mailing IS NOT NULL THEN sh_zip_mailing ELSE 'No Update' END as SHZipMailing
+                        FROM
+                            u_portalupdate
+                        WHERE
+                            id=~(gpv.updateid)                    
+                    ]
+                    <tr>
+                        <td>Mailing Street Address</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Street_Mailing" value="" id="fileSHStreetMailing" /></td>
+                        <td><span id="button_updateSHStreetMailing">
+                            <button type="button" id="approve_updateSHStreetMailing" onClick="approveUpdate('updateSHStreetMailing', 'fileSHStreetMailing');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHStreetMailing)" id="updateSHStreetMailing" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_City_Mailing" value="" id="fileSHCityMailing" /></td>
+                        <td><span id="button_updateSHCityMailing">
+                            <button type="button" id="approve_updateSHCityMailing" onClick="approveUpdate('updateSHCityMailing', 'fileSHCityMailing');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHCityMailing)" id="updateSHCityMailing" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_State_Mailing" value="" id="fileSHStateMailing" /></td>
+                        <td><span id="button_updateSHStateMailing">
+                            <button type="button" id="approve_updateSHStateMailing" onClick="approveUpdate('updateSHStateMailing', 'fileSHStateMailing');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHStateMailing)" id="updateSHStateMailing" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Zip_Mailing" value="" id="fileSHZipMailing" /></td>
+                        <td><span id="button_updateSHZipMailing">
+                            <button type="button" id="approve_updateSHZipMailing" onClick="approveUpdate('updateSHZipMailing', 'fileSHZipMailing');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHZipMailing)" id="updateSHZipMailing" readonly/></td>
+                    </tr>
+                    [/tlist_sql]
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Secondary Household Adult Contact 1</h3>
+            
+            <table class="grid" id="SH_AC1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha1_firstname IS NOT NULL THEN sha1_firstname ELSE 'No Update' END as SHA1FirstName,
+                            CASE WHEN sha1_lastname IS NOT NULL THEN sha1_lastname ELSE 'No Update' END as SHA1LastName,
+                            CASE WHEN sha1_rel IS NOT NULL THEN sha1_rel ELSE 99 END as SHA1Rel,
+                            CASE WHEN sha1_phone IS NOT NULL THEN sha1_phone ELSE 'No Update' END as SHA1Phone,
+                            CASE WHEN sha1_phone_type IS NOT NULL THEN sha1_phone_type ELSE 99 END as SHA1PhoneType,
+                            CASE WHEN sha1_email IS NOT NULL THEN sha1_email ELSE 'No Update' END as SHA1Email
+                        FROM
+                            u_portalupdate
+                        WHERE
+                            id=~(gpv.updateid)
+                    ]
+                    <tr>
+                        <td>First (Given) Name</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_FirstName" value="" id="fileSHA1FirstName" /></td>
+                        <td><span id="button_updateSHA1FirstName">
+                            <button type="button" id="approve_updateSHA1FirstName" onClick="approveUpdate('updateSHA1FirstName', 'fileSHA1FirstName');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA1FirstName)" id="updateSHA1FirstName" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_LastName" value="" id="fileSHA1LastName" /></td>
+                        <td><span id="button_updateSHA1LastName">
+                            <button type="button" id="approve_updateSHA1LastName" onClick="approveUpdate('updateSHA1LastName', 'fileSHA1LastName');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA1LastName)" id="updateSHA1LastName" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_Rel" value="" id="fileSHA1Rel" /></td>
+                        <td><span id="button_updateSHA1Rel">
+                            <button type="button" id="approve_updateSHA1Rel" onClick="approveUpdate('updateSHA1Rel', 'fileSHA1Rel');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA1Rel)" id="updateSHA1Rel" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_Phone" value="" id="fileSHA1Phone" /></td>
+                        <td><span id="button_updateSHA1Phone">
+                            <button type="button" id="approve_updateSHA1Phone" onClick="approveUpdate('updateSHA1Phone', 'fileSHA1Phone');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA1Phone)" id="updateSHA1Phone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone Type</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_Phone_Type" value="" id="fileSHA1PhoneType" /></td>
+                        <td><span id="button_updateSHA1PhoneType">
+                            <button type="button" id="approve_updateSHA1PhoneType" onClick="approveUpdate('updateSHA1PhoneType', 'fileSHA1PhoneType');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA1PhoneType)" id="updateSHA1PhoneType" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_Email" value="" id="fileSHA1Email" /></td>
+                        <td><span id="button_updateSHA1Email">
+                            <button type="button" id="approve_updateSHA1Email" onClick="approveUpdate('updateSHA1Email', 'fileSHA1Email');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA1Email)" id="updateSHA1Email" readonly/></td>
+                    </tr>
+                    [/tlist_sql]
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Secondary Household Adult Contact 2</h3>
+            
+            <table class="grid" id="SH_AC2">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha2_firstname IS NOT NULL THEN sha2_firstname ELSE 'No Update' END as SHA2FirstName,
+                            CASE WHEN sha2_lastname IS NOT NULL THEN sha2_lastname ELSE 'No Update' END as SHA2LastName,
+                            CASE WHEN sha2_rel IS NOT NULL THEN sha2_rel ELSE 99 END as SHA2Rel,
+                            CASE WHEN sha2_phone IS NOT NULL THEN sha2_phone ELSE 'No Update' END as SHA2Phone,
+                            CASE WHEN sha2_phone_type IS NOT NULL THEN sha2_phone_type ELSE 99 END as SHA2PhoneType,
+                            CASE WHEN sha2_email IS NOT NULL THEN sha2_email ELSE 'No Update' END as SHA2Email
+                        FROM
+                            u_portalupdate
+                        WHERE
+                            id=~(gpv.updateid)
+                    ]
+                    <tr>
+                        <td>First (Given) Name</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_FirstName" value="" id="fileSHA2FirstName" /></td>
+                        <td><span id="button_updateSHA2FirstName">
+                            <button type="button" id="approve_updateSHA2FirstName" onClick="approveUpdate('updateSHA2FirstName', 'fileSHA2FirstName');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA2FirstName)" id="updateSHA2FirstName" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_LastName" value="" id="fileSHA2LastName" /></td>
+                        <td><span id="button_updateSHA2LastName">
+                            <button type="button" id="approve_updateSHA2LastName" onClick="approveUpdate('updateSHA2LastName', 'fileSHA2LastName');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA2LastName)" id="updateSHA2LastName" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_Rel" value="" id="fileSHA2Rel" /></td>
+                        <td><span id="button_updateSHA2Rel">
+                            <button type="button" id="approve_updateSHA2Rel" onClick="approveUpdate('updateSHA2Rel', 'fileSHA2Rel');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA2Rel)" id="updateSHA2Rel" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_Phone" value="" id="fileSHA2Phone" /></td>
+                        <td><span id="button_updateSHA2Phone">
+                            <button type="button" id="approve_updateSHA2Phone" onClick="approveUpdate('updateSHA2Phone', 'fileSHA2Phone');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA2Phone)" id="updateSHA2Phone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone Type</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_Phone_Type" value="" id="fileSHA2PhoneType" /></td>
+                        <td><span id="button_updateSHA2PhoneType">
+                            <button type="button" id="approve_updateSHA2PhoneType" onClick="approveUpdate('updateSHA2PhoneType', 'fileSHA2PhoneType');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA2PhoneType)" id="updateSHA2PhoneType" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_Email" value="" id="fileSHA2Email" /></td>
+                        <td><span id="button_updateSHA2Email">
+                            <button type="button" id="approve_updateSHA2Email" onClick="approveUpdate('updateSHA2Email', 'fileSHA2Email');">Approve</button></span></td>
+                        <td><input type="text" name="" value="~(SHA2Email)" id="updateSHA2Email" readonly/></td>
+                    </tr>
+                    [/tlist_sql]
+                </tbody>
+            </table>
+        
+    </div>
+    
+    <div class="button-row">
+        ~[DirectTable.Select:U_PORTALUPDATE;id:~[gpv:updateid;htmlencode]]
+        <input id="portalshupdatepending" type="hidden" name="[U_PORTALUPDATE]SHUpdatePending" value="" />
+        <input id="studentshupdatepending" type="hidden" name="[Students.U_Student_Demographics]SHUpdatePending" value="" />
+        <input id="hassecondaryhousehold" type="hidden" name="[Students.U_Student_Demographics]HasSecondaryHousehold" value="" />
+        <input type="hidden" name="ac" value="prim" />
+        <button type="button" id="btnDelete" class="confirmationReq">Delete</button>
+        <button type="button" id="btnSubmit" name="btnSubmit">Submit</button>
+        <br>
+        <br>
+    </div>
+    
+</form>
+    
+<form id="ajaxDelete">
+    <input type="hidden" name="DD-U_PORTALUPDATE.ID:~(gpv.updateid;htmlencode)" value="1" />
+    <input type="hidden" name="ac" value="prim" />
+</form>
+    
+<script>
+    $j('#btnSubmit').click(function() {
+        $j('#studentshupdatepending').val("0");
+        $j('#portalshupdatepending').val("0");
+        $j('#hassecondaryhousehold').val("1");
+       var dataString = $j('#ajaxSubmit').serialize();
+        angular.element($j('#unprocessedSHUpdatesCtrlDiv')).scope().unprocessedSHUpdatesEdit(dataString);
+    });
+    $j('#btnDelete').click(function() {
+       var dataString = $j('#ajaxDelete').serialize();
+        angular.element($j('#unprocessedSHUpdatesCtrlDiv')).scope().unprocessedSHUpdatesEdit(dataString);
+    });
+</script>
+    
+<script>
+ function approveUpdate (updateId, onfileId) {
+  $j('#' + onfileId).val($j('#' + updateId).val());
+  $j('#button_' + updateId).html('<strong>Submit to save changes.</strong>');
+    };   
+</script>
+</div>

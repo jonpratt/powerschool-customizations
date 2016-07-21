@@ -1,0 +1,273 @@
+<div>
+    
+<form id="shEdit" action="secondaryhousehold.html?frn=~(studentfrn)" method="POST">
+    
+~[DirectTable.Select:U_SECONDARY_HOUSEHOLD;id:~(gpv.shid;htmlencode)]
+    
+    <div class="box-round" id="editSHDiv"> 
+        
+    <h2>Secondary Household Information for ~([Students]First_Name) ~([Students]Last_Name)</h2>
+            
+        <h3>~([Students]First_Name)'s Secondary Household Details</h3>
+
+            <table class="grid" id="SH_Details">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Custody Type</td>
+                        <td><select name="[U_SECONDARY_HOUSEHOLD]SH_Custody" id="fileSHCustody">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    id as ID,
+                                    CASE WHEN id=(SELECT sh_custody FROM U_Secondary_Household WHERE id=~(gpv.shid)) THEN 'selected="selected"' ELSE '' END as storedSHCustody,
+                                    custodytype as custodytype
+
+                                FROM
+                                    u_custody
+
+                                ORDER BY
+                                    custodytype
+                            ]
+                            <option value="~(id)" ~(storedSHCustody)>~(custodytype)</option>
+                            [/tlist_sql]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mass Mailing Preference (1=paper, 0=email)</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Paper" value="" id="fileSHPaper" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Secondary Household Legal Address</h3>
+            
+            <table class="grid" id="SH_Legal_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Legal Street Address</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Street_Legal" value="" id="fileSHStreetLegal" /></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_City_Legal" value="" id="fileSHCityLegal" /></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_State_Legal" value="" id="fileSHStateLegal" /></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Zip_Legal" value="" id="fileSHZipLegal" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Secondary Household Mailing Address</h3>
+        
+            <table class="grid" id="SH_Mailing_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mailing Street Address</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Street_Mailing" value="" id="fileSHStreetMailing" /></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_City_Mailing" value="" id="fileSHCityMailing" /></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_State_Mailing" value="" id="fileSHStateMailing" /></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Zip_Mailing" value="" id="fileSHZipMailing" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Secondary Household Adult Contact 1</h3>
+            
+            <table class="grid" id="SH_AC1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (Given) Name</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_FirstName" value="" id="fileSHA1FirstName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_LastName" value="" id="fileSHA1LastName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        <td><select name="[U_SECONDARY_HOUSEHOLD]SHA1_Rel" id="fileSHA1Rel">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    id as ID,
+                                    CASE WHEN id=(SELECT sha1_rel FROM U_Secondary_Household WHERE id=~(gpv.shid)) THEN 'selected="selected"' ELSE '' END as storedSHA1Rel,
+                                    reltype as reltype
+
+                                FROM
+                                    u_household_relationships
+
+                                ORDER BY
+                                    id
+                            ]
+                            <option value="~(id)" ~(storedSHA1Rel)>~(reltype)</option>
+                            [/tlist_sql]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_Phone" value="" id="fileSHA1Phone" /></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone Type</td>
+                        <td><select name="[U_SECONDARY_HOUSEHOLD]SHA1_Phone_Type" id="fileSHA1PhoneType">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    id as ID,
+                                    CASE WHEN id=(SELECT sha1_phone_type FROM U_Secondary_Household WHERE id=~(gpv.shid)) THEN 'selected="selected"' ELSE '' END as storedSHA1PType,
+                                    phonetype as phonetype
+
+                                FROM
+                                    u_phones
+
+                                ORDER BY
+                                    id
+                            ]
+                            <option value="~(id)" ~(storedSHA1PType)>~(phonetype)</option>
+                            [/tlist_sql]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_Email" value="" id="fileSHA1Email" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Secondary Household Adult Contact 2</h3>
+            
+            <table class="grid" id="SH_AC2">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (Given) Name</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_FirstName" value="" id="fileSHA2FirstName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_LastName" value="" id="fileSHA2LastName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        <td><select name="[U_SECONDARY_HOUSEHOLD]SHA2_Rel" id="fileSHA2Rel">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    id as ID,
+                                    CASE WHEN id=(SELECT sha2_rel FROM U_Secondary_Household WHERE id=~(gpv.shid)) THEN 'selected="selected"' ELSE '' END as storedSHA2Rel,
+                                    reltype as reltype
+
+                                FROM
+                                    u_household_relationships
+
+                                ORDER BY
+                                    id
+                            ]
+                            <option value="~(id)" ~(storedSHA2Rel)>~(reltype)</option>
+                            [/tlist_sql]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_Phone" value="" id="fileSHA2Phone" /></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone Type</td>
+                        <td><select name="[U_SECONDARY_HOUSEHOLD]SHA2_Phone_Type" id="fileSHA2PhoneType">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    id as ID,
+                                    CASE WHEN id=(SELECT sha2_phone_type FROM U_Secondary_Household WHERE id=~(gpv.shid)) THEN 'selected="selected"' ELSE '' END as storedSHA2PType,
+                                    phonetype as phonetype
+
+                                FROM
+                                    u_phones
+
+                                ORDER BY
+                                    id
+                            ]
+                            <option value="~(id)" ~(storedSHA2PType)>~(phonetype)</option>
+                            [/tlist_sql]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_Email" value="" id="fileSHA2Email" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+    </div>
+    
+    <div class="button-row" id="row1">
+        
+        <input type="hidden" name="ac" value="prim" />
+        
+        ~[submitbutton]
+        
+    </div>
+    
+</form>
+
+    <div class="button-row" id="row2">
+        <form id="shDelete" action="secondaryhousehold.html?frn=~(studentfrn)" method="POST">
+        
+        <input type="hidden" name="ac" value="prim" />
+        <input type="hidden" name="DD-U_SECONDARY_HOUSEHOLD.ID:~(gpv.shid;htmlencode)" value="1" />
+        <input id="hassecondaryhousehold" type="hidden" name="[Students.U_Student_Demographics]HasSecondaryHousehold" value="" />
+                
+        <button class="confirmationReq" id="btnDelete">Delete</button>
+        </form>
+    </div>
+
+<script>
+    $j('#btnDelete').click(function() {
+       $j('#hassecondaryhousehold').val("0");
+    });
+</script>
+
+</div>

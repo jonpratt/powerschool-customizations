@@ -1,0 +1,184 @@
+<h2>Add Boarding Demographic Information for ~([STUDENTS]FIRST_NAME) ~([STUDENTS]LAST_NAME)</h1> 
+<p>Please provide the information requested below.</p>
+<div class="box-round"> 
+        
+<form action="boarding.html?frn=~(studentfrn)" id="addBoarding" method="POST">
+            
+    ~[DirectTable.Select:U_INTERNATIONAL_DEMOGRAPHIC;id:-1]
+    
+    <fieldset id="addBoardingFieldset">
+        
+        <h3>Student Info</h3>
+        <div>
+            <label>Preferred Name</label>
+            <input type="text" name="[Students.U_Student_Demographics]PreferredName" value="" id="preferredName"/>
+        </div>
+        
+        <div>
+            <label>Primary Citizenship</label>
+            <select name="[Students.U_Student_Demographics]Citizenship1">~[wc:citizenshippicker]</select>
+        </div>
+    
+        <div>
+            <label>Dual Citizenship</label>
+            <select name="[Students.U_Student_Demographics]Citizenship2">~[wc:citizenshippicker]</select>
+        </div>
+
+        <div>
+            <label>Primary Heritage</label>
+            <select name="[Students.U_Student_Demographics]Heritage1">~[wc:heritagepicker]</select>
+        </div>
+
+        <div>
+            <label>Secondary Heritage</label>
+            <select name="[Students.U_Student_Demographics]Heritage2">~[wc:heritagepicker]</select>
+        </div>
+
+        <div>
+            <label>Personal Email</label>
+            <input type="text" name="[Students.U_Student_Demographics]PersonalEmail" value="" id="personalEmail"/>
+        </div>
+        
+        <div>
+            <label>Insurance</label>
+            <textarea name="[Students.U_Student_Demographics]PersonalEmail" value="" rows="5" cols="50" id="insurance"></textarea>
+        </div>
+
+        <h3>Secondary Household Legal Address</h3>
+        <div>
+            <label>Legal Street Address</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Street_Legal" value="" id="legalStreet" />
+        </div>
+        
+        <div>
+            <label>Legal City or Town</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_City_Legal" value="" id="legalCity" />
+        </div>
+        
+        <div>
+            <label>Legal State</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_State_Legal" value="" id="legalState" />
+        </div>
+        
+        <div>
+            <label>Legal ZIP</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Zip_Legal" value="" id="legalZip" />
+        </div>
+        
+        <h3>Secondary Household Mailing Address</h3>
+        
+        <button type="button" id="copyFromLegal" onClick="copyLegalToMailing();">Copy to Mailing from Legal Address</button>
+        
+        <div>
+            <label>Mailing Street Address</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Street_Mailing" value="" id="mailingStreet" />
+        </div>
+        
+        <div>
+            <label>Mailing City or Town</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_City_Mailing" value="" id="mailingCity" />
+        </div>
+        
+        <div>
+            <label>Mailing State</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_State_Mailing" value="" id="mailingState" />
+        </div>
+        
+        <div>
+            <label>Mailing ZIP</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SH_Zip_Mailing" value="" id="mailingZip" />
+        </div>
+        
+        <h3>Secondary Household Adult Contact 1</h3>
+        
+        <div>
+            <label>Adult Contact 1 First (Given) Name</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_FirstName" value="" id="sha1FirstName" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Last (Family) Name</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_LastName" value="" id="sha1LastName" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Relationship to Student</label>
+            <select name="[U_SECONDARY_HOUSEHOLD]SHA1_Rel">~[wc:reltypepicker]</select>
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Primary Phone Number</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_Phone" value="" id="sha1Phone" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Primary Phone Type</label>
+            <select name="[U_SECONDARY_HOUSEHOLD]SHA1_Phone_Type">~[wc:ptypepicker]</select>
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Email</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA1_Email" value="" id="sha1Email" />
+        </div>
+        
+        <h3>Secondary Household Adult Contact 2</h3>
+        
+        <div>
+            <label>Adult Contact 2 First (Given) Name</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_FirstName" value="" id="sha2FirstName" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Last (Family) Name</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_LastName" value="" id="sha2LastName" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Relationship to Student</label>
+            <select name="[U_SECONDARY_HOUSEHOLD]SHA2_Rel">~[wc:reltypepicker]</select>
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Primary Phone Number</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_Phone" value="" id="sha2Phone" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Primary Phone Type</label>
+            <select name="[U_SECONDARY_HOUSEHOLD]SHA2_Phone_Type">~[wc:ptypepicker]</select>
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Email</label>
+            <input type="text" name="[U_SECONDARY_HOUSEHOLD]SHA2_Email" value="" id="sha2Email" />
+        </div>
+        
+        <div class="button-row">
+            <input type="hidden" id="hassecondaryhousehold" name="[STUDENTS.U_STUDENT_DEMOGRAPHICS]HASSECONDARYHOUSEHOLD" value="1">
+            <input type="hidden" name="ac" value="prim" />
+            <button type="submit" id="btnSubmit" name="btnSubmit">Submit</button>
+        </div>
+        
+    </fieldset>
+
+</form>
+
+</div>
+
+<script>
+    function copyField (legalId, mailingId) {
+        $j('#' + mailingId).val($j('#' + legalId).val());
+    };
+    function copyLegalToMailing () {
+        copyField ('legalStreet', 'mailingStreet');
+        copyField ('legalCity', 'mailingCity');
+        copyField ('legalState', 'mailingState');
+        copyField ('legalZip', 'mailingZip');
+    };
+</script>
+
+<script>
+    $j('#btnSubmit').click(function() {
+        $j('#hassecondaryhousehold').val("1");
+    });
+</script>

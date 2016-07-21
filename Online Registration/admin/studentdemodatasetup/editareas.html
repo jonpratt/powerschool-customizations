@@ -1,0 +1,30 @@
+<div style="width:640px;">
+<form id="ajaxSubmit">
+    ~[DirectTable.Select:U_AREAS;id:~[gpv:id;htmlencode]]
+    <fieldset id="areaForm">
+        <div>
+            <label>Area</label>
+            <input type="text" name="[U_AREAS]Area" value="" id="Area" />
+        </div>
+        <div class="button-row">
+            <input type="hidden" name="ac" value="prim" />
+            <button type="button" id="btnDelete" class="confirmationReq">Delete</button>
+            <button type="button" id="btnSubmit" name="btnSubmit">Submit</button>
+        </div>
+    </fieldset>    
+</form>
+<form id="ajaxDelete">
+    <input type="hidden" name="DD-U_AREAS.ID:~[gpv:id;htmlencode]" value="1" />
+    <input type="hidden" name="ac" value="prim" />
+</form>
+<script>
+    $j('#btnSubmit').click(function() {
+       var dataString = $j('#ajaxSubmit').serialize();
+        angular.element($j('#areasCtrlDiv')).scope().areasEdit(dataString);
+    });
+    $j('#btnDelete').click(function() {
+       var dataString = $j('#ajaxDelete').serialize();
+        angular.element($j('#areasCtrlDiv')).scope().areasEdit(dataString);
+    });
+</script>
+</div>

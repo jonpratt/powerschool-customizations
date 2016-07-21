@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+<title>Community Service</title>
+~[wc:commonscripts]
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head>
+
+<body>
+
+~[wc:admin_header_frame_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.misc.start_page]</a> &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.misc.student_selection]</a> &gt; Community Service<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
+
+~[wc:title_student_begin_css]Community Service~[wc:title_student_end_css]
+
+<!-- start of content and bounding box -->
+<div class="box-round">
+
+<!-- start custom content here -->
+
+<h2>New Service Entry</h2>
+<form action="/admin/changesrecorded.white.html" method="POST">
+<input type="hidden" name="[communityservice]foreignkey" value="~([01]id)" />
+<input type="hidden" name="[communityservice]related_to_table" value="communityservice" />
+<input type="hidden" name="[communityservice]linkto_def_id" value="514" />
+<table>
+	<tr>
+		<td>Date of Service</td>
+		<td><input class="psDateWidget" type="date" name="[communityservice]user_defined_date" size="10" value="" id="[communityservice]user_defined_date" /></td>
+	</tr>
+	<tr>
+		<td>Grade Level when Service Performed</td>
+		<td><select name="[communityservice]user_defined_integer">
+			<option value="">Select Grade Level</option>
+			<option value="9">Grade 9</option>
+			<option value="10">Grade 10</option>
+			<option value="11">Grade 11</option>
+			<option value="12">Grade 12</option>
+			</select></td>
+	</tr>
+	<tr>
+		<td>Hours of Service</td>
+		<td><input type="text" name="[communityservice]user_defined_numeric" value="" size=5</td>
+	</tr>
+	<tr>
+		<td>Organization or Person Served</td>
+		<td><input type="text" name="[communityservice]user_defined_text" value="" size=40</td>
+	</tr>
+</table>
+<div class="button-row">
+	<input type="hidden" name="ac" value="prim" />~[submitbutton]
+</div>
+</form>
+
+<h2>Summary of Service</h2>
+<table cellpadding="4">
+	<thead>
+	<tr>
+		<th class="bold">Grade Level</th>
+		<th class="bold">Hours Served</th>
+	</tr>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+	SELECT user_defined_integer, SUM(user_defined_numeric) as hoursserved
+	FROM virtualtablesdata2
+	WHERE foreignkey=~(curstudid) AND related_to_table='communityservice'
+	GROUP BY user_defined_integer
+	ORDER BY user_defined_integer;]
+	<tr>
+		<td>~(user_defined_integer)</td>
+		<td>~(hoursserved)</td>
+	</tr>
+	[/tlist_sql]
+	~[tlist_sql;
+	SELECT SUM(user_defined_numeric) as totalhoursserved
+	FROM virtualtablesdata2
+	WHERE foreignkey=~(curstudid) AND related_to_table='communityservice';]
+	<tr>
+		<td>TOTAL HOURS SERVED</td>
+		<td>~(totalhoursserved)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody>
+</table>
+
+<h2>Service Log</h2>
+The following community service actions have been logged for ~(first_name):
+<table cellpadding="4" class="tableToGrid">
+	<thead>
+	<tr>
+		<th>Date</th>
+		<th>Grade Level</th>
+		<th>Hours</th>
+		<th>Organization or Person Served</th>
+	</tr>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+	SELECT user_defined_date, user_defined_integer, user_defined_numeric, user_defined_text
+	FROM virtualtablesdata2
+	WHERE foreignkey=~(curstudid) AND related_to_table='communityservice'
+	ORDER BY user_defined_date DESC;]
+	<tr>
+		<td><center>~(user_defined_date)</center></td>
+		<td><center>~(user_defined_integer)</center></td>
+		<td><center>~(user_defined_numeric)</center></td>
+		<td>~(user_defined_text)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody
+</table>
+<!-- end custom content here -->
+</div>
+<!-- end of content of bounding box -->
+</body>
+</html><!-- end right frame -->

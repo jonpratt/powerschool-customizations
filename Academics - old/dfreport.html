@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DF Report</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->Your breadcrumbs go here<!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>DF Report</h1> 
+<!-- start of content area --> 
+	<div class="box-round"> 
+		 <table border="0" cellspacing="0" cellpadding="0" class="tableToGrid">
+             <thead>
+                 <th>FirstName</th>
+                 <th>LastName</th>
+                 <th>Grade</th>
+                 <th>Course</th>
+                 <th>Teacher</th>
+                 <th>SectionID</th>
+                 <th>TeachComm</th>
+                 <th>Email</th>
+                 <th>CC</th>
+             </thead>
+             <tbody>
+                 ~[tlist_sql;
+SELECT
+	students.first_name as FirstName, 
+	students.last_name as LastName,
+	storedgrades.grade as Grade,
+	storedgrades.course_name as Course,
+	(teachers.first_name || ' ' || teachers.last_name) as Teacher,
+	storedgrades.sectionid as SectionID,
+	storedgrades.comment_value as TeachComm,
+	students.student_web_id || '@foxcroftacademy.org' as Email,
+	(teachers.email_addr || ', ' ||
+	students.guardianemail || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'Non_Custodial___Email_Address') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_1') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_2') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_agent_email')) as CC
+	
+FROM
+	students
+
+INNER JOIN
+	storedgrades ON students.id=storedgrades.studentid
+
+INNER JOIN
+	teachers ON storedgrades.teacher_name=teachers.lastfirst
+
+WHERE
+	students.enroll_status=0
+	AND storedgrades.termid BETWEEN 2400 AND 2410
+	AND storedgrades.storecode='P4'
+	AND storedgrades.grade IN ('D', 'F')
+
+ORDER BY
+	teachers.lastfirst, storedgrades.sectionid, students.lastfirst
+                 ]
+                 <tr>
+                     <td>~(FirstName)</td>
+                     <td>~(LastName)</td>
+                     <td>~(Grade)</td>
+                     <td>~(Course)</td>
+                     <td>~(Teacher)</td>
+                     <td>~(SectionID)</td>
+                     <td>~(TeachComm)</td>
+                     <td>~(Email)</td>
+                     <td>~(CC)</td>
+                 </tr>
+                 [/tlist_sql]
+             </tbody>
+         </table>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

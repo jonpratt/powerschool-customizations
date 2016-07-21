@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Co-Curricular Agreements</title>
+<!-- start of page body --> 
+~[wc:guardian_header] 
+	<h1>Co-Curricular Forms</h1> 
+<!-- start student content --> 
+	<div class="box-round"> 
+		<h3>Add a Co-Curricular Agreement</h3>
+        
+		<p>Before beginning this form, please be sure to have your insurance information available. If you do not have insurance, you may purchase it through the school: <a href="http://www.foxcroftacademy.org/wp-content/uploads/2013/07/Student-Accident-Insurance-Plan-2015-2016.pdf" target="_blank">Student Accident Insurance Plan</a>.</p>
+        
+        <p><a href="addcocurricular.html?frn=001~(rn)">New Agreement</a></p>
+        
+        <h3>Co-Curricular Agreements on file</h3>
+        
+        <p>Use the "View" link next to each agreement on file to review it.</p>
+        
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Agreement</th>
+                    <th>Activity</th>
+                    <th>Date Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                ~[tlist_sql;
+                    SELECT
+                        u_cocurricular_agreements.id as CCID,
+                        u_cocurricular_activities.activity as Activity,
+                        u_cocurricular_agreements.whencreated as DateSubmitted
+                    FROM
+                        u_cocurricular_agreements
+                    INNER JOIN
+                        u_cocurricular_activities on u_cocurricular_activities.id=u_cocurricular_agreements.activityid
+                    WHERE
+                        studentsdcid=~(rn)
+                    ORDER BY
+                        u_cocurricular_agreements.whencreated
+                ]
+                <tr>
+                    <td><a href="viewcocurricular.html?ccid=~(CCID)">View</a></td>
+                    <td>~(Activity)</td>
+                    <td>~(DateSubmitted)</td>
+                </tr>
+                [/tlist_sql]
+            </tbody>
+        </table>
+        
+	</div> 
+<!-- end student content --> 
+<!-- Sets the navigation highlighting: the value is the ID value of the navigation element you want to highlight--> 
+<input id="activeNav" type="hidden" value="#onlineregistration"/> 
+<!-- end of page body --> 
+~[wc:guardian_footer] 
+</body> 
+</html>

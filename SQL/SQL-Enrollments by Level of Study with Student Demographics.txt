@@ -1,0 +1,21 @@
+SELECT DISTINCT 
+	students.id as ID, students.lastfirst as Name,
+	students.grade_level as Grade, students.gender as Gender,
+	ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig') as SLE
+
+FROM
+	students
+	
+INNER JOIN
+	cc on students.id=cc.studentid
+
+INNER JOIN
+	courses on cc.course_number=courses.course_number
+	
+WHERE
+	students.enroll_status=0
+	AND cc.termid>=2200
+	AND ps_customfields.getcoursescf(courses.id, 'LevelOfStudy')='G'
+
+ORDER BY
+	students.lastfirst

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Community Service Graduation Requirement Evaluation</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->Your breadcrumbs go here<!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Community Service Graduation Requirement Evaluation</h1> 
+<!-- start of content area --> 
+	<div ng-cloak class="box-round" ng-controller="commservAppCtrl" id="commservCtrlDiv"> 
+		 <h2>Student Community Service Summary</h2> 
+		 <p> 
+		 	Your paragraph text goes here.
+        </p>
+    <div id="commservTable" data-pss-grid-widget data-data="commservList" data-filtered-data="commservListFilt" data-client-side-pagination="true">
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th data-pss-sort-fields="Advisor">Advisor</th>
+                    <th data-pss-sort-fields="Student">Student</th>
+                    <th data-pss-sort-fields="StudentID|number">StudentID</th>
+                    <th data-pss-sort-fields="Grade|number">Grade</th>
+                    <th data-pss-sort-fields="G09H|number">G09H</th>
+                    <th data-pss-sort-fields="G10H|number">G10H</th>
+                    <th data-pss-sort-fields="G11H|number">G11H</th>
+                    <th data-pss-sort-fields="G12H|number">G12H</th>
+                    <th data-pss-sort-fields="totH|number">Total Hours</th>
+                    <th data-pss-sort-fields="">HRG12</th>
+                    <th data-pss-sort-fields="">HRTot</th>
+                    <th data-pss-sort-fields="">Done?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="student in commservListFilt">
+                    <td>{{student.Advisor}}</td>
+                    <td>{{student.Student}}</td>
+                    <td>{{student.StudentID}}</td>
+                    <td>{{student.Grade}}</td>
+                    <td>{{student.G09H}}</td>
+                    <td>{{student.G10H}}</td>
+                    <td>{{student.G11H}}</td>
+                    <td>{{student.G12H}}</td>
+                    <td>{{student.totH}}</td>
+                    <td>{{student.G12H < student.ReqG12 ? student.ReqG12 - student.G12H : 0}}</td>
+                    <td>{{student.totH < student.ReqTot ? student.ReqTot - student.totH : 0}}</td>
+                    <td>{{student.ReqG12 - student.G12H <= 0 && student.ReqTot - student.totH <=0 ? "YES" : "NO"}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	</div>
+    <script>
+        require(['angular', '01/commserveval'], function(angular) {
+           angular.bootstrap(document, ['commservApp']); 
+        });
+    </script>
+    <!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

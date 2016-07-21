@@ -1,0 +1,34 @@
+"StudentName", "BoardingStatus", "Gender", "GradeLevel", "LunchStatus", "DFStatus", "TotalCredits", "AARP"
+~[tlist_sql;
+SELECT
+	students.lastfirst as studentName,
+	CASE studentcorefields.area WHEN 'Non-Resident' THEN 'BOARDING' ELSE 'DAY' END as boardingStatus,
+	CASE students.gender WHEN 'F' THEN 'FEMALE' WHEN 'M' THEN 'MALE' ELSE 'NA' END as gender,
+	storedgrades.grade_level as gradeLevel,
+	CASE ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig') WHEN 'F' THEN 'FR' WHEN 'R' THEN 'FR' ELSE 'NE' END as lunchStatus,
+	CASE WHEN SUM(CASE storedgrades.grade WHEN 'D' THEN 1 WHEN 'F' THEN 2 WHEN 'WF' THEN 2 ELSE 0 END)>0 THEN 'DF' ELSE 'P' END as dfStatus,
+	SUM(courses.credit_hours) as totalCredits,
+	SUM(CASE storedgrades.grade WHEN 'D' THEN 1 WHEN 'F' THEN 2 WHEN 'WF' THEN 2 ELSE 0 END) as aarp
+
+FROM
+	students
+
+INNER JOIN
+  studentcorefields on studentcorefields.studentsdcid=students.dcid
+
+INNER JOIN
+	storedgrades ON storedgrades.studentid=students.id AND storedgrades.storecode='~(gpv.storecode)'
+  
+INNER JOIN
+	courses on storedgrades.course_number=courses.course_number
+
+INNER JOIN
+	terms on storedgrades.termid=terms.id AND terms.yearid=~(curyearid) AND terms.schoolid=~(curschoolid)
+
+GROUP BY
+	students.lastfirst, studentcorefields.area, students.gender, storedgrades.grade_level, ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig')
+
+ORDER BY
+	storedgrades.grade_level, students.lastfirst
+]"~(studentName)", "~(boardingStatus)", "~(gender)", "~(gradeLevel)", "~(lunchStatus)", "~(dfStatus)", "~(totalCredits)", "~(aarp)"
+[/tlist_sql]

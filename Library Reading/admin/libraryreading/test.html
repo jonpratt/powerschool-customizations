@@ -1,0 +1,22 @@
+<html ng-app>
+    <head>
+        <title>AngularJS Hello PSU</title>
+    </head>
+    <body>
+        The sum of 2 + 2 is {{2+2}}.<br />
+        The current year is {{1991+~(curyearid)}}.<br />
+        What is your name? <input type="text" ng-model="name" /><br />
+        
+        Hi {{name}}!<br />
+        What is your favorite color? <input type="text" ng-model="color" /><br />
+        Please give me an adjective: <input type="text" ng-model="adjective" /> <br />
+        Please give me a verb: <input type="text" ng-model="verb" /><br />
+        Ready for your Mad Lib? <input type="checkbox" ng-model="showIt">
+        <div ng-show="name && color && adjective && verb && showIt">
+            I love attending PSU. All the people in the {{color}} shirts are so {{adjective}} I just wish they would yell {{name}} at lunch, that would make me {{verb}}.
+        </div>
+        <!--Load the Angular script from Google or locally -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js">
+        </script>
+    </body>
+</html>

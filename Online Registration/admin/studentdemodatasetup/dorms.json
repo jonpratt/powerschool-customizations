@@ -1,0 +1,7 @@
+[~[tlist_sql;
+select ID, DORM
+from u_dorms]
+    {"id":~(id),
+     "Dorm":"~(dorm;js)"
+    },
+[/tlist_sql]{}]

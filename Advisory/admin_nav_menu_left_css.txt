@@ -1,0 +1,73 @@
+<!-- start menu navigation -->
+<div id="nav-main">
+<h3>~[text:psx.txt.wildcards.admin_nav_menu_left_css.functions]</h3>
+<ul>
+<li><a href="/admin/attendance/functions/attendancestatus.html" id="navAttStatus" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.view_attendance_status]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.attendance]</a></li>
+<li><a href="/admin/bulletin_popup.html" id="navBulletin" class="dialogM" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.view_daily_bulletin]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.daily_bulletin]</a></li>
+<li><a href="/admin/reports/ethnicitybreakdown.html" id="navReportEthnicityBreakdown" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.view_ethnicity_breakdown_report]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.enrollment_summary]</a></li>
+<li><a href="/admin/masterschedule/home.html?break=15" id="navMasterSched" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.view_master_schedule]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.master_schedule]</a></li>
+~[if.database.sql]
+<li><a href="/admin/dashboard/index.html?context=~[if.district.office]Server[/if.district.office]~[if.is.a.school]School[/if.is.a.school]" id="navDashboard" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.view_dashboard]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.dashboard]</a></li>
+[/if]
+<li><a href="/admin/functions.html" id="navSpecialFunctions" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.view_special_functions]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.special_functions]</a></li>
+<li><a href="/admin/teacherschedules/" id="navTeachSched" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.view_teachers_schedules]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.teacher_schedules]</a></li>
+
+</ul>
+
+<!-- Start State LDS Links -->
+ <!-- After the issue of insert file tag breaking student/faculty
+      search results pages is resolved, state specific stuff should 
+      be moved to state specific html fragments and a single
+      insert file tag should be used here for all states
+  -->
+~[if.stateabbr.ga]
+~[SetPostValue:externalLinks_0.linkUrl=https://slds.gadoe.org/sldsweb/?clientid=http://~[displaypref:districtnumber]]
+~[SetPostValue:externalLinks_0.linkLabel=Georgia LDS]
+~[SetPostValue:relyingPartyName=ga.lds]
+~[brij_render_insert:security-ps:renderAdminLeftNavStateLDSLinks]
+[/if]
+<!-- End State LDS Links -->    
+
+<h3>~[text:psx.txt.wildcards.admin_nav_menu_left_css.report]</h3>
+<ul>
+<li><a href="/admin/reports/runreports.html" id="navSysReports"title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.run_system_reports]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.reports]</a></li>
+<li><a href="/admin/reports/runprreports.html" id="navRWReports" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.run_reportworks_reports]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.reportworks]</a></li>
+<!--<li><a href="/admin/reports/statereports.html" id="navStateReports"title="Run state reports">State</a></li>-->
+</ul>
+
+<h3>~[text:psx.txt.wildcards.admin_nav_menu_left_css.people]</h3>
+<ul>
+<li><a href="/admin/advisorylists.html">Advisory Lists</a>
+<li><a href="/admin/" id="navStudentSearch" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.search_for_students]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.student_search]</a></li>
+<li><a href="/admin/faculty/search.html" id="navFacultySearch" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.search_for_staff]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.staff]</a></li>
+<li><a href="/admin/guardians/search.html" id="navParentSearch" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.parent_search1]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.parent_search]</a></li>
+<li><a href="/admin/students/newstudent.html" id="navNewStudent" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.create_new_student_record]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.enroll_new_student1]</a></li>
+<li><a href="/admin/faculty/new.html?frn=005-99" id="navNewStaff" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.create_new_staff_record]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.new_staff_entry]</a> </li>
+<li><a href="/admin/guardians/new_guardian_account.html" id="navNewParent" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.create_new_parent_record]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.new_parent_entry]</a></li>
+</ul>
+
+<h3>~[text:psx.txt.wildcards.admin_nav_menu_left_css.setup]</h3>
+<ul>
+~[if.district.office]
+<li><a href="/admin/district/" id="navSetupDist" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.setup_district]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.district]</a></li>
+[/if.district.office]
+~[if.is.a.school]
+<li><a href="/admin/schoolsetup/" id="navSetupSchool" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.setup_school]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.school]</a></li>
+[/if.is.a.school]
+<li><a href="/admin/tech/" id="navSetupSystem" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.setup_powerschool_systems]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.system]</a></li>
+<li><a href="/admin/userpreferences.html?frn=~(userfrn)" id="navPersonalize" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.personal_settings]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.personalize]</a></li>
+</ul>
+<h3>~[text:psx.txt.wildcards.admin_nav_menu_left_css.applications]</h3>
+<ul>
+<li><a href="/admin/powerlunch/" id="navAppLunch" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.launch_powerlunch]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.powerlunch]</a></li>
+~[if.is.a.school]
+~[if.sched_scheduleraccess]
+<li><a href="/admin/powerschedule/" id="navAppSched" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.launch_powerscheduler]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.powerscheduler]</a></li>
+[/if.sched_scheduleraccess]
+[/if.is.a.school]
+<li><a href="/admin/launchsysmgmt" target="_blank" id="navAppSysMgmt" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.launch_system_management]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.administrator]</a></li>
+<li><a href="/admin/launchptadmin" target="_blank" id="navAppPTAdmin" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.launch_powerteacher_administrator]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.pt_administrator]</a></li>
+<li><a href="/admin/reportworks/" id="navAppReportWorksDev" title="~[text:psx.txt.wildcards.admin_nav_menu_left_css.launch_reportworks_developer]">~[text:psx.txt.wildcards.admin_nav_menu_left_css.reportworks_developer]</a></li>
+</ul>
+</div>
+<!-- end menu navigation -->

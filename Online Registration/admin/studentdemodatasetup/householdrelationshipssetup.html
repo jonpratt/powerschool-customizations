@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Household Relationship Types Setup</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+    <style>
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display:none !important;
+        }
+        .octet {
+            width:25px;
+            text-align:right;
+        }
+    </style>
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->
+    <a href="/admin/home.html" target="_top">Start Page</a>
+    &gt;
+    <a href="/admin/studentdemodatasetup/studentdemodatasetup.html" target="_top">Student Demographic Data Setup</a>
+    &gt; Household Relationship Types Setup
+    <!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Household Relationship Types Setup</h1> 
+<!-- start of content area --> 
+	<div class="box-round" ng-controller="householdrelationshipsCtrl" id="householdrelationshipsCtrlDiv"> 
+		 <h2>Household Relationship Types</h2> 
+		 <p> 
+		 	These household relationship types are used in Student Demographics to provide context for the relationship between the student and his-her Primary and Secondary Household adult contacts.
+		 </p>
+        <div class="button-row">
+            <a class="button dialogM dockedDialog" title="Add" href="edithouseholdrelationships.html?id=-1">Add Item</a>
+        </div>
+        <div id="ngHouseholdRelationshipTypesTable" ng-cloak>
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Household Relationship Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in householdrelationshipsList">
+                    <td><a href="edithouseholdrelationships.html?id={{item.id}}" class="dialogM dockedDialog" title="Edit">{{item.id}}</a></td>
+                    <td>{{item.Reltype}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css]
+    <script>
+        require(['angular', 'studentdemodatasetup/householdrelationshipssetup'], function(angular) {
+           angular.bootstrap(document, ['householdrelationshipsApp']); 
+        });
+    </script>
+</body> 
+</html>
+</html>

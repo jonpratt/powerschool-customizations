@@ -1,0 +1,9 @@
+<script>
+
+~[if.~(studentscreenaccess;generaldemographics.html)=1]$j("option[value*='termgrades.html']").after('<option value="/admin/students/officialgradereportap.html?plce=hldr&storecode=~[tlist_sql;SELECT value as curFG FROM prefs WHERE name='curfgname-S1036']~(curFG)">Official Grade Report for Current Final Grade (~(curFG))[/tlist_sql]</option>');[/if]
+
+~[if.~(studentscreenaccess;generaldemographics.html)=1]$j("option[value*='termgrades.html']").after('<option value="/admin/students/communityservice.html?plce=hldr">Community Service</option>');[/if]
+
+~[if.~(studentscreenaccess;generaldemographics.html)=1]$j("option[value*='termgrades.html']").after('<option value="/admin/students/requests.html?plce=hldr&schedulerequestyearid=~[tlist_sql;SELECT CASE WHEN yearid=~(curyearid) THEN ((~(curyearid)+1)*100) ELSE yearid END as nextyearid FROM terms WHERE schoolid=~(curschoolid) AND yearid=~(curyearid) AND isyearrec=1]~(nextyearid)[/tlist_sql]">Future Schedule Requests</option>');[/if]
+
+</script>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Official Grade Report</title>
+    
+<!-- required scripts -->
+	~[wc:commonscripts] 
+    
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+
+</head> 
+
+<body>
+	~[wc:admin_header_frame_css]
+    
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/home.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Official Grade Report
+	<!-- breadcrumb end -->
+    
+    ~[wc:admin_navigation_frame_css]
+    
+<!-- start of main menu and content -->
+~[wc:title_student_begin_css]Official Grade Report~[wc:title_student_end_css]
+    
+<!-- start of content area -->
+    <div class="box-round">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Foxcroft Academy</th>
+                    <th>~([STUDENTS]FIRST_NAME) ~([STUDENTS]LAST_NAME)</th>
+                    <th>Reporting term:
+                        <select id="storecode">
+                        <option value=''>Change reporting term</option>
+                        ~[tlist_sql;
+                            SELECT
+                                (SELECT dcid FROM students WHERE id=~(curstudid)) as dcid,
+                                storecode as storecode,
+                                CASE WHEN storecode='~(gpv.storecode)' THEN 'selected="selected"' ELSE '' END as defaultChoice
+
+                            FROM
+                                termbins
+                            WHERE
+                                termid=~(curyearid)*100
+                            ORDER BY
+                                date2
+                        ]
+                        <option value="frn=001~(dcid)&storecode=~(storecode)" ~(defaultChoice)>~(storecode)</option>
+                        [/tlist_sql]
+                        </select></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>975 West Main Street</td>
+                    <td>~([STUDENTS]STREET)</td>
+                    <td>School year: ~[tlist_sql;SELECT name FROM terms WHERE id=~(curyearid)*100 AND schoolid=~(curschoolid)]~(name)[/tlist_sql]</td>
+                </tr>
+                <tr>
+                    <td>Dover-Foxcroft, ME 04426</td>
+                    <td>~([STUDENTS]CITY), ~([STUDENTS]STATE) ~([STUDENTS]ZIP)</td>
+                    <td>This report generated on: ~[date]</td>
+                </tr>
+                <tr>
+                    <td>207-564-8351 (phone)<br>207-564-8394 (fax)</td>
+                    <td>Class of ~([STUDENTS]SCHED_YEAROFGRADUATION) (Projected)</td>
+                    <td rowspan="2"><ul>
+                            <li>Teacher name links to email.</li>
+                            <li>Attendance Status links to attendance report.</li>
+                            <li>Standard name links to description.</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>http://www.foxcroftacademy.org</td>
+                    <td>Advisor: ~([STUDENTS]ADVISOR)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>~[tlist_sql;SELECT name FROM terms WHERE id=~(curyearid)*100 AND schoolid=~(curschoolid)]~(name)[/tlist_sql] ~(gpv.storecode) Course Overview</h2>
+        <table class="grid" id="courseOverview" style="page-break-inside: avoid;">
+            <thead>
+                <tr>
+                    <th class="bold">Term</th>
+                    <th class="bold">Course</th>
+                    <th class="bold">Grade</th>
+                    <th class="bold">Potential Credit</th>
+                    <th class="bold">Earned Credit</th>
+                    <th class="bold">Teacher</th>
+                    <th class="bold">Comment</th>
+                    <th class="bold">Attendance Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                ~[tlist_sql;
+                    SELECT
+                      terms.abbreviation as termCode,
+                      courses.course_name as courseName,
+                      storedgrades.grade as courseGrade,
+                      courses.credit_hours as potentialCredit,
+                      storedgrades.earnedcrhrs as earnedCredit,
+                      users.email_addr as teacherEmail,
+                      storedgrades.teacher_name as teacherName,
+                      TO_CHAR (storedgrades.comment_value) as teacherComment,
+                      students.dcid as studentsDCID,
+                      attendance.ccid as attendanceCCID,
+                      CASE WHEN courses.credit_hours=0 THEN 'feedback-confirm' ELSE (CASE WHEN (SUM(attendance_code.course_credit_points)/courses.credit_hours)>15 THEN 'error-message' ELSE (CASE WHEN (SUM(attendance_code.course_credit_points)/courses.credit_hours)>9 THEN 'feedback-alert' ELSE (CASE WHEN (SUM(attendance_code.course_credit_points)/courses.credit_hours)>4 THEN 'feedback-note' ELSE 'feedback-confirm' END) END) END) END as attendanceAlertType,
+                      CASE WHEN courses.credit_hours=0 THEN SUM(attendance_code.course_credit_points) ELSE (CASE WHEN (SUM(attendance_code.course_credit_points)/courses.credit_hours)>0 THEN round((SUM(attendance_code.course_credit_points)/courses.credit_hours)) ELSE 0 END) END as adjustedAttendancePoints
+
+                    FROM
+                      students
+
+                    INNER JOIN
+                      cc ON cc.studentid=students.id AND cc.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10
+                      
+                    INNER JOIN
+                      sections on sections.id=cc.sectionid
+                
+                    INNER JOIN
+                      schoolstaff ON schoolstaff.id=cc.teacherid
+                
+                    INNER JOIN
+                      users on users.dcid=schoolstaff.users_dcid
+
+                    INNER JOIN
+                      terms ON terms.id=cc.termid AND terms.schoolid=~(curschoolid)
+
+                    INNER JOIN
+                      courses ON courses.course_number=cc.course_number
+
+                    INNER JOIN
+                      storedgrades ON storedgrades.studentid=students.id AND storedgrades.sectionid=sections.id AND storedgrades.storecode='~(gpv.storecode)'
+                      
+                    LEFT JOIN
+                      attendance ON attendance.ccid=cc.id AND attendance.studentid=students.id
+
+                    LEFT JOIN
+                      attendance_code ON attendance_code.id=attendance.attendance_codeid AND attendance_code.yearid=~(curyearid) AND attendance_code.schoolid=~(curschoolid)
+
+                    WHERE
+                      students.id=~(curstudid)
+                    
+                    GROUP BY
+                      terms.abbreviation, courses.course_name, storedgrades.grade, courses.credit_hours, storedgrades.earnedcrhrs, users.email_addr, storedgrades.teacher_name, TO_CHAR(storedgrades.comment_value), students.dcid, attendance.ccid
+                    
+                    ORDER BY
+                      terms.abbreviation, courses.course_name
+                ]
+                <tr>
+                    <td>~(termCode)</td>
+                    <td>~(courseName)</td>
+                    <td>~(courseGrade)</td>
+                    <td>~(potentialCredit)</td>
+                    <td>~(earnedCredit)</td>
+                    <td><a href="mailto:~(teacherEmail)" target="_top">~(teacherName)</a></td>
+                    <td>~(teacherComment)</td>
+                    <td><a class="dialogM" href="courseattendancestatus.html?frn=001~(studentsDCID)&ccid=~(attendanceCCID)"><p class="~(attendanceAlertType)">~(adjustedAttendancePoints)</p></a></td>
+                </tr>
+                [/tlist_sql]
+            </tbody>
+        </table>
+        
+        <div style="page-break-after: always">
+        </div>
+        
+        <h2>~[tlist_sql;SELECT name FROM terms WHERE id=~(curyearid)*100 AND schoolid=~(curschoolid)]~(name)[/tlist_sql] ~(gpv.storecode) Standards Overview</h2>
+        <table class="grid" id="standardsOverview" style="page-break-inside: avoid;">
+            <thead>
+                <tr>
+                    <th class="bold">Term</th>
+                    <th class="bold">Course</th>
+                    <th class="bold">Course Grade</th>
+                    <th class="bold">Standard ID</th>
+                    <th class="bold">Standard</th>
+                    <th class="bold">Standard Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                ~[tlist_sql;
+                    SELECT
+                      terms.abbreviation as termAbbreviation,
+                      courses.course_name as courseName,
+                      storedgrades.grade as courseGrade,
+                      standard.identifier as standardIdentifier,
+                      standard.standardid as standardID,
+                      standard.description as standardDescription,
+                      standard.name as standardName,
+                      standardgradesection.standardgrade as standardGrade
+
+                    FROM
+                      students
+
+                    INNER JOIN
+                      cc ON cc.studentid=students.id AND cc.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10
+
+                    INNER JOIN
+                      sections on sections.id=cc.sectionid
+                
+                    INNER JOIN
+                      courses ON courses.course_number=cc.course_number
+
+                    INNER JOIN
+                      storedgrades ON storedgrades.studentid=students.id AND storedgrades.sectionid=sections.id AND storedgrades.storecode='~(gpv.storecode)'
+
+                    INNER JOIN
+                      terms on terms.id=cc.termid AND terms.schoolid=~(curschoolid)
+
+                    LEFT OUTER JOIN
+                      standardcourseassoc ON standardcourseassoc.coursesdcid=courses.dcid
+
+                    LEFT OUTER JOIN
+                      standard ON standard.standardid=standardcourseassoc.standardid
+
+                    LEFT OUTER JOIN
+                      standardgradesection ON standardgradesection.standardid=standard.standardid AND standardgradesection.studentsdcid=students.dcid AND standardgradesection.sectionsdcid=sections.dcid AND standardgradesection.storecode='~(gpv.storecode)'
+
+                    WHERE
+                      students.id=~(curstudid) AND
+                      (standard.yearid=~(curyearid) OR standard.yearid IS NULL)
+
+                    ORDER BY
+                      terms.abbreviation, courses.course_name, sections.id, standard.displayposition
+                ]
+                <tr>
+                    <td>~(termAbbreviation)</td>
+                    <td>~(courseName)</td>
+                    <td>~(courseGrade)</td>
+                    <td>~(standardIdentifier;t;if.blank.then=NA;else=~(standardIdentifier;t);)</td>
+                    <div id="hiddenDivDialog~(standardID)" class="hide">
+                        <h3>About this standard:</h3>
+                        <p>~(standardDescription;t;if.blank.then=Description not yet on file. Please contact the teacher for more information.;else=~(standardDescription;t);)</p>
+                    </div>
+                    <td><a class="dialogDivM" href="#hiddenDivDialog~(standardID)">~(standardName)</a></td>
+                    <td>~(standardGrade)</td>
+                </tr>
+                [/tlist_sql]
+            </tbody>
+        </table>
+        
+	</div>
+    
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+
+<script type="text/javascript">
+	$j("#storecode").change(function(){
+		window.location='officialgradereportap.html?' + this.value
+		});
+</script>
+    
+</body>
+    
+</html>

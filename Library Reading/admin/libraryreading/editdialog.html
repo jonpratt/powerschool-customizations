@@ -1,0 +1,75 @@
+<form id="ajaxSubmit">
+    ~[DirectTable.Select:U_INVENTORY;id:~[gpv:id;htmlencode]]
+    <fieldset id="laptopForm">
+        <div>
+            <label>Inventory ID</label>
+            <input type="text" name="[U_INVENTORY]InvID" value="" id="InvID" />
+        </div>
+        <div>
+            <label>Manufacturer</label>
+            <input type="text" name="[U_INVENTORY]Manufacturer" value="" id="Manufacturer" />
+        </div>
+        <div>
+            <label>Make</label>
+            <input type="text" name="[U_INVENTORY]Make" value="" id="Make" />
+        </div>
+        <div>
+            <label>Model</label>
+            <input type="text" name="[U_INVENTORY]Model" value="" id="Model" />
+        </div>
+        <div>
+            <label>Serial Number</label>
+            <input type="text" name="[U_INVENTORY]SerialNumber" value="" id="SerialNumber" />
+        </div>
+        <div>
+            <label>CPU Type</label>
+            <input type="text" name="[U_INVENTORY]CPUType" value="" id="CPUType" />
+        </div>
+        <div>
+            <label>CPU Speed (GHz)</label>
+            <input type="text" name="[U_INVENTORY]CPUSpeed" value="" id="CPUSpeed" />
+        </div>
+        <div>
+            <label>RAM Size (GB)</label>
+            <input type="text" name="[U_INVENTORY]RAMSize" value="" id="RAMSize" />
+        </div>
+        <div>
+            <label>Hard Drive Size (GB)</label>
+            <input type="text" name="[U_INVENTORY]HDSize" value="" id="HDSize" />
+        </div>
+        <div>
+            <label>Platform</label>
+            <input type="text" name="[U_INVENTORY]Platform" value="" id="Platform" />
+        </div>
+        <div>
+            <label>OS</label>
+            <input type="text" name="[U_INVENTORY]OS" value="" id="OS" />
+        </div>
+        <div>
+            <label>IP Address</label>
+            <input type="text" name="[U_INVENTORY]IP1" value="" id="IP1" class="octet" />.
+            <input type="text" name="[U_INVENTORY]IP2" value="" id="IP2" class="octet" />.
+            <input type="text" name="[U_INVENTORY]IP3" value="" id="IP3" class="octet" />.
+            <input type="text" name="[U_INVENTORY]IP4" value="" id="IP4" class="octet" />
+        </div>
+        <div class="button-row">
+            <input type="hidden" name="ac" value="prim" />
+            <button type="button" id="btnDelete" class="confirmationReq">Delete</button>
+            <button type="button" id="btnSubmit" name="btnSubmit">Submit</button>
+        </div>
+    </fieldset>    
+</form>
+<form id="ajaxDelete">
+    <input type="hidden" name="DD-U_INVENTORY.ID:~[gpv:id;htmlencode]" value="1" />
+    <input type="hidden" name="ac" value="prim" />
+</form>
+<script>
+    $j('#btnSubmit').click(function() {
+       var dataString = $j('#ajaxSubmit').serialize();
+        angular.element($j('#invCtrlDiv')).scope().invEdit(dataString);
+    });
+    $j('#btnDelete').click(function() {
+       var dataString = $j('#ajaxDelete').serialize();
+        angular.element($j('#invCtrlDiv')).scope().invEdit(dataString);
+    });
+</script>

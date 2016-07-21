@@ -1,0 +1,21 @@
+SELECT DISTINCT
+	students.lastfirst as Name,
+	students.gender as Gender,
+	students.grade_level as Grade,
+	ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig') as SLE
+	
+FROM
+	students
+	
+INNER JOIN
+	storedgrades ON students.id=storedgrades.studentid
+	
+WHERE
+	students.enroll_status=0
+	AND storedgrades.termid>=2300
+	AND storedgrades.storecode='P1'
+	AND (storedgrades.grade='D'
+	OR storedgrades.grade='F')
+	
+ORDER BY
+	students.grade_level, students.lastfirst

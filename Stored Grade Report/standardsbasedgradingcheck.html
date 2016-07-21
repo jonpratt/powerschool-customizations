@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Standards-Based Grading Check</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+<script type="text/javascript">
+	$j(function(){
+		$j("#storecode").change(function(){
+		window.location='standardsbasedgradingcheck.html?' + this.value
+		});
+	});
+</script>
+</head> 
+<body> 
+	~[wc:admin_header_css]
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Standards-Based Grading Check</h1> 
+<!-- start of content area --> 
+	<div class="box-round"> 
+		 <h2>About this report</h2> 
+		 <p>This report for shows historical data from stored course and standards grades for all students for ~[gpv:storecode].</p>
+			<p><b>Please select a reporting term:</b>
+	<select id="storecode">
+	<option value=''>Select reporting term</option>
+	<option value="storecode=P1">P1</option>
+	<option value="storecode=Q1">Q1</option>
+	<option value="storecode=P2">P2</option>
+	<option value="storecode=Q2">Q2</option>
+	<option value="storecode=P3">P3</option>
+	<option value="storecode=Q3">Q3</option>
+	<option value="storecode=P4">P4</option>
+	<option value="storecode=Q4">Q4</option>
+	</select></p>
+    	<h2>~[gpv:storecode] Course and Standards Grades</h2>
+<table border="0" cellpadding="4" cellspacing="0" id="courseoverview" data-pstablefilter='{"cols":"7"}'>
+	<thead>
+	<tr>
+		<th class="bold">Student</th>
+		<th class="bold">Course</th>
+		<th class="bold">Teacher</th>
+		<th class="bold">~[gpv:storecode] Course Grade</th>
+		<th class="bold">Standard</th>
+		<th class="bold">StandardID</th>
+		<th class="bold">~[gpv:storecode] Standard Grade</th>
+	</tr>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+SELECT
+	students.lastfirst as Name,
+	courses.course_name as Course,
+	storedgrades.teacher_name as Teacher,
+	storedgrades.grade as CourseGrade,
+	standards.name as Standard,
+	standards.identifier as StandardID,
+	standardsgrades.transaveragescore as StandardGrade
+
+FROM
+  students
+
+INNER JOIN
+	standardsgrades on students.id=standardsgrades.STUDENTID
+	
+INNER JOIN
+	standards on standardsgrades.standardsid=standards.id
+  
+INNER JOIN
+	courses on (cast(standards.courses as varchar(11))=courses.course_number)
+
+INNER JOIN
+	storedgrades on storedgrades.course_number=courses.course_number
+	
+WHERE
+	students.ENROLL_STATUS=0
+	AND standardsgrades.studentid=storedgrades.studentid
+	AND storedgrades.storecode='~[gpv:storecode]'
+	AND standardsgrades.yearid=~(curyearid)
+	AND standardsgrades.storecode='~[gpv:storecode]'
+	AND storedgrades.termid BETWEEN ~(curyearid)*100 and ~(curyearid)*100+10
+	
+ORDER BY
+	students.lastfirst, courses.course_name, standards.sortorder
+	;]
+	<tr>
+		<td>~(Name)</td>
+		<td>~(Course)</td>
+		<td>~(Teacher)</td>
+		<td>~(CourseGrade)</td>
+		<td>~(Standard)</td>
+		<td>~(StandardID)</td>
+		<td>~(StandardGrade)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody>
+</table>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

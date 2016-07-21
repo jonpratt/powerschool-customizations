@@ -1,0 +1,85 @@
+SELECT
+	students.first_name as FirstName,
+	students.last_name as LastName,
+	(students.student_web_id || '@foxcroftacademy.org') as Email,
+	students.guardianemail || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'Non_Custodial___Email_Address') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_1') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_2') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_agent_email') || ', ' ||
+	u_student_demographics.pha1_email || ', ' ||
+	u_student_demographics.pha2_email as CC,
+	students.web_id as AccessID,
+	students.web_password as AccessPassword
+	
+FROM
+	students
+	
+LEFT OUTER JOIN
+	u_student_demographics on u_student_demographics.studentsdcid=students.dcid
+
+WHERE
+	students.enroll_status=0
+
+ORDER BY
+	students.lastfirst
+	
+---For Constant Contact---
+
+SELECT
+	students.first_name as FirstName,
+	students.last_name as LastName,
+    students.sched_yearofgraduation as YOG,
+	(students.student_web_id || '@foxcroftacademy.org') as StudentEmail,
+	students.guardianemail as GuardianEmail,
+	ps_customfields.getstudentscf(students.id, 'Non_Custodial___Email_Address') as NonCustodialEmail,
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_1') as IntlParent1Email,
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_2') as IntlParent2Email,
+	ps_customfields.getstudentscf(students.id, 'international_agent_email') as IntlAgentEmail,
+    u_student_demographics.pha1_email as PHAdult1Email,
+  	u_student_demographics.pha2_email as PHAdult2Email
+	
+FROM
+	students
+  
+LEFT OUTER JOIN
+  	u_student_demographics on u_student_demographics.studentsdcid=students.dcid
+
+WHERE
+	students.enroll_status=0
+
+ORDER BY
+	students.sched_yearofgraduation, students.lastfirst
+	
+---For Constant Contact include All contact names---
+SELECT
+	students.first_name as FirstName,
+	students.last_name as LastName,
+  students.sched_yearofgraduation as YOG,
+	(students.student_web_id || '@foxcroftacademy.org') as StudentEmail,
+	students.guardianemail as PrimHouseholdEmail,
+  ps_customfields.getstudentscf(students.id, 'Non_Custodial___First_Name') as NCPFirstName,
+  ps_customfields.getstudentscf(students.id, 'Non_Custodial___Last_Name') as NCPLastName,
+	ps_customfields.getstudentscf(students.id, 'Non_Custodial___Email_Address') as NonCustodialEmail,
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_1') as IntlParent1Email,
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_2') as IntlParent2Email,
+  ps_customfields.getstudentscf(students.id, 'international_agent_name') as IntlAgendName,
+	ps_customfields.getstudentscf(students.id, 'international_agent_email') as IntlAgentEmail,
+  u_student_demographics.pha1_firstname as PHA1FirstName,
+  u_student_demographics.pha1_lastname as PHA1LastName,
+  u_student_demographics.pha1_email as PHAdult1Email,
+  u_student_demographics.pha2_firstname as PHA2FirstName,
+  u_student_demographics.pha2_lastname as PHA2LastName, 
+  u_student_demographics.pha2_email as PHAdult2Email
+	
+FROM
+	students
+  
+LEFT OUTER JOIN
+  u_student_demographics on u_student_demographics.studentsdcid=students.dcid
+
+WHERE
+	students.enroll_status=0
+
+ORDER BY
+	students.sched_yearofgraduation, students.lastfirst

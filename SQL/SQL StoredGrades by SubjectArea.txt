@@ -1,0 +1,83 @@
+SELECT
+	students.lastfirst as Name,
+	SUM(storedgrades.earnedcrhrs) as SciECredit,
+	COUNT(storedgrades.course_name) as SciCourseCount
+
+FROM
+	storedgrades
+	
+INNER JOIN
+	students on storedgrades.studentid=students.id
+	
+INNER JOIN
+	courses on storedgrades.course_number=courses.course_number
+
+WHERE
+	students.grade_level=12 AND
+	students.enroll_status=0 AND
+	courses.sched_department='Science' AND
+	storedgrades.earnedcrhrs>0
+
+GROUP BY
+  students.lastfirst
+  
+ORDER BY
+  students.lastfirst
+  
+  ---Historical---
+  
+SELECT
+	students.lastfirst as Name,
+	students.sched_yearofgraduation as YOG,
+	SUM(storedgrades.earnedcrhrs) as SciECredit,
+	COUNT(storedgrades.course_name) as SciCourseCount
+
+FROM
+	storedgrades
+	
+INNER JOIN
+	students on storedgrades.studentid=students.id
+	
+INNER JOIN
+	courses on storedgrades.course_number=courses.course_number
+
+WHERE
+	students.sched_yearofgraduation=2013 AND
+    students.grade_level=99 AND
+	courses.sched_department='Science' AND
+	storedgrades.earnedcrhrs>0
+
+GROUP BY
+  students.lastfirst, students.sched_yearofgraduation
+  
+ORDER BY
+  students.lastfirst
+  
+---Historical breakout by EarnedCreditValue---
+
+SELECT
+	students.lastfirst as Name,
+	students.sched_yearofgraduation as YOG,
+	SUM(storedgrades.earnedcrhrs) as TotalCredits,
+	COUNT(storedgrades.course_name) as TotalCourseCount,
+	
+FROM
+	storedgrades
+	
+INNER JOIN
+	students on storedgrades.studentid=students.id
+	
+INNER JOIN
+	courses on storedgrades.course_number=courses.course_number
+
+WHERE
+	students.sched_yearofgraduation=2013 AND
+    students.grade_level=99 AND
+	courses.sched_department='Science' AND
+	storedgrades.earnedcrhrs>0
+
+GROUP BY
+  students.lastfirst, students.sched_yearofgraduation
+  
+ORDER BY
+  students.lastfirst

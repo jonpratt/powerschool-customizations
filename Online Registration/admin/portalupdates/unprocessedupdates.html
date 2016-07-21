@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Unprocessed Portal Updates</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+    <style>
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display:none !important;
+        }
+        .octet {
+            width:25px;
+            text-align:right;
+        }
+    </style>
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->
+    <a href="/admin/home.html" target="_top">Start Page</a>
+    &gt; Unprocessed Portal Updates
+    <!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Unprocessed Portal Updates</h1> 
+<!-- start of content area --> 
+	<div class="box-round" ng-controller="unprocessedupdatesCtrl" id="unprocessedupdatesCtrlDiv"> 
+		 <h2>Primary Updates</h2> 
+		 <p> 
+		 	These portal updates to student demographic information and annual agreements have not yet been processed.
+		 </p>
+        <div id="ngUnprocessedupdatesTable" ng-cloak>
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>UpdateID</th>
+                    <th>Date</th>
+                    <th>Student Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in unprocessedupdatesList">
+                    <td><a href="approveupdate.html?frn=001{{item.dcid}}&id={{item.id}}" class="dialogM dockedDialog" title="Edit">{{item.id}}</a></td>
+                    <td>{{item.date}}</td>
+                    <td>{{item.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+	</div>
+
+    <div class="box-round" ng-controller="unprocessedSHUpdatesCtrl" id="unprocessedSHUpdatesCtrlDiv"> 
+		 <h2>Secondary Household Updates</h2> 
+		 <p> 
+		 	These portal updates to student secondary household information have not yet been processed.
+		 </p>
+        <div id="ngUnprocessedSHUpdatesTable" ng-cloak>
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>UpdateID</th>
+                    <th>Date</th>
+                    <th>Student Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in unprocessedSHUpdatesList">
+                    <td><a href="approveshupdate.html?frn=001{{item.studentDCID}}&updateid={{item.updateID}}&secondaryhouseholdid={{item.secondaryHouseholdID}}" class="dialogM dockedDialog" title="Edit">{{item.updateID}}</a></td>
+                    <td>{{item.updateDate}}</td>
+                    <td>{{item.studentName}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+	</div>
+    
+<!-- end of content area --> 
+	~[wc:admin_footer_css]
+    <script>
+        require(['angular', 'portalupdates/unprocessedupdates'], function(angular) {
+           angular.bootstrap(document, ['unprocessedupdatesApp']); 
+        });
+    </script>
+</body> 
+</html>

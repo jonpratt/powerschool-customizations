@@ -1,0 +1,7 @@
+[~[tlist_sql;
+select ID, CUSTODYTYPE
+from u_custody]
+    {"id":~(id),
+     "Custodytype":"~(custodytype;js)"
+    },
+[/tlist_sql]{}]

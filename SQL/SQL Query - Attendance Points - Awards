@@ -1,0 +1,32 @@
+SELECT
+  students.id as StudentID,
+  students.lastfirst as Name,
+  students.gender as Gender,
+  students.grade_level as Grade,
+  courses.course_name as Course,
+  CASE WHEN SUM(attendance_code.course_credit_points)<=1 THEN SUM(attendance_code.course_credit_points) ELSE 99 END as Elig,
+  SUM(CASE WHEN attendance_code.course_credit_points>0 THEN attendance_code.course_credit_points ELSE 0 END) as RawPoints
+
+FROM students
+
+INNER JOIN
+  cc on students.id=cc.studentid
+INNER JOIN
+  terms on cc.termid=terms.id
+INNER JOIN
+  courses on cc.course_number=courses.course_number
+INNER JOIN
+  attendance on cc.id=attendance.ccid
+INNER JOIN
+  attendance_code on attendance.attendance_codeid=attendance_code.id
+  
+WHERE
+  students.enroll_status=0 AND
+  courses.credit_hours>0 AND
+  cc.termid>=0 AND
+  terms.yearid=24 AND
+  terms.schoolid=1036
+
+GROUP BY students.id, students.lastfirst, students.gender, students.grade_level, courses.course_name, terms.abbreviation, courses.credit_hours
+
+ORDER BY students.lastfirst, terms.abbreviation

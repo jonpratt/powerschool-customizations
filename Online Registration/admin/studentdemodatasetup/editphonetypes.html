@@ -1,0 +1,28 @@
+<form id="ajaxSubmit">
+    ~[DirectTable.Select:U_PHONES;id:~[gpv:id;htmlencode]]
+    <fieldset id="phonetypesForm">
+        <div>
+            <label>Phone Type</label>
+            <input type="text" name="[U_PHONES]Phonetype" value="" id="Phonetype" />
+        </div>
+        <div class="button-row">
+            <input type="hidden" name="ac" value="prim" />
+            <button type="button" id="btnDelete" class="confirmationReq">Delete</button>
+            <button type="button" id="btnSubmit" name="btnSubmit">Submit</button>
+        </div>
+    </fieldset>    
+</form>
+<form id="ajaxDelete">
+    <input type="hidden" name="DD-U_PHONES.ID:~[gpv:id;htmlencode]" value="1" />
+    <input type="hidden" name="ac" value="prim" />
+</form>
+<script>
+    $j('#btnSubmit').click(function() {
+       var dataString = $j('#ajaxSubmit').serialize();
+        angular.element($j('#phonetypesCtrlDiv')).scope().phonetypesEdit(dataString);
+    });
+    $j('#btnDelete').click(function() {
+       var dataString = $j('#ajaxDelete').serialize();
+        angular.element($j('#phonetypesCtrlDiv')).scope().phonetypesEdit(dataString);
+    });
+</script>

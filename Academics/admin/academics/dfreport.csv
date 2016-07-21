@@ -1,0 +1,27 @@
+"StudentName", "TeacherName", "CourseName", "SectionID", "GradeLevel", "CourseGrade", "TeacherComment"
+~[tlist_sql;
+SELECT
+	students.lastfirst as studentName,
+    storedgrades.grade_level as gradeLevel,
+	storedgrades.teacher_name as teacherName,
+	storedgrades.course_name as courseName,
+	storedgrades.sectionid as sectionID,
+	storedgrades.grade as courseGrade,
+	storedgrades.comment_value as teacherComment
+	
+FROM
+	students
+
+INNER JOIN
+	storedgrades ON students.id=storedgrades.studentid
+                 AND storedgrades.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10 
+                 AND storedgrades.storecode='~(gpv.storecode)' 
+                 AND storedgrades.grade IN ('D', 'F')
+
+WHERE
+	students.enroll_status=0
+
+ORDER BY
+	students.lastfirst, storedgrades.teacher_name, storedgrades.course_name, storedgrades.sectionid
+]"~(FirstName)", "~(LastName)", "~(YOG)", "~(Email)", "~(BCC)", "~(AccessID)", "~(AccessPassword)"
+[/tlist_sql]

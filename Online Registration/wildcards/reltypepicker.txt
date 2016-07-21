@@ -1,0 +1,4 @@
+<option value="">Please choose...</option>
+~[tlist_sql; select id as ID, reltype as RelType from u_household_relationships order by id]
+<option value="~(ID)">~(RelType)</option>
+[/tlist_sql]

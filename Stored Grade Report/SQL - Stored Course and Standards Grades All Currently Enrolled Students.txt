@@ -1,0 +1,35 @@
+SELECT
+	students.lastfirst as Name,
+	CASE students.gender WHEN 'F' THEN 'FEMALE' WHEN 'M' THEN 'MALE' ELSE 'NA' END as Gender,
+	storedgrades.grade_level as GradeLevel,
+	CASE ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig') WHEN 'F' THEN 'FR' WHEN 'R' THEN 'FR' ELSE 'NE' END as SLE,
+	courses.course_name as Course,
+	storedgrades.grade as CourseGrade,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as StandardGrade
+
+FROM
+  students
+
+INNER JOIN
+	standardsgrades on students.id=standardsgrades.STUDENTID
+	
+INNER JOIN
+	standards on standardsgrades.standardsid=standards.id
+  
+INNER JOIN
+	courses on (cast(standards.courses as varchar(11))=courses.course_number)
+
+INNER JOIN
+	storedgrades on storedgrades.course_number=courses.course_number
+	
+WHERE
+	students.ENROLL_STATUS=0
+	AND standardsgrades.studentid=storedgrades.studentid
+	AND storedgrades.storecode='P1'
+	AND standardsgrades.yearid=24
+	AND standardsgrades.storecode='P1'
+	AND storedgrades.termid BETWEEN 24*100 and 24*100+10
+	
+ORDER BY
+	students.lastfirst, courses.course_name, standards.sortorder

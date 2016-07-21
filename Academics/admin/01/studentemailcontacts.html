@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Email Contacts</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->Your breadcrumbs go here<!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Student Email Contacts</h1> 
+<!-- start of content area --> 
+	<div class="box-round"> 
+		 <table border="0" cellspacing="0" cellpadding="0" class="tableToGrid">
+             <thead>
+                 <th>FirstName</th>
+                 <th>LastName</th>
+                 <th>YOG</th>
+                 <th>Email</th>
+                 <th>CC</th>
+                 <th>AccessID</th>
+                 <th>AccessPW</th>
+             </thead>
+             <tbody>
+                 ~[tlist_sql;
+SELECT
+	students.first_name as FirstName,
+	students.last_name as LastName,
+  students.sched_yearofgraduation as YOG,
+	(students.student_web_id || '@foxcroftacademy.org') as Email,
+	students.guardianemail || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'Non_Custodial___Email_Address') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_1') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_2') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_agent_email') || ', ' ||
+	u_student_demographics.pha1_email || ', ' ||
+	u_student_demographics.pha2_email as CC,
+	students.web_id as AccessID,
+	students.web_password as AccessPassword
+	
+FROM
+	students
+	
+LEFT OUTER JOIN
+	u_student_demographics on u_student_demographics.studentsdcid=students.dcid
+
+WHERE
+	students.enroll_status=0
+
+ORDER BY
+	students.lastfirst
+                 ]
+                 <tr>
+                     <td>~(FirstName)</td>
+                     <td>~(LastName)</td>
+                     <td>~(YOG)</td>
+                     <td>~(Email)</td>
+                     <td>~(CC)</td>
+                     <td>~(AccessID)</td>
+                     <td>~(AccessPW)</td>
+                 </tr>
+                 [/tlist_sql]
+             </tbody>
+         </table>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

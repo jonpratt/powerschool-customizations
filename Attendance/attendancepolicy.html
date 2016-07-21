@@ -1,0 +1,96 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Attendance Points Report</title> 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen"> 
+	<link href="/images/css/print.css" rel="stylesheet" media="print"> 
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <div id="breadcrumbs"> 
+		<!-- breadcrumb start -->Your breadcrumbs go here<!-- breadcrumb end --> 
+    </div> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Attendance Points Report</h1> 
+<!-- start of content area --> 
+	<div class="box-round">
+		 <h2>Attendance Points</h2> 
+		 <p> 
+		 	Attendance Points for all students. 
+		 </p> 
+	<table data-pstablefilter=''>
+			<thead>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Gender</th>
+				<th>Grade</th>
+				<th>SLE</th>
+				<th>Course</th>
+				<th>Term</th>
+				<th>Credits</th>
+				<th>Raw Points</th>
+				<th>Adjusted Points</th>
+			</thead>
+			<tbody>
+				~[tlist_sql;
+SELECT
+  students.id as StudentID,
+  students.lastfirst as Name,
+  students.gender as Gender,
+  students.grade_level as Grade,
+  ps_customfields.getstudentscf(students.id,'ME_SchoolLunchElig') as SLE,
+  courses.course_name as Course,
+  terms.abbreviation as Term,
+  courses.credit_hours as Credits,
+  SUM(attendance_code.course_credit_points) as RawPoints,
+  round((SUM(attendance_code.course_credit_points)/courses.credit_hours)) as AdjustedPoints
+
+FROM students
+
+INNER JOIN
+  cc on students.id=cc.studentid
+INNER JOIN
+  terms on cc.termid=terms.id
+INNER JOIN
+  courses on cc.course_number=courses.course_number
+INNER JOIN
+  attendance on cc.id=attendance.ccid
+INNER JOIN
+  attendance_code on attendance.attendance_codeid=attendance_code.id
+  
+WHERE
+  students.enroll_status=0 AND
+  courses.credit_hours>0 AND
+  cc.termid>=0 AND
+  terms.yearid=~(curyearid) AND
+  attendance_code.course_credit_points>0.5 AND
+  terms.schoolid=1036
+
+GROUP BY students.id, ps_customfields.getstudentscf(students.id,'ME_SchoolLunchElig'), students.lastfirst, students.gender, students.grade_level, courses.course_name, terms.abbreviation, courses.credit_hours
+
+ORDER BY students.lastfirst, terms.abbreviation;]
+					<tr>
+						<td>~(StudentID)</td>
+						<td>~(Name)</td>
+						<td>~(Gender)</td>
+						<td>~(Grade)</td>
+						<td>~(SLE)</td>
+						<td>~(Course)</td>
+						<td>~(Term)</td>
+						<td>~(Credits)</td>
+						<td>~(RawPoints)</td>
+						<td>~(AdjustedPoints)</td>
+					</tr>
+					[/tlist_sql]
+				</tbody>
+		</table>		
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+<!-- required scripts --> 
+	~[wc:commonscripts] 
+</body> 
+</html>

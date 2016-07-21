@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Secondary Household Information</title>
+<!-- start of page body --> 
+~[wc:guardian_header] 
+	<h1>Edit Secondary Household Information</h1> 
+<!-- start student content --> 
+	
+    ~[if#shupdatepending.~([Students.U_Student_Demographics]SHUpdatePending)=1]
+    
+        <div class="box-round" id="shUpdatePending">
+            
+            <br>
+            <p>An update to this Secondary Household information has been submitted for processing. To reduce the potential for error, we can only process one submission at a time per student. Please check back in 24-48 hours.</p>
+            <br>
+            <p><a href="formsoverview.html">Return to Digital Forms Overview</a></p>
+            <br>
+
+        </div>
+    
+    [else#shupdatepending]
+
+    <form action="formsubmitted.html" id="editSecondaryHousehold" method="POST">
+    
+    ~[DirectTable.Select:U_PORTALUPDATE;id:-1]
+    
+    <div class="box-round">
+        
+		<h2>Secondary Household</h2> 
+		
+        <p>Please review, and if necessary, update the Secondary Houshold information on file.</p> 
+        
+        <h3>Secondary Household Details</h3>
+            
+            <table class="grid" id="SH_Details">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ~[tlist_sql;
+                        SELECT
+                            CASE WHEN u_secondary_household.sh_custody IS NOT NULL THEN u_custody.custodytype ELSE 'Nothing on file' END as SHCustody,
+                            CASE WHEN u_secondary_household.sh_paper IS NOT NULL THEN CASE WHEN u_secondary_household.sh_paper=1 THEN 'Paper' ELSE 'Electronic' END ELSE 'Nothing on file' END as SHPaper
+                        FROM
+                            u_secondary_household
+                    
+                        LEFT OUTER JOIN
+                            u_custody on u_custody.id=u_secondary_household.sh_custody
+                    
+                        WHERE
+                            u_secondary_household.id=~(gpv.shid)
+                    ]
+                    <tr>
+                        <td>Custody Type</td>
+                        <td>~(SHCustody)</td>
+                        <td><select name="[U_PORTALUPDATE]SH_Custody">
+                                <option>Please choose...</option>
+                                <option value="1">Shared</option>
+                                <option value="2">Non-Custodial</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Mass Mailing Preference</td>
+                        <td>~(SHPaper)</td>
+                        <td><input type="radio" name="[U_PORTALUPDATE]SH_PAPER" value="0" checked>Electronic</input><br><input type="radio" name="[U_PORTALUPDATE]SH_PAPER" value="1">Paper</input></td>
+                    </tr>
+                    [/tlist_sql]
+                </tbody>
+            </table>
+        
+            <h3>Secondary Household Legal Address</h3>
+            
+            <table class="grid" id="SH_Legal_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sh_street_legal IS NOT NULL THEN sh_street_legal ELSE 'Nothing on file' END as SHStreetLegal,
+                            CASE WHEN sh_city_legal IS NOT NULL THEN sh_city_legal ELSE 'Nothing on file' END as SHCityLegal,
+                            CASE WHEN sh_state_legal IS NOT NULL THEN sh_state_legal ELSE 'Nothing on file' END as SHStateLegal,
+                            CASE WHEN sh_zip_legal IS NOT NULL THEN sh_zip_legal ELSE 'Nothing on file' END as SHZipLegal
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)                    
+                    ]
+                    <tr>
+                        <td>Legal Street Address</td>
+                        <td>~(SHStreetLegal)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]SH_Street_Legal" value="" id="updateSHStreetLegal"/></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td>~(SHCityLegal)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]SH_City_Legal" value="" id="updateSHCityLegal"/></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td>~(SHStateLegal)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]SH_State_Legal" value="" id="updateSHStateLegal"/></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td>~(SHZipLegal)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]SH_Zip_Legal" value="" id="updateSHZipLegal"/></td>
+                    </tr>
+                    [/tlist_sql]
+                </tbody>
+            </table>
+        
+            <h3>Secondary Household Mailing Address</h3>
+            
+            <button type="button" id="copyFromLegal" onClick="copyLegalToMailing();">Copy to Mailing from Legal Address</button>
+            
+            <table class="grid" id="SH_Mailing_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sh_street_mailing IS NOT NULL THEN sh_street_mailing ELSE 'Nothing on file' END as SHStreetMailing,
+                            CASE WHEN sh_city_mailing IS NOT NULL THEN sh_city_mailing ELSE 'Nothing on file' END as SHCityMailing,
+                            CASE WHEN sh_state_mailing IS NOT NULL THEN sh_state_mailing ELSE 'Nothing on file' END as SHStateMailing,
+                            CASE WHEN sh_zip_mailing IS NOT NULL THEN sh_zip_mailing ELSE 'Nothing on file' END as SHZipMailing
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)                    
+                    ]
+                    <tr>
+                        <td>Mailing Street Address</td>
+                        <td>~(SHStreetMailing)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]SH_Street_Mailing" value="" id="updateSHStreetMailing" /></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td>~(SHCityMailing)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]SH_City_Mailing" value="" id="updateSHCityMailing" /></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td>~(SHStateMailing)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]SH_State_Mailing" value="" id="updateSHStateMailing" /></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td>~(SHZipMailing)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]SH_Zip_Mailing" value="" id="updateSHZipMailing" /></td>
+                    </tr>
+                    [/tlist_sql]
+                </tbody>
+            </table>
+        
+            <h3>Secondary Household Adult Contact 1</h3>
+            
+            <table class="grid" id="SH_AC1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (Given) Name</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha1_firstname IS NOT NULL THEN sha1_firstname ELSE 'Nothing on file' END as SHA1FirstName
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)
+                        ]
+                        <td>~(SHA1FirstName)</td>
+                        [/tlist_sql]
+                        <td><input type="text" name="[U_PORTALUPDATE]SHA1_FirstName" value="" id="updateSHA1FirstName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha1_lastname IS NOT NULL THEN sha1_lastname ELSE 'Nothing on file' END as SHA1LastName
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)
+                        ]
+                        <td>~(SHA1LastName)</td>
+                        [/tlist_sql]
+                        <td><input type="text" name="[U_PORTALUPDATE]SHA1_LastName" value="" id="updateSHA1LastName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN u_secondary_household.sha1_rel IS NOT NULL THEN u_household_relationships.reltype ELSE 'Nothing on file' END as SHA1Rel
+                        FROM
+                            u_secondary_household
+                        LEFT OUTER JOIN
+                            u_household_relationships on u_household_relationships.id=u_secondary_household.sha1_rel
+                        WHERE
+                            u_secondary_household.id=~(gpv.shid)
+                        ]
+                        <td>~(SHA1Rel)</td>
+                        [/tlist_sql]
+                        <td><select name="[U_PORTALUPDATE]SHA1_Rel">
+                                ~[wc:reltypepicker]
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha1_phone IS NOT NULL THEN sha1_phone ELSE 'Nothing on file' END as SHA1Phone
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)
+                        ]
+                        <td>~(SHA1Phone)</td>
+                        [/tlist_sql]
+                        <td><input type="text" name="[U_PORTALUPDATE]SHA1_Phone" value="" id="updateSHA1Phone" /></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone Type</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN u_secondary_household.sha1_phone_type IS NOT NULL THEN u_phones.phonetype ELSE 'Nothing on file' END as SHA1PhoneType
+                        FROM
+                            u_secondary_household
+                        LEFT OUTER JOIN
+                            u_phones on u_phones.id=u_secondary_household.sha1_phone_type
+                        WHERE
+                            u_secondary_household.id=~(gpv.shid)
+                        ]
+                        <td>~(SHA1PhoneType)</td>
+                        [/tlist_sql]
+                        <td><select name="[U_PORTALUPDATE]SHA1_Phone_Type">
+                                ~[wc:ptypepicker]
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha1_email IS NOT NULL THEN sha1_email ELSE 'Nothing on file' END as SHA1Email
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)
+                        ]
+                        <td>~(SHA1Email)</td>
+                        [/tlist_sql]
+                        <td><input type="text" name="[U_PORTALUPDATE]SHA1_Email" value="" id="updateSHA1Email" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>Secondary Household Adult Contact 2</h3>
+            
+            <table class="grid" id="SH_AC2">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (Given) Name</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha2_firstname IS NOT NULL THEN sha2_firstname ELSE 'Nothing on file' END as SHA2FirstName
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)
+                        ]
+                        <td>~(SHA2FirstName)</td>
+                        [/tlist_sql]
+                        <td><input type="text" name="[U_PORTALUPDATE]SHA2_FirstName" value="" id="updateSHA2FirstName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha2_lastname IS NOT NULL THEN sha2_lastname ELSE 'Nothing on file' END as SHA2LastName
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)
+                        ]
+                        <td>~(SHA2LastName)</td>
+                        [/tlist_sql]
+                        <td><input type="text" name="[U_PORTALUPDATE]SHA2_LastName" value="" id="updateSHA2LastName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN u_secondary_household.sha2_rel IS NOT NULL THEN u_household_relationships.reltype ELSE 'Nothing on file' END as SHA2Rel
+                        FROM
+                            u_secondary_household
+                        LEFT OUTER JOIN
+                            u_household_relationships on u_household_relationships.id=u_secondary_household.sha2_rel
+                        WHERE
+                            u_secondary_household.id=~(gpv.shid)
+                        ]
+                        <td>~(SHA2Rel)</td>
+                        [/tlist_sql]
+                        <td><select name="[U_PORTALUPDATE]SHA2_Rel">
+                                ~[wc:reltypepicker]
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha2_phone IS NOT NULL THEN sha2_phone ELSE 'Nothing on file' END as SHA2Phone
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)
+                        ]
+                        <td>~(SHA2Phone)</td>
+                        [/tlist_sql]
+                        <td><input type="text" name="[U_PORTALUPDATE]SHA2_Phone" value="" id="updateSHA2Phone" /></td>
+                    </tr>
+                    <tr>
+                        <td>Best Phone Type</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN u_secondary_household.sha2_phone_type IS NOT NULL THEN u_phones.phonetype ELSE 'Nothing on file' END as SHA2PhoneType
+                        FROM
+                            u_secondary_household
+                        LEFT OUTER JOIN
+                            u_phones on u_phones.id=u_secondary_household.sha2_phone_type
+                        WHERE
+                            u_secondary_household.id=~(gpv.shid)
+                        ]
+                        <td>~(SHA2PhoneType)</td>
+                        [/tlist_sql]
+                        <td><select name="[U_PORTALUPDATE]SHA2_Phone_Type">
+                                ~[wc:ptypepicker]
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        ~[tlist_sql;
+                        SELECT
+                            CASE WHEN sha2_email IS NOT NULL THEN sha2_email ELSE 'Nothing on file' END as SHA2Email
+                        FROM
+                            u_secondary_household
+                        WHERE
+                            id=~(gpv.shid)
+                        ]
+                        <td>~(SHA2Email)</td>
+                        [/tlist_sql]
+                        <td><input type="text" name="[U_PORTALUPDATE]SHA2_Email" value="" id="updateSHA2Email" /></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <div class="button-row">
+            
+            <input type="hidden" id="whoChanged" name="[U_PORTALUPDATE]updatedby" value="~[x:userid;guardianid]" />
+            <input type="hidden" id="needtoprocess" name="[U_PORTALUPDATE]SHUpdatePending" value="1" />
+            <input type="hidden" id="updateType" name="[U_PORTALUPDATE]UpdateType" value="2" />
+            <input type="hidden" id="shUpdatePendingInput" name="[Students.U_Student_Demographics]SHUpdatePending" value="1" />
+            <input type="hidden" name="ac" value="autosendupdate" />
+            
+            <button type="submit" id="btnSubmit" name="btnSubmit" onClick="shUpdatePending();">Submit</button>
+            
+        </div>
+        
+	</div>
+    
+    </form>
+    
+    [/if#shupdatepending]
+    
+<!-- end student content --> 
+<!-- Sets the navigation highlighting: the value is the ID value of the navigation element you want to highlight--> 
+<input id="activeNav" type="hidden" value="#onlineregistration"/> 
+<!-- end of page body --> 
+~[wc:guardian_footer]
+
+<script>
+    function copyField (legalId, mailingId) {
+        $j('#' + mailingId).val($j('#' + legalId).val());
+    };
+    function copyLegalToMailing () {
+        copyField ('updateSHStreetLegal', 'updateSHStreetMailing');
+        copyField ('updateSHCityLegal', 'updateSHCityMailing');
+        copyField ('updateSHStateLegal', 'updateSHStateMailing');
+        copyField ('updateSHZipLegal', 'updateSHZipMailing');
+    };
+    function shUpdatePending () {
+        $j('#shUpdatePendingInput').val("1");  
+    };
+</script>
+
+</body> 
+</html>

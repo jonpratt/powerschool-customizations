@@ -1,0 +1,71 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>iPad App Codes</title> 
+	~[wc:commonscripts] 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen"> 
+	<link href="/images/css/print.css" rel="stylesheet" media="print"> 
+</head> 
+<body> 
+~[wc:teachers_header_css] 
+~[wc:teachers_navigation_css] 
+<!-- sets active navigation tab --> 
+~[SetPostValue:tabname=home] 
+~[wc:teachers_nav_css] 
+	<h1>iPad App Codes</h1> 
+	<form name="navigation"> 
+<!-- start of content area --> 
+	<div class="box-round"> 
+		<h2>Instructions</h2> 
+		<p>From your iPad, touch the links below to download the apps. Your iPad will switch to the App Store, and you may be prompted to sign in with your Apple ID.  Although the screen will most likely remain on the App Store, the app will most likely be downloading in the background.  It also may download to a new screen of apps (swipe to check).  If not, or if you get an error, please make an appointment to see Mr. Pratt.</p>
+		<p>Please note that only new teachers in the 2012-2013 school year have their redemption codes for Pages, Numbers, Keynote, and iMovie stored here in PowerSchool.  If you are a returning teacher and have not download the required apps, please make an appointment to see Mr. Pratt.</p>
+                <h2>Redemption Links</h2>
+<table border="0" cellpadding="4" cellspacing="0" class="grid" id="appcodes"> 
+	<thead>
+	<tr>
+		<th class="bold">App Name</th>
+		<th class="bold">Download Link</th>
+	</tr>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+		select ps_customfields.getTeacherscf(id,'AppCodePages') as PagesCode, ps_customfields.getTeacherscf(id,'AppCodeNumbers') as NumbersCode, ps_customfields.getTeacherscf(id,'AppCodeKeynote') as KeynoteCode, ps_customfields.getTeacherscf(id,'AppCodeiMovie') as iMovieCode, ps_customfields.getTeacherscf(id,'AppCodeNotability') as NotabilityCode
+		from teachers
+		where id=~[x:userid];]
+	<tr>
+		<td>Pages</td>
+		<td><a href="~(PagesCode)">Redeem Now</a></td>
+	</tr>
+	<tr>
+		<td>Numbers</td>
+		<td><a href="~(NumbersCode)">Redeem Now</a></td>
+	</tr>
+	<tr>
+		<td>Keynote</td>
+		<td><a href="~(KeynoteCode)">Redeem Now</a></td>
+	</tr>
+	<tr>
+		<td>iMovie</td>
+		<td><a href="~(iMovieCode)">Redeem Now</a></td>
+	</tr>
+	<tr>
+		<td>Notability</td>
+		<td><a href="~(NotabilityCode)">Redeem Now</a></td>
+	</tr>
+	[/tlist_sql]
+	<tr>
+		<td>iBooks 2</td>
+		<td><a href="http://itunes.apple.com/us/app/ibooks/id364709193?mt=8">Download Now</a></td>
+	</tr>
+	<tr>
+		<td>iTunes U</td>
+		<td><a href="http://itunes.apple.com/us/app/itunes-u/id490217893?mt=8">Download Now</a></td>
+	</tr>
+
+	</tbody>
+</table>
+	</div> 
+<!-- end of content area --> 
+~[wc:teachers_footer_css] 
+</body> 
+</html>

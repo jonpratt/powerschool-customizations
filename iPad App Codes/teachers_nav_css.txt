@@ -1,0 +1,53 @@
+<!-- start gel tabs navigation -->
+<div id="nav-main">
+  <h3>~[text:psx.txt.wildcards.teachers_nav_css.navigation]</h3>
+  <ul>
+	  <li ~[if.~[gpv:tabname]=home]class="selected"[/if]><a href="/teachers/home.html" id="navHome" title="~[text:psx.txt.wildcards.teachers_nav_css.start_page]">~[text:psx.txt.wildcards.teachers_nav_css.start_page]</a></li>
+	  <li ~[if.~[gpv:tabname]=daily]class="selected"[/if]><a href="/teachers/bulletin.html" class="dialogM" id="navBulletin" title="~[text:psx.txt.wildcards.teachers_nav_css.view_daily_bulletin]">~[text:psx.txt.wildcards.teachers_nav_css.daily_bulletin]</a></li>
+	  <li ~[if.~[gpv:tabname]=faculty]class="selected"[/if]><a href="/teachers/facultydirectory.html" id="navDirectory" title="~[text:psx.txt.wildcards.teachers_nav_css.staff_directory]">~[text:psx.txt.wildcards.teachers_nav_css.staff_directory]</a></li>
+	  <li ~[if.~[gpv:tabname]=meals]class="selected"[/if]><a href="/teachers/lunchtransactions.html?frn=~(userfrn)" id="navMeals" title="~[text:psx.txt.wildcards.teachers_nav_css.meals]">~[text:psx.txt.wildcards.teachers_nav_css.meals]</a></li>
+	  <li ~[if.~[gpv:tabname]=personalize]class="selected"[/if]><a href="/teachers/userpreferences.html?frn=~(userfrn)" id="navPersonalize" title="~[text:psx.txt.wildcards.teachers_nav_css.personalize]">~[text:psx.txt.wildcards.teachers_nav_css.personalize]</a></li>
+		  ~[if.~[gpv:tabname]=wgb]~[SetPostValue:tabon="selected"][/if]
+		  ~[if.~[gpv:tabname]=pg]~[SetPostValue:tabon="selected"][/if]		  
+	  <li class=~[gpv:tabon] >
+		  <a href="/teachers/gradebook/home.html" id="navGradebook" title="~[text:psx.txt.wildcards.teachers_nav_css.view_powerteacher_gradebook_information_and_launch_the_application]">~[text:psx.txt.wildcards.teachers_nav_css.gradebook]</a>
+		  <span id="icon-btn-gblaunch" title="~[text:psx.txt.wildcards.teachers_nav_css.launch_powerteacher_gradebook]"><a href="/teachers/launchgradebook" title="~[text:psx.txt.wildcards.teachers_nav_css.instantly_launch_gradebook]" name="navGblaunch">&nbsp;</a></span>
+	  </li>
+		  	  
+	  <li ~[if.~[gpv:tabname]=reports]class="selected"[/if]><a href="/teachers/reportsall.html?ac=selectstudentsforteacher&teacherid=~[x:userid]" id="navReports" title="~[text:psx.txt.wildcards.teachers_nav_css.run_reports]">~[text:psx.txt.wildcards.teachers_nav_css.reports]</a></li>
+	  <li ~[if.~[gpv:tabname]=recommendations]class="selected"[/if]><a href="/teachers/RecommendTeacherPTList.html?teacherid=~[x:userid]" id="navRecommendations" title="~[text:psx.txt.wildcards.teachers_nav_css.manage_recommendation]">~[text:psx.txt.wildcards.teachers_nav_css.recommendations]</a></li>
+<li><a href="ipadappcodesteachers.html">iPad App Codes</a>
+<!-- Start State LDS Links -->
+ <!-- After we verify that the use of insert file tag will not 
+     break any teacher pages, state specific stuff should 
+      be moved to state specific html fragments and a single
+      insert file tag should be used here for all states
+  -->
+~[if.stateabbr.ga]
+~[SetPostValue:externalLinks_0.linkUrl=https://slds.gadoe.org/sldsweb/?clientid=http://~[displaypref:districtnumber]]
+~[SetPostValue:externalLinks_0.linkLabel=Georgia LDS]
+~[SetPostValue:relyingPartyName=ga.lds]
+~[brij_render:security-ps;:renderTeacherNavLDSLinks]
+[/if]
+<!-- End State LDS Links -->   
+
+  	~[if.CNFG.~(id).com.pearson.powerschool.sso.outbound.enabled=1]
+      <li><a href="/ssorequest/">id="navPSStudio" title="~[text:psx.txt.wildcards.teachers_nav_css.powerschool_studio]">~[text:psx.txt.wildcards.teachers_nav_css.powerschool_studio1]</a></li>
+	[/if]
+  </ul>
+  <p class="center">
+	~[if.~(gradebookType)#"1"]<div class="invisible">[/if]
+	~[if.~[displaypref:mobileapp_enable]#"1"]<div class="invisible">[/if]
+	~[if.prefschool.mobileappdisable_teachers=1]<div class="invisible">[/if]
+	<br />~[text:psx.txt.wildcards.teachers_nav_css.powerteacher_mobile]<br />
+	<a href="http://itunes.apple.com/app/id390563073" target="_blank">
+	<img src="/images/available-in-appstore.png" width="130" alt="" border="0">
+	</a>
+	~[if.~(gradebookType)#"1"]</div>[/if]
+	~[if.~[displaypref:mobileapp_enable]#"1"]</div>[/if]
+	~[if.prefschool.mobileappdisable_teachers=1]</div>[/if]
+  </p>
+</div>
+<!-- end gel tabs navigation -->
+<div id="content-main">
+<!--start of content-main-->

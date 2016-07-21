@@ -1,0 +1,824 @@
+<div style="width:1024px;">
+<form id="ajaxSubmit">
+    
+    ~[DirectTable.Select:U_PORTALUPDATE;id:~(gpv.id;htmlencode)]
+    
+    <div class="box-round" id="approveupdate"> 
+    
+        <h2>Step 1: Approve Updated Demographic Information for ~([Students]LastFirst)</h2>
+            
+            <p>This update submitted by ~([U_PORTALUPDATE]WHOCREATED) on ~([U_PORTALUPDATE]WHENCREATED).</p>
+        
+            <h3>~([Students]First_Name)'s Primary Household Legal Address</h3>
+            
+            <table class="grid" id="PH_Legal_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Street Address</td>
+                        <td><input type="text" name="[Students]Street" value="" id="file_l_street" /></td>
+                        <td><span id="button_update_l_street">
+                            <button type="button" id="approve_update_l_street" onClick="approveUpdate('update_l_street', 'file_l_street');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_L_STREET" value="" id="update_l_street" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td><input type="text" name="[Students]City" value="" id="file_l_city" /></td>
+                        <td><span id="button_update_l_city">
+                            <button type="button" id="approve_update_l_city" onClick="approveUpdate('update_l_city', 'file_l_city');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_L_CITY" value="" id="update_l_city" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td><input type="text" name="[Students]State" value="" id="file_l_state" /></td>
+                        <td><span id="button_update_l_state">
+                            <button type="button" id="approve_update_l_state" onClick="approveUpdate('update_l_state', 'file_l_state');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_L_STATE" value="" id="update_l_state" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td><input type="text" name="[Students]ZIP" value="" id="file_l_zip" /></td>
+                        <td><span id="button_update_l_zip">
+                            <button type="button" id="approve_update_l_zip" onClick="approveUpdate('update_l_zip', 'file_l_zip');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_L_ZIP" value="" id="update_l_zip" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Primary Household Mailing Address</h3>
+            
+            <table class="grid" id="PH_Mailing_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Street Address</td>
+                        <td><input type="text" name="[Students]Mailing_Street" value="" id="file_m_street" /></td>
+                        <td><span id="button_update_m_street">
+                            <button type="button" id="approve_update_m_street" onClick="approveUpdate('update_m_street', 'file_m_street');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_M_STREET" value="" id="update_m_street" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td><input type="text" name="[Students]Mailing_City" value="" id="file_m_city" /></td>
+                        <td><span id="button_update_m_city">
+                            <button type="button" id="approve_update_m_city" onClick="approveUpdate('update_m_city', 'file_m_city');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_M_CITY" value="" id="update_m_city" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td><input type="text" name="[Students]Mailing_State" value="" id="file_m_state" /></td>
+                        <td><span id="button_update_m_state">
+                            <button type="button" id="approve_update_m_state" onClick="approveUpdate('update_m_state', 'file_m_state');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_M_STATE" value="" id="update_m_state" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td><input type="text" name="[Students]Mailing_ZIP" value="" id="file_m_zip" /></td>
+                        <td><span id="button_update_m_zip">
+                            <button type="button" id="approve_update_m_zip" onClick="approveUpdate('update_m_zip', 'file_m_zip');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_M_ZIP" value="" id="update_m_zip" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Primary Household Contact Information</h3>
+            
+            <table class="grid" id="PH_Contact_Information">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primary Phone Number</td>
+                        <td><input type="text" name="[Students]Home_Phone" value="" id="file_home_phone" /></td>
+                        <td><span id="button_update_home_phone">
+                            <button type="button" id="approve_update_home_phone" onClick="approveUpdate('update_home_phone', 'file_home_phone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_HOME_PHONE" value="" id="update_home_phone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Primary Phone Number Type</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PH_Home_Phone_Type" value="" id="file_home_phone_type" /></td>
+                        <td><span id="button_update_home_phone_type">
+                            <button type="button" id="approve_update_home_phone_type" onClick="approveUpdate('update_home_phone_type', 'file_home_phone_type');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_HOME_PHONE_TYPE" value="" id="update_home_phone_type" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Primary Email</td>
+                        <td><input type="text" name="[Students]GuardianEmail" value="" id="file_ph_guardianemail" /></td>
+                        <td><span id="button_update_ph_guardianemail">
+                            <button type="button" id="approve_update_ph_guardianemail" onClick="approveUpdate('update_ph_guardianemail', 'file_ph_guardianemail');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_GUARDIANEMAIL" value="" id="update_ph_guardianemail" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Mass Mailing Preference (1=paper, 0=email)</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PH_Paper" value="" id="file_ph_paper" /></td>
+                        <td><span id="button_update_ph_paper">
+                            <button type="button" id="approve_update_ph_paper" onClick="approveUpdate('update_ph_paper', 'file_ph_paper');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_PAPER" value="" id="update_ph_paper" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Primary Household Adult Contact 1</h3>
+            
+            <table class="grid" id="PH_AC1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (Given) Name</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA1_FirstName" value="" id="file_pha1_firstname" /></td>
+                        <td><span id="button_update_pha1_firstname">
+                            <button type="button" id="approve_update_pha1_firstname" onClick="approveUpdate('update_pha1_firstname', 'file_pha1_firstname');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_FIRSTNAME" value="" id="update_pha1_firstname" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA1_LastName" value="" id="file_pha1_lastname" /></td>
+                        <td><span id="button_update_pha1_lastname">
+                            <button type="button" id="approve_update_pha1_lastname" onClick="approveUpdate('update_pha1_lastname', 'file_pha1_lastname');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_LASTNAME" value="" id="update_pha1_lastname" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA1_Rel" value="" id="file_pha1_rel" /></td>
+                        <td><span id="button_update_pha1_rel">
+                            <button type="button" id="approve_update_pha1_rel" onClick="approveUpdate('update_pha1_rel', 'file_pha1_rel');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_Rel" value="" id="update_pha1_rel" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Cell Phone</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA1_CellPhone" value="" id="file_pha1_cellphone" /></td>
+                        <td><span id="button_update_pha1_cellphone">
+                            <button type="button" id="approve_update_pha1_cellphone" onClick="approveUpdate('update_pha1_cellphone', 'file_pha1_cellphone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_CELLPHONE" value="" id="update_pha1_cellphone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Home Phone</td>
+                        <td><input type="text" name="[Students]Father_Home_Phone" value="" id="file_pha1_homephone" /></td>
+                        <td><span id="button_update_pha1_homephone">
+                            <button type="button" id="approve_update_pha1_homephone" onClick="approveUpdate('update_pha1_homephone', 'file_pha1_homephone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_HOMEPHONE" value="" id="update_pha1_homephone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA1_Email" value="" id="file_pha1_email" /></td>
+                        <td><span id="button_update_pha1_email">
+                            <button type="button" id="approve_update_pha1_email" onClick="approveUpdate('update_pha1_email', 'file_pha1_email');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_EMAIL" value="" id="update_pha1_email" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Employer</td>
+                        <td><input type="text" name="[Students]Father_Employer" value="" id="file_pha1_employer" /></td>
+                        <td><span id="button_update_pha1_employer">
+                            <button type="button" id="approve_update_pha1_employer" onClick="approveUpdate('update_pha1_employer', 'file_pha1_employer');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_EMPLOYER" value="" id="update_pha1_employer" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Work Phone</td>
+                        <td><input type="text" name="[Students]FatherDayPhone" value="" id="file_pha1_workphone" /></td>
+                        <td><span id="button_update_pha1_workphone">
+                            <button type="button" id="approve_update_pha1_workphone" onClick="approveUpdate('update_pha1_workphone', 'file_pha1_workphone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_WORKPHONE" value="" id="update_pha1_workphone" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Primary Household Adult Contact 2</h3>
+            
+            <table class="grid" id="PH_AC2">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (Given) Name</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA2_FirstName" value="" id="file_pha2_firstname" /></td>
+                        <td><span id="button_update_pha2_firstname">
+                            <button type="button" id="approve_update_pha2_firstname" onClick="approveUpdate('update_pha2_firstname', 'file_pha2_firstname');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_FIRSTNAME" value="" id="update_pha2_firstname" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA2_LastName" value="" id="file_pha2_lastname" /></td>
+                        <td><span id="button_update_pha2_lastname">
+                            <button type="button" id="approve_update_pha2_lastname" onClick="approveUpdate('update_pha2_lastname', 'file_pha2_lastname');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_LASTNAME" value="" id="update_pha2_lastname" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA2_Rel" value="" id="file_pha2_rel" /></td>
+                        <td><span id="button_update_pha2_rel">
+                            <button type="button" id="approve_update_pha2_rel" onClick="approveUpdate('update_pha2_rel', 'file_pha2_rel');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_Rel" value="" id="update_pha2_rel" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Cell Phone</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA2_CellPhone" value="" id="file_pha2_cellphone" /></td>
+                        <td><span id="button_update_pha2_cellphone">
+                            <button type="button" id="approve_update_pha2_cellphone" onClick="approveUpdate('update_pha2_cellphone', 'file_pha2_cellphone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_CELLPHONE" value="" id="update_pha2_cellphone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Home Phone</td>
+                        <td><input type="text" name="[Students]Mother_Home_Phone" value="" id="file_pha2_homephone" /></td>
+                        <td><span id="button_update_pha2_homephone">
+                            <button type="button" id="approve_update_pha2_homephone" onClick="approveUpdate('update_pha2_homephone', 'file_pha2_homephone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_HOMEPHONE" value="" id="update_pha2_homephone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]PHA2_Email" value="" id="file_pha2_email" /></td>
+                        <td><span id="button_update_pha2_email">
+                            <button type="button" id="approve_update_pha2_email" onClick="approveUpdate('update_pha2_email', 'file_pha2_email');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_EMAIL" value="" id="update_pha2_email" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Employer</td>
+                        <td><input type="text" name="[Students]Mother_Employer" value="" id="file_pha2_employer" /></td>
+                        <td><span id="button_update_pha2_employer">
+                            <button type="button" id="approve_update_pha2_employer" onClick="approveUpdate('update_pha2_employer', 'file_pha2_employer');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_EMPLOYER" value="" id="update_pha2_employer" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Work Phone</td>
+                        <td><input type="text" name="[Students]MotherDayPhone" value="" id="file_pha2_workphone" /></td>
+                        <td><span id="button_update_pha2_workphone">
+                            <button type="button" id="approve_update_pha2_workphone" onClick="approveUpdate('update_pha2_workphone', 'file_pha2_workphone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_WORKPHONE" value="" id="update_pha2_workphone" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Emergency Contact 1</h3>
+            
+            <table class="grid" id="EC1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" name="[Students]Emerg_Contact_1" value="" id="file_ec1_name" /></td>
+                        <td><span id="button_update_ec1_name">
+                            <button type="button" id="approve_update_ec1_name" onClick="approveUpdate('update_ec1_name', 'file_ec1_name');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC1_NAME" value="" id="update_ec1_name" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship</td>
+                        <td><input type="text" name="[Students]Emerg_1_Rel" value="" id="file_ec1_rel" /></td>
+                        <td><span id="button_update_ec1_rel">
+                            <button type="button" id="approve_update_ec1_rel" onClick="approveUpdate('update_ec1_rel', 'file_ec1_rel');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC1_REL" value="" id="update_ec1_rel" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td><input type="text" name="[Students]Emerg_Phone_1" value="" id="file_ec1_phone" /></td>
+                        <td><span id="button_update_ec1_phone">
+                            <button type="button" id="approve_update_ec1_phone" onClick="approveUpdate('update_ec1_phone', 'file_ec1_phone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC1_PHONE" value="" id="update_ec1_phone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Phone Type</td>
+                        <td><input type="text" name="[Students]Emerg_1_PType" value="" id="file_ec1_phone_type" /></td>
+                        <td><span id="button_update_ec1_phone_type">
+                            <button type="button" id="approve_update_ec1_phone_type" onClick="approveUpdate('update_ec1_phone_type', 'file_ec1_phone_type');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC1_PHONE_TYPE" value="" id="update_ec1_phone_type" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Emergency Contact 2</h3>
+            
+            <table class="grid" id="EC2">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" name="[Students]Emerg_Contact_2" value="" id="file_ec2_name" /></td>
+                        <td><span id="button_update_ec2_name">
+                            <button type="button" id="approve_update_ec2_name" onClick="approveUpdate('update_ec2_name', 'file_ec2_name');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC2_NAME" value="" id="update_ec2_name" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship</td>
+                        <td><input type="text" name="[Students]Emerg_2_Rel" value="" id="file_ec2_rel" /></td>
+                        <td><span id="button_update_ec2_rel">
+                            <button type="button" id="approve_update_ec2_rel" onClick="approveUpdate('update_ec2_rel', 'file_ec2_rel');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC2_REL" value="" id="update_ec2_rel" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td><input type="text" name="[Students]Emerg_Phone_2" value="" id="file_ec2_phone" /></td>
+                        <td><span id="button_update_ec2_phone">
+                            <button type="button" id="approve_update_ec2_phone" onClick="approveUpdate('update_ec2_phone', 'file_ec2_phone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC2_PHONE" value="" id="update_ec2_phone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Phone Type</td>
+                        <td><input type="text" name="[Students]Emerg_2_PType" value="" id="file_ec2_phone_type" /></td>
+                        <td><span id="button_update_ec2_phone_type">
+                            <button type="button" id="approve_update_ec2_phone_type" onClick="approveUpdate('update_ec2_phone_type', 'file_ec2_phone_type');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC2_PHONE_TYPE" value="" id="update_ec2_phone_type" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Emergency Contact 3</h3>
+            
+            <table class="grid" id="EC3">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" name="[Students]Emerg_Contact_3" value="" id="file_ec3_name" /></td>
+                        <td><span id="button_update_ec3_name">
+                            <button type="button" id="approve_update_ec3_name" onClick="approveUpdate('update_ec3_name', 'file_ec3_name');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC3_NAME" value="" id="update_ec3_name" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship</td>
+                        <td><input type="text" name="[Students]Emerg_3_Rel" value="" id="file_ec3_rel" /></td>
+                        <td><span id="button_update_ec3_rel">
+                            <button type="button" id="approve_update_ec3_rel" onClick="approveUpdate('update_ec3_rel', 'file_ec3_rel');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC3_REL" value="" id="update_ec3_rel" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td><input type="text" name="[Students]Emerg_3_Phone" value="" id="file_ec3_phone" /></td>
+                        <td><span id="button_update_ec3_phone">
+                            <button type="button" id="approve_update_ec3_phone" onClick="approveUpdate('update_ec3_phone', 'file_ec3_phone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC3_PHONE" value="" id="update_ec3_phone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Phone Type</td>
+                        <td><input type="text" name="[Students]Emerg_3_PType" value="" id="file_ec3_phone_type" /></td>
+                        <td><span id="button_update_ec3_phone_type">
+                            <button type="button" id="approve_update_ec3_phone_type" onClick="approveUpdate('update_ec3_phone_type', 'file_ec3_phone_type');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC3_PHONE_TYPE" value="" id="update_ec3_phone_type" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>~([Students]First_Name)'s Medical Information</h3>
+            
+            <table class="grid" id="MedicalInformation">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Doctor Name</td>
+                        <td><input type="text" name="[Students]Doctor_Name" value="" id="file_doctor_name" /></td>
+                        <td><span id="button_update_doctor_name">
+                            <button type="button" id="approve_update_doctor_name" onClick="approveUpdate('update_doctor_name', 'file_doctor_name');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]DOCTOR_NAME" value="" id="update_doctor_name" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Doctor Phone</td>
+                        <td><input type="text" name="[Students]Doctor_Phone" value="" id="file_doctor_phone" /></td>
+                        <td><span id="button_update_doctor_phone">
+                            <button type="button" id="approve_update_doctor_phone" onClick="approveUpdate('update_doctor_phone', 'file_doctor_phone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]DOCTOR_PHONE" value="" id="update_doctor_phone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Dentist Name</td>
+                        <td><input type="text" name="[Students]Dentist_Name" value="" id="file_dentist_name" /></td>
+                        <td><span id="button_update_dentist_name">
+                            <button type="button" id="approve_update_dentist_name" onClick="approveUpdate('update_dentist_name', 'file_dentist_name');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]DENTIST_NAME" value="" id="update_dentist_name" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Dentist Phone</td>
+                        <td><input type="text" name="[Students]Dentist_Phone" value="" id="file_dentist_phone" /></td>
+                        <td><span id="button_update_dentist_phone">
+                            <button type="button" id="approve_update_dentist_phone" onClick="approveUpdate('update_dentist_phone', 'file_dentist_phone');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]DENTIST_PHONE" value="" id="update_dentist_phone" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>OTC Notes</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Clinic_OTC_Note" value="" id="file_clinic_otc_note" /></td>
+                        <td><span id="button_update_clinic_otc_note">
+                            <button type="button" id="approve_update_clinic_otc_note" onClick="approveUpdate('update_clinic_otc_note', 'file_clinic_otc_note');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]CLINIC_OTC_NOTE" value="" id="update_clinic_otc_note" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Medications and-or Medical Remarks</td>
+                        <td><input type="text" name="[Students]Medical_Considerations" value="" id="file_medical_considerations" /></td>
+                        <td><span id="button_update_medical_considerations">
+                            <button type="button" id="approve_update_medical_considerations" onClick="approveUpdate('update_medical_considerations', 'file_medical_considerations');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]MEDICAL_CONSIDERATIONS" value="" id="update_medical_considerations" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Allergies and-or Disabilities</td>
+                        <td><input type="text" name="[Students]Allergies" value="" id="file_allergies" /></td>
+                        <td><span id="button_update_allergies">
+                            <button type="button" id="approve_update_allergies" onClick="approveUpdate('update_allergies', 'file_allergies');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]ALLERGIES" value="" id="update_allergies" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+        <h2>Step 2: Approve Annual Agreements for ~([Students]LastFirst)</h2>
+            
+            <h3>~([Students]First_Name)'s Emergency Agreement</h3>
+            
+            ~[if#emergencyagree.~([Students.U_Student_Demographics]Emergency_Agree)=1]
+            <b><p>Emergency Agreement has been submitted and is on file.</p></b>
+            [else#emergencyagree]
+        
+            <table class="grid" id="EmergencyAgreement">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Agreement (1=Yes, 0=No)</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Emergency_Agree" value="" id="file_emergency_agree" /></td>
+                        <td><span id="button_update_emergency_agree">
+                            <button type="button" id="approve_update_emergency_agree" onClick="approveUpdate('update_emergency_agree', 'file_emergency_agree');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EMERGENCY_AGREE" value="" id="update_emergency_agree" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Parent Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Emergency_Sig" value="" id="file_emergency_sig" /></td>
+                        <td><span id="button_update_emergency_sig">
+                            <button type="button" id="approve_update_emergency_sig" onClick="approveUpdate('update_emergency_sig', 'file_emergency_sig');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EMERGENCY_SIG" value="" id="update_emergency_sig" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Emergency_Date" value="" id="file_emergency_date" /></td>
+                        <td><span id="button_update_emergency_date">
+                            <button type="button" id="approve_update_emergency_date" onClick="approveUpdate('update_emergency_date', 'file_emergency_date');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_emergency_date" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            [/if#emergencyagree]
+        
+            <h3>~([Students]First_Name)'s Clinic Agreement</h3>
+            
+            ~[if#clinicagree.~([Students.U_Student_Demographics]Clinic_Agree)=1]
+            <b><p>Clinic Agreement has been submitted and is on file.</p></b>
+            [else#clinicagree]
+        
+            <table class="grid" id="ClinicAgreement">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Agreement (1=Yes, 0=No)</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Clinic_Agree" value="" id="file_clinic_agree" /></td>
+                        <td><span id="button_update_clinic_agree">
+                            <button type="button" id="approve_update_clinic_agree" onClick="approveUpdate('update_clinic_agree', 'file_clinic_agree');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]CLINIC_AGREE" value="" id="update_clinic_agree" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Parent Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Clinic_Sig" value="" id="file_clinic_sig" /></td>
+                        <td><span id="button_update_clinic_sig">
+                            <button type="button" id="approve_update_clinic_sig" onClick="approveUpdate('update_clinic_sig', 'file_clinic_sig');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]CLINIC_SIG" value="" id="update_clinic_sig" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Clinic_Date" value="" id="file_clinic_date" /></td>
+                        <td><span id="button_update_clinic_date">
+                            <button type="button" id="approve_update_clinic_date" onClick="approveUpdate('update_clinic_date', 'file_clinic_date');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_clinic_date" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>    
+        
+            [/if#clinicagree]
+        
+            <h3>~([Students]First_Name)'s Bus Agreement</h3>
+            
+            ~[if#busagree.~([Students.U_Student_Demographics]Bus_Agree)=1]
+            <b><p>Bus Agreement has been submitted and is on file.</p></b>
+            [else#busagree]
+        
+            <table class="grid" id="BusAgreement">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Agreement (1=Yes, 0=No)</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Bus_Agree" value="" id="file_bus_agree" /></td>
+                        <td><span id="button_update_bus_agree">
+                            <button type="button" id="approve_update_bus_agree" onClick="approveUpdate('update_bus_agree', 'file_bus_agree');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]BUS_AGREE" value="" id="update_bus_agree" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Student Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Bus_Sig_Student" value="" id="file_bus_sig_student" /></td>
+                        <td><span id="button_update_bus_sig_student">
+                            <button type="button" id="approve_update_bus_sig_student" onClick="approveUpdate('update_bus_sig_student', 'file_bus_sig_student');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]BUS_SIG_STUDENT" value="" id="update_bus_sig_student" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Bus_Date_Student" value="" id="file_bus_date_student" /></td>
+                        <td><span id="button_update_bus_date_student">
+                            <button type="button" id="approve_update_bus_date_student" onClick="approveUpdate('update_bus_date_student', 'file_bus_date_student');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_bus_date_student" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Parent Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Bus_Sig_Parent" value="" id="file_bus_sig_parent" /></td>
+                        <td><span id="button_update_bus_sig_parent">
+                            <button type="button" id="approve_update_bus_sig_parent" onClick="approveUpdate('update_bus_sig_parent', 'file_bus_sig_parent');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]BUS_SIG_PARENT" value="" id="update_bus_sig_parent" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Bus_Date_Parent" value="" id="file_bus_date_parent" /></td>
+                        <td><span id="button_update_bus_date_parent">
+                            <button type="button" id="approve_update_bus_date_parent" onClick="approveUpdate('update_bus_date_parent', 'file_bus_date_parent');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_bus_date_parent" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            [/if#busagree]
+        
+            <h3>~([Students]First_Name)'s Student Handbook Agreement</h3>
+            
+            ~[if#handbookagree.~([Students.U_Student_Demographics]Handbook_Agree)=1]
+            <b><p>Student Handbook Agreement has been submitted and is on file.</p></b>
+            [else#handbookagree]
+        
+            <table class="grid" id="handbookAgreement">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Agreement (1=Yes, 0=No)</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Handbook_Agree" value="" id="file_handbook_agree" /></td>
+                        <td><span id="button_update_handbook_agree">
+                            <button type="button" id="approve_update_handbook_agree" onClick="approveUpdate('update_handbook_agree', 'file_handbook_agree');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]HANDBOOK_AGREE" value="" id="update_handbook_agree" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Student Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Handbook_Sig_Student" value="" id="file_handbook_sig_student" /></td>
+                        <td><span id="button_update_handbook_sig_student">
+                            <button type="button" id="approve_update_handbook_sig_student" onClick="approveUpdate('update_handbook_sig_student', 'file_handbook_sig_student');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]HANDBOOK_SIG_STUDENT" value="" id="update_handbook_sig_student" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Handbook_Date_Student" value="" id="file_handbook_date_student" /></td>
+                        <td><span id="button_update_handbook_date_student">
+                            <button type="button" id="approve_update_handbook_date_student" onClick="approveUpdate('update_handbook_date_student', 'file_handbook_date_student');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_handbook_date_student" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Parent Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Handbook_Sig_Parent" value="" id="file_handbook_sig_parent" /></td>
+                        <td><span id="button_update_handbook_sig_parent">
+                            <button type="button" id="approve_update_handbook_sig_parent" onClick="approveUpdate('update_handbook_sig_parent', 'file_handbook_sig_parent');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]HANDBOOK_SIG_PARENT" value="" id="update_handbook_sig_parent" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Handbook_Date_Parent" value="" id="file_handbook_date_parent" /></td>
+                        <td><span id="button_update_handbook_date_parent">
+                            <button type="button" id="approve_update_handbook_date_parent" onClick="approveUpdate('update_handbook_date_parent', 'file_handbook_date_parent');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_handbook_date_parent" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            [/if#handbookagree]
+            
+            <h3>~([Students]First_Name)'s iPad Agreement</h3>
+            
+            ~[if#ipadagree.~([Students.U_Student_Demographics]iPad_Agree)=1]
+            <b><p>iPad Agreement has been submitted and is on file.</p></b>
+            [else#ipadagree]
+        
+            <table class="grid" id="iPadAgreement">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Insurance Option (Ins, TakeHome) (1=Y,Y, 2=Y,N, 3=N,N)</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]iPad_Insurance" value="" id="file_ipad_insurance" /></td>
+                        <td><span id="button_update_ipad_insurance">
+                            <button type="button" id="approve_update_ipad_insurance" onClick="approveUpdate('update_ipad_insurance', 'file_ipad_insurance');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]IPAD_INSURANCE" value="" id="update_ipad_insurance" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Agreement (1=Yes, 0=No)</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]iPad_Agree" value="" id="file_ipad_agree" /></td>
+                        <td><span id="button_update_ipad_agree">
+                            <button type="button" id="approve_update_ipad_agree" onClick="approveUpdate('update_ipad_agree', 'file_ipad_agree');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]IPAD_AGREE" value="" id="update_ipad_agree" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Parent Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]iPad_Sig" value="" id="file_ipad_sig" /></td>
+                        <td><span id="button_update_ipad_sig">
+                            <button type="button" id="approve_update_ipad_sig" onClick="approveUpdate('update_ipad_sig', 'file_ipad_sig');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]IPAD_SIG" value="" id="update_ipad_sig" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]iPad_Date" value="" id="file_ipad_date" /></td>
+                        <td><span id="button_update_ipad_date">
+                            <button type="button" id="approve_update_ipad_date" onClick="approveUpdate('update_ipad_date', 'file_ipad_date');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_ipad_date" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            [/if#ipadagree]
+        
+            <h3>~([Students]First_Name)'s Enrollment Agreement</h3>
+            
+            ~[if#enrollmentagree.~([Students.U_Student_Demographics]Enrollment_Agree)=1]
+            <b><p>Enrollment Agreement has been submitted and is on file.</p></b>
+            [else#enrollmentagree]
+        
+            <table class="grid" id="enrollmentAgreement">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Approve</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Agreement (1=Yes, 0=No)</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Enrollment_Agree" value="" id="file_enrollment_agree" /></td>
+                        <td><span id="button_update_enrollment_agree">
+                            <button type="button" id="approve_update_enrollment_agree" onClick="approveUpdate('update_enrollment_agree', 'file_enrollment_agree');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]ENROLLMENT_AGREE" value="" id="update_enrollment_agree" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Student Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Enrollment_Sig_Student" value="" id="file_enrollment_sig_student" /></td>
+                        <td><span id="button_update_enrollment_sig_student">
+                            <button type="button" id="approve_update_enrollment_sig_student" onClick="approveUpdate('update_enrollment_sig_student', 'file_enrollment_sig_student');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]ENROLLMENT_SIG_STUDENT" value="" id="update_enrollment_sig_student" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Enrollment_Date_Student" value="" id="file_enrollment_date_student" /></td>
+                        <td><span id="button_update_enrollment_date_student">
+                            <button type="button" id="approve_update_enrollment_date_student" onClick="approveUpdate('update_enrollment_date_student', 'file_enrollment_date_student');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_enrollment_date_student" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Parent Signature</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Enrollment_Sig_Parent" value="" id="file_enrollment_sig_parent" /></td>
+                        <td><span id="button_update_enrollment_sig_parent">
+                            <button type="button" id="approve_update_enrollment_sig_parent" onClick="approveUpdate('update_enrollment_sig_parent', 'file_enrollment_sig_parent');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]ENROLLMENT_SIG_PARENT" value="" id="update_enrollment_sig_parent" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" name="[Students.U_Student_Demographics]Enrollment_Date_Parent" value="" id="file_enrollment_date_parent" /></td>
+                        <td><span id="button_update_enrollment_date_parent">
+                            <button type="button" id="approve_update_enrollment_date_parent" onClick="approveUpdate('update_enrollment_date_parent', 'file_enrollment_date_parent');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]WHENCREATED" value="" id="update_enrollment_date_parent" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>Area</td>
+                        <td><input type="text" name="[Students]Area" value="" id="file_area" /></td>
+                        <td><span id="button_update_area">
+                            <button type="button" id="approve_update_area" onClick="approveUpdate('update_area', 'file_area');">Approve</button></span></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]AREA" value="" id="update_area" readonly/></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            [/if#enrollmentagree]
+        
+    </div>
+    
+    <div class="button-row">
+        <input id="portalupdatepending" type="hidden" name="[U_PORTALUPDATE]UpdatePending" value="" />
+        <input id="studentupdatepending" type="hidden" name="[Students.U_Student_Demographics]UpdatePending" value="" />
+        <input type="hidden" name="ac" value="prim" />
+        <button type="button" id="btnDelete" class="confirmationReq">Delete</button>
+        <button type="button" id="btnSubmit" name="btnSubmit">Submit</button>
+        <br>
+        <br>
+    </div>
+    
+</form>
+    
+<form id="ajaxDelete">
+    <input type="hidden" name="DD-U_PORTALUPDATE.ID:~(gpv.id;htmlencode)" value="1" />
+    <input type="hidden" name="ac" value="prim" />
+</form>
+    
+<script>
+    $j('#btnSubmit').click(function() {
+        $j('#studentupdatepending').val("0");
+        $j('#portalupdatepending').val("0");
+       var dataString = $j('#ajaxSubmit').serialize();
+        angular.element($j('#unprocessedupdatesCtrlDiv')).scope().unprocessedupdatesEdit(dataString);
+    });
+    $j('#btnDelete').click(function() {
+       var dataString = $j('#ajaxDelete').serialize();
+        angular.element($j('#unprocessedupdatesCtrlDiv')).scope().unprocessedupdatesEdit(dataString);
+    });
+</script>
+    
+<script>
+ function approveUpdate (updateId, onfileId) {
+  $j('#' + onfileId).val($j('#' + updateId).val());
+  $j('#button_' + updateId).html('<strong>Submit to save changes.</strong>');
+    };   
+</script>
+</div>

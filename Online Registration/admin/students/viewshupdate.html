@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Secondary Household Update</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_frame_css]
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/portalupdates.html?frn=~(studentfrn)">Portal Updates</a> &gt; Secondary Household Update
+	<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css]
+<!-- start of main menu and content -->
+~[wc:title_student_begin_css]Secondary Household Update~[wc:title_student_end_css]
+<!-- start of content area -->
+    
+	<div class="box-round">
+        
+        ~[DirectTable.Select:U_PORTALUPDATE;id:~(gpv.shid)]
+        
+        <h2>Secondary Household Update for ~([STUDENTS]LASTFIRST) submitted by ~([U_PORTALUPDATE]WHOCREATED) on ~([U_PORTALUPDATE]WHENCREATED).</h2>
+		
+            <h3>Secondary Household Details</h3>
+        
+                <table class="grid" id="secondaryHouseholdDetailsTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Custody Type</td>
+                            <td>~([U_PORTALUPDATE]SH_CUSTODY)</td>
+                        </tr>
+                        <tr>
+                            <td>Mass Mailing Preference</td>
+                            <td>~([U_PORTALUPDATE]SH_PAPER)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Secondary Household Legal Address</h3>
+        
+                <table class="grid" id="legalAddressTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Street Address</td>
+                            <td>~([U_PORTALUPDATE]sh_street_legal)</td>
+                        </tr>
+                        <tr>
+                            <td>City or Town</td>
+                            <td>~([U_PORTALUPDATE]sh_city_legal)</td>
+                        </tr>
+                        <tr>
+                            <td>State</td>
+                            <td>~([U_PORTALUPDATE]sh_state_legal)</td>
+                        </tr>
+                        <tr>
+                            <td>ZIP</td>
+                            <td>~([U_PORTALUPDATE]sh_zip_legal)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Secondary Household Mailing Address</h3>
+        
+                <table class="grid" id="mailingAddressTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Street Address</td>
+                            <td>~([U_PORTALUPDATE]sh_street_mailing)</td>
+                        </tr>
+                        <tr>
+                            <td>City or Town</td>
+                            <td>~([U_PORTALUPDATE]sh_city_mailing)</td>
+                        </tr>
+                        <tr>
+                            <td>State</td>
+                            <td>~([U_PORTALUPDATE]sh_state_mailing)</td>
+                        </tr>
+                        <tr>
+                            <td>ZIP</td>
+                            <td>~([U_PORTALUPDATE]sh_zip_mailing)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Secondary Household Adult Contact 1</h3>
+        
+                <table class="grid" id="adultContact1Table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>First (Given) Name</td>
+                            <td>~([U_PORTALUPDATE]sha1_firstname)</td>
+                        </tr>
+                        <tr>
+                            <td>Last (Family) Name</td>
+                            <td>~([U_PORTALUPDATE]sha1_lastname)</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship to Student</td>
+                            <td>~([U_PORTALUPDATE]sha1_rel)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td>~([U_PORTALUPDATE]sha1_phone)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Type</td>
+                            <td>~([U_PORTALUPDATE]sha1_phone_type)</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>~([U_PORTALUPDATE]sha1_email)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Secondary Household Adult Contact 2</h3>
+        
+                <table class="grid" id="adultContact2Table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>First (Given) Name</td>
+                            <td>~([U_PORTALUPDATE]sha2_firstname)</td>
+                        </tr>
+                        <tr>
+                            <td>Last (Family) Name</td>
+                            <td>~([U_PORTALUPDATE]sha2_lastname)</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship to Student</td>
+                            <td>~([U_PORTALUPDATE]sha2_rel)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td>~([U_PORTALUPDATE]sha2_phone)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Type</td>
+                            <td>~([U_PORTALUPDATE]sha2_phone_type)</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>~([U_PORTALUPDATE]sha2_email)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+	</div>
+    
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+</body> 
+</html>

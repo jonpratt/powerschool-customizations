@@ -1,0 +1,22 @@
+SELECT
+  sections.section_number as SectionNumber,
+  sections.fastperlist as FastPerList,
+  sections.original_expression as OrigExpress,
+  section_meeting.period_number as PeriodNumber,
+  section_meeting.cycle_day_letter as DayLetter,
+  section_meeting.meeting as Meeting,
+  period.abbreviation as Abbreviation,
+  period.name as PerName
+  
+FROM
+  section_meeting
+  
+INNER JOIN
+  period ON section_meeting.period_number=period.period_number
+  
+INNER JOIN
+  sections on section_meeting.sectionid=sections.id
+  
+WHERE
+  section_meeting.sectionid=2583 AND
+  period.year_id=23

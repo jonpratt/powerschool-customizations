@@ -1,0 +1,145 @@
+
+<!DOCTYPE html> 
+<html>
+<head> 
+	<title>Advisory Lists</title>
+<!-- required scripts --> 
+~[wc:commonscripts]
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen"> 
+	<link href="/images/css/print.css" rel="stylesheet" media="print"> 
+<script type="text/javascript">
+	$j(function(){
+		$j("#gradelevel").change(function(){
+		window.location='advisorylists.html?' + this.value
+		});
+	});
+</script>
+<script type="text/javascript">
+	$j(function(){
+		$j("#advisor").change(function(){
+		window.location='advisorylists.html?' + this.value
+		});
+	});
+</script>
+</head> 
+<body>
+	~[wc:admin_header_css] 
+    <div id="breadcrumbs"> 
+		<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.misc.start_page]</a> > Advisory Lists<!-- breadcrumb end --> 
+    </div>
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Advisory Lists</h1> 
+<!-- start of content area --> 
+	<div class="box-round"> 
+		 <h2 class="toggle expanded">Advisory by Grade Level</h2> 
+		 <div>
+		 <p> 
+		 	Use the drop-down menu to select the grade level to display. The initial list is alphabetical by student. If you want to group by advisory, click on the "Advisor" column heading.
+		 </p>
+	<select id="gradelevel">
+	<option value=''>Select Grade Level</option>
+	<option value="gradelevel=09">9th Grade</option>
+	<option value="gradelevel=10">10th Grade</option>
+	<option value="gradelevel=11">11th Grade</option>
+	<option value="gradelevel=12">12th Grade</option>
+	</select>
+ 	
+ 	<table border="0" cellspacing="0" cellpadding="4" class="tableToGrid">
+	<thead>
+		<th>Student Name</th>
+		<th>Grade Level</th>
+		<th>Advisor</th>
+		<th>Room</th>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+		SELECT Students.DCID as DCID, Students.LastFirst as StudentLastFirst, Students.Grade_Level as StudentGradeLevel, Teachers.LastFirst as AdvisorName, Sections.Room as AdvisorRoom
+		FROM Students
+		INNER JOIN CC
+		ON Students.ID=CC.StudentID AND CC.Course_Number='104' AND CC.TermID>=CASE WHEN  to_number(to_char(sysdate, 'MM')) < 07
+                      THEN  to_number(to_char(sysdate, 'YYYY') - 1991) * 100
+                      ELSE  to_number(to_char(sysdate, 'YYYY') - 1990) * 100
+                    END
+		INNER JOIN Teachers
+		ON CC.TeacherID=Teachers.ID
+		INNER JOIN Sections
+		ON CC.SectionID=Sections.ID
+		WHERE Students.Enroll_Status=0 AND Students.Grade_Level=~[gpv:gradelevel]
+		ORDER BY StudentLastFirst
+		;]
+	<tr>
+		<td><a href="/admin/students/home.html?frn=001~(DCID)">~(StudentLastFirst)</a></td>
+		<td>~(StudentGradeLevel)</td>
+		<td>~(AdvisorName)</td>
+		<td>~(AdvisorRoom)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody>
+	</table>
+	</div> 
+		 <h2 class="toggle expanded">Advisory by Advisor</h2> 
+		 <div>
+		 <p> 
+		 	Use the drop-down menu to select the advisor to display. The initial list is alphabetical by student.
+		 </p>
+
+ 	<select id="advisor">
+	<option value=''>Select Advisor</option>
+	~[tlist_sql;
+		SELECT Teachers.ID as AdvisorID, Teachers.LastFirst as AdvisorName
+		FROM Teachers
+		INNER JOIN Sections
+		ON Teachers.ID=Sections.Teacher
+		WHERE Sections.TermID>=CASE WHEN  to_number(to_char(sysdate, 'MM')) < 07
+                      THEN  to_number(to_char(sysdate, 'YYYY') - 1991) * 100
+                      ELSE  to_number(to_char(sysdate, 'YYYY') - 1990) * 100
+                    END AND Sections.Course_Number='104'
+		ORDER BY AdvisorName
+		;]
+	<option value="advisor=~(AdvisorID)">~(AdvisorName)</option>
+	[/tlist_sql]
+	</select>
+	
+	<table border="0" cellspacing="0" cellpadding="4" class="tableToGrid">
+	<thead>
+		<th>Student Name</th>
+		<th>Grade Level</th>
+		<th>Advisor</th>
+		<th>Room</th>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+		SELECT Students.DCID as DCID, Students.LastFirst as StudentLastFirst, Students.Grade_Level as StudentGradeLevel, Teachers.LastFirst as AdvisorName, Sections.Room as AdvisorRoom
+		FROM Students
+		INNER JOIN CC
+		ON Students.ID=CC.StudentID AND CC.Course_Number='104' AND CC.TermID>=CASE WHEN  to_number(to_char(sysdate, 'MM')) < 07
+                      THEN  to_number(to_char(sysdate, 'YYYY') - 1991) * 100
+                      ELSE  to_number(to_char(sysdate, 'YYYY') - 1990) * 100
+                    END
+		INNER JOIN Teachers
+		ON CC.TeacherID=Teachers.ID AND Teachers.ID=~[gpv:advisor]
+		INNER JOIN Sections
+		ON CC.SectionID=Sections.ID
+		WHERE Students.Enroll_Status=0
+		ORDER BY StudentLastFirst
+		;]
+	<tr>
+		<td><a href="/admin/students/home.html?frn=001~(DCID)">~(StudentLastFirst)</a></td>
+		<td>~(StudentGradeLevel)</td>
+		<td>~(AdvisorName)</td>
+		<td>~(AdvisorRoom)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody>
+	</table>
+	</div> 
+	</div>
+
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body>
+</html>
+ <!-- AND Students.Grade_Level=~[gpv:gradelevel] AND Teachers.ID=~[gpv:advisor] --!>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Your Page Title Goes Here</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_frame_css]
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/home.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Your Page Title Goes Here
+	<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css]
+<!-- start of main menu and content -->
+~[wc:title_student_begin_css]Your Page Title Goes Here~[wc:title_student_end_css]
+<form action="/~[self.page]?frn=~(studentfrn)&changesSaved=true" method="POST">
+<!-- start of content area -->
+~[if.~(gpv.changesSaved)=true]<div class="feedback-confirm">~[text:psx.common.changes_recorded]</div>[/if]
+	<div class="box-round">
+		 <h2>Section Title Text Goes Here</h2>
+		 <p>
+		 	Your paragraph text goes here.
+		 </p>
+        <div class="button-row"><input type="hidden" name="ac" value="prim">~[submitbutton]</div>
+	</div>
+</form>
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+</body> 
+</html>

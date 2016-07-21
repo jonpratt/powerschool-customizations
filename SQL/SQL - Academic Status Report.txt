@@ -1,0 +1,33 @@
+SELECT
+	students.id as StudentID,
+	students.lastfirst as Name,
+	CASE ps_customfields.getstudentscf(students.id, 'Area') WHEN 'NON-RESIDENT' THEN 'BOARDING' ELSE 'DAY' END as Boarding,
+	CASE students.gender WHEN 'F' THEN 'FEMALE' WHEN 'M' THEN 'MALE' ELSE 'NA' END as Gender,
+	storedgrades.grade_level as GradeLevel,
+	CASE ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig') WHEN 'F' THEN 'FR' WHEN 'R' THEN 'FR' ELSE 'NE' END as SLE,
+	CASE WHEN SUM(CASE storedgrades.grade WHEN 'D' THEN 1 WHEN 'F' THEN 2 WHEN 'WF' THEN 2 ELSE 0 END)>0 THEN 'DF' ELSE 'P' END as DFStatus,
+	SUM(courses.credit_hours) as TotalCredits,
+	SUM(CASE storedgrades.grade WHEN 'D' THEN 1 WHEN 'F' THEN 2 WHEN 'WF' THEN 2 ELSE 0 END) as AARP
+
+FROM
+	students
+
+INNER JOIN
+	storedgrades ON storedgrades.studentid=students.id
+  
+INNER JOIN
+	courses on storedgrades.course_number=courses.course_number
+
+INNER JOIN
+	terms on storedgrades.termid=terms.id
+
+WHERE
+	terms.yearid=24
+	AND terms.schoolid=1036
+	AND storedgrades.storecode='Q2'
+
+GROUP BY
+	students.id, students.lastfirst, students.gender, storedgrades.grade_level
+
+ORDER BY
+	storedgrades.grade_level, students.lastfirst

@@ -1,0 +1,40 @@
+<!-- start menu navigation -->
+<table width="130" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td class="preference-g">~[text:psx.txt.wildcards.admin_nav_menu_left.functions]</td>
+<td rowspan="9"><img src="/images/transparent.gif" width="5" height="1" alt="" border="0"></td>
+</tr>
+<tr>
+<td>
+&nbsp;<a href="/admin/attendance/functions/attendancestatus.html">~[text:psx.txt.wildcards.admin_nav_menu_left.attendance]</a>
+<br>&nbsp;<a href="/admin/bulletin.html">~[text:psx.txt.wildcards.admin_nav_menu_left.daily_bulletin]</a>
+<br>&nbsp;<a href="/admin/reports/ethnicitybreakdown.html">~[text:psx.txt.wildcards.admin_nav_menu_left.enrollment_summary]</a>
+<br>&nbsp;<a href="/admin/masterschedule/home.html?break=15">~[text:psx.txt.wildcards.admin_nav_menu_left.master_schedule]</a>
+<br>&nbsp;<a href="/admin/powerlunch/">~[text:psx.txt.wildcards.admin_nav_menu_left.powerlunch]</a>
+<br>&nbsp;<a href="/admin/reports/">~[text:psx.txt.wildcards.admin_nav_menu_left.reports]</a>
+<br>&nbsp;<a href="/admin/functions.html">~[text:psx.txt.wildcards.admin_nav_menu_left.special_functions]</a>
+<br>&nbsp;<a href="/admin/teacherschedules/">~[text:psx.txt.wildcards.admin_nav_menu_left.teacher_schedules]</a>
+<!-- Start State LDS Links -->
+ <!-- After the issue of insert file tag breaking student/faculty
+      search results pages is resolved, state specific stuff should 
+      be moved to state specific html fragments and a single
+      insert file tag should be used here for all states
+  -->
+~[if.stateabbr.ga]
+~[SetPostValue:externalLinks_0.linkUrl=https://slds.gadoe.org/sldsweb/?clientid=http://~[displaypref:districtnumber]]
+~[SetPostValue:externalLinks_0.linkLabel=Georgia LDS]
+~[SetPostValue:relyingPartyName=ga.lds]
+~[brij_render_insert:security-ps:renderAdminLeftNavStateLDSLinks]
+[/if]
+<!-- End State LDS Links -->    
+<br>&nbsp;
+</td>
+</tr>
+<tr>
+<td class="preference-g">~[text:psx.txt.wildcards.admin_nav_menu_left.setup]</td>
+</tr>
+<tr>
+<td>~[if.district.office]&nbsp;<a href="/admin/district/">~[text:psx.txt.wildcards.admin_nav_menu_left.district]</a><br>[/if.district.office]&nbsp;<a href="/admin/userpreferences.html?frn=~(userfrn)">~[text:psx.txt.wildcards.admin_nav_menu_left.personalize]</a><br>~[if.is.a.school]~[if.sched_scheduleraccess]&nbsp;<a href="/admin/powerschedule/">~[text:psx.txt.wildcards.admin_nav_menu_left.powerscheduler]</a><br>[/if.sched_scheduleraccess]&nbsp;<a href="/admin/schoolsetup/">~[text:psx.txt.wildcards.admin_nav_menu_left.school]</a><br>[/if.is.a.school]&nbsp;<a href="/admin/faculty/search.html">~[text:psx.txt.wildcards.admin_nav_menu_left.staff]</a><br>&nbsp;<a href="/admin/tech/">~[text:psx.txt.wildcards.admin_nav_menu_left.system]</a><br>&nbsp;~[if.database.sql]<a href="/admin/dashboard/index.html?context=~[if.district.office]Server[/if.district.office]~[if.is.a.school]School[/if.is.a.school]">~[text:psx.txt.wildcards.admin_nav_menu_left.dashboard]</a><br>&nbsp;[/if]<a href="/admin/launchsysmgmt" target="_blank">~[text:psx.txt.wildcards.admin_nav_menu_left.administrator]</a><br>&nbsp;<a href="/admin/launchptadmin" target="_blank">~[text:psx.txt.wildcards.admin_nav_menu_left.pt_administrator]</a><br>&nbsp;<a href="/admin/reportworks/">~[text:psx.txt.wildcards.admin_nav_menu_left.reportworks]</a><br>&nbsp;</td>
+</tr>
+</table>
+<!-- end menu navigation -->

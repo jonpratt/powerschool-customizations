@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demographics</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_frame_css]
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/home.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Demographics
+	<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css]
+<!-- start of main menu and content -->
+    
+~[wc:title_student_begin_css]Demographics~[wc:title_student_end_css]
+    
+<form action="/~[self.page]?frn=~(studentfrn)&changesSaved=true" method="POST">
+    
+<!-- start of content area -->
+    
+~[if.~(gpv.changesSaved)=true]<div class="feedback-confirm">~[text:psx.common.changes_recorded]</div>[/if]
+    
+	<div class="box-round">
+	
+        <h2>Student Demographics</h2>
+        
+        <table id="studentDemographicsTable" class="linkDescList">
+            <colgroup>
+                <col style="width:20%">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>First (Given) Name</td>
+                    <td><input type="text" name="[STUDENTS]FIRST_NAME" value="" size="25" maxlength="50" id="firstName"></td>
+                </tr>
+                <tr>
+                    <td>Middle Name</td>
+                    <td><input type="text" name="[STUDENTS]MIDDLE_NAME" value="" size="15" maxlength="30" id="middleName"></td>
+                </tr>
+                <tr>
+                    <td>Last (Family) Name</td>
+                    <td><input type="text" name="[STUDENTS]LAST_NAME" value="" size="25" maxlength="50" id="lastName"></td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td><select id="selectGender" name="[01]gender">
+                            <option value="">
+                            <option value="M">~[text:psx.html.admin_students.generaldemographics.male]
+                            <option value="F">~[text:psx.html.admin_students.generaldemographics.female]
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>Date of Birth</td>
+                    <td><input type="text" id="fieldDOB" name="[STUDENTS]DOB" value="" size="11"></td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td>~(age)</td>
+                </tr>
+                <tr>
+                    <td>Graduation Year</td>
+                    <td><input type="text" id="fieldGraduationYear" name="[STUDENTS]GRADUATION_YEAR" value="" size="5"></td>
+                </tr>
+                <tr>
+                    <td>Grade Level</td>
+                    <td>~(grade_level)</td>
+                </tr>
+                <tr>
+                    <td>Student Number</td>
+                    <td><input type="text" id="fieldStudentNumber" name="[STUDENTS]STUDENT_NUMBER" value="" size="8"></td>
+                </tr>
+                <tr class="headerrow">
+                    <td colspan="2" class="bold">~[text:psx.html.admin_students.generaldemographics.federal_ethnicity_and_race]</td>
+                </tr>
+                <tr>
+                    <td>~[text:psx.html.admin_students.generaldemographics.ethnicity]</td>
+                    <td>
+                        <div>
+                        <label>~[text:psx.html.admin_students.generaldemographics.is_the_student_hispanic_or_latino]</label>
+                        <input id="defaultEthnicity" type="hidden" name="[STUDENTS]FEDETHNICITY" value="-1">~[Comment:Note that the onload javascript will revert this back to -1 after it's been changed to whatever is currently in the DB.]
+                        <div class="choicefloat"><input type="radio" id="radioFedEthYes" name="[STUDENTS]FEDETHNICITY" value="1">~[text:psx.html.admin_students.generaldemographics.yes]</div>
+                        <div class="choicefloat"><input type="radio" id="radioFedEthNo" name="[STUDENTS]FEDETHNICITY" value="0">~[text:psx.html.admin_students.generaldemographics.no]</div>
+                            ~[if.pref.FRE_AllowDeclineEthnicity=1]<div class="choicefloat"><span class="declined"><input type="radio" id="radioFedEthDecline" name="[01]FedEthnicity" value="2">~[pref:FRE_DeclineEthnicityText]</span></div>[/if]
+                        <div class=clearit><!-- --></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>~[text:psx.html.admin_students.generaldemographics.race]</td>
+                    <td>
+                        <input type="hidden" id="hiddenFieldSaveRace" name="SaveRace" value="1">
+                        <input type="hidden" id="r_none_storage" name="[01]FedRaceDecline" value="0"><!-- See 'decline_race' function in raceselection_block.ftl -->
+                        ~[brij_renderform:federalrace;:GetStudentRaceSelectionBlock]
+                    </td>
+                </tr>
+                <tr>
+                    <td>~[text:psx.html.admin_students.generaldemographics.schedulingreporting_ethnicity]</td>
+                    <td>
+                        <select id="primaryethnicity" name="[01]ethnicity" special="lists.ethnicity">
+                        <option>
+                        </select>
+                    </td>   
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Primary Household Information</h2>
+        
+        <h3>Primary Household Details</h3>
+        
+        <table class="linkDescList" id="primaryHouseholdDetailsTable">
+            <colgroup>
+                <col style="width:20%">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Residency Declaration</td>
+                    <td><select name="[Students]Area" id="residencyDeclaration">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    area as Area,
+                                    CASE WHEN area='~([STUDENTS]AREA)' THEN 'selected="selected"' ELSE '' END storedArea
+                                FROM
+                                    u_areas
+                                ORDER BY
+                                    area
+                            ]
+                            <option value="~(Area)" ~(storedArea)>~(Area)</option>
+                            [/tlist_sql]
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>Primary Phone Number</td>
+                    <td><input type="text" name="[Students]Home_Phone" value="" id="file_home_phone" /></td>
+                </tr>
+                <tr>
+                    <td>Primary Phone Number Type</td>
+                    <td><select name="[Students.U_Student_Demographics]PH_Home_Phone_Type" id="file_home_phone_type">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    id as ID,
+                                    CASE WHEN (SELECT COUNT(*) FROM u_student_demographics WHERE studentsdcid=~(rn))=0 THEN '' ELSE CASE WHEN id=(SELECT ph_home_phone_type FROM u_student_demographics WHERE studentsdcid=~(rn)) THEN 'selected="selected"' ELSE '' END END storedtype,
+                                    phonetype as PType
+                                FROM
+                                    u_phones
+                                ORDER BY
+                                    phonetype
+                            ]
+                            <option value="~(ID)" ~(storedtype)>~(PType)</option>
+                            [/tlist_sql]
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>Primary Email</td>
+                    <td><input type="text" name="[Students]GuardianEmail" value="" id="file_ph_guardianemail" /></td>
+                </tr>
+                <tr>
+                    <td>Mass Mailing Preference</td>
+                    <td><input type="radio" name="[Students.U_Student_Demographics]PH_Paper" value="0">Email</input><br><input type="radio" name="[Students.U_Student_Demographics]PH_Paper" value="1">Paper</input></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Primary Household Address</h3>
+        
+        <table class="linkDescList" id="primaryHouseholdAddressTable">
+            <colgroup>
+                <col style="width:20%">
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Legal Address</th>
+                    <th>Mailing Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3"><button type="button" id="copyFromLegal" onClick="copyLegalToMailing();">Copy from Legal to Mailing</button></td>
+                </tr>
+                <tr>
+                    <td>Street</td>
+                    <td><input type="text" name="[Students]Street" value="" id="file_l_street" /></td>
+                    <td><input type="text" name="[Students]Mailing_Street" value="" id="file_m_street" /></td>
+                </tr>
+                <tr>
+                    <td>City or Town</td>
+                    <td><input type="text" name="[Students]City" value="" id="file_l_city" /></td>
+                    <td><input type="text" name="[Students]Mailing_City" value="" id="file_m_city" /></td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td><input type="text" name="[Students]State" value="" id="file_l_state" /></td>
+                    <td><input type="text" name="[Students]Mailing_State" value="" id="file_m_state" /></td>
+                </tr>
+                <tr>
+                    <td>ZIP</td>
+                    <td><input type="text" name="[Students]ZIP" value="" id="file_l_zip" /></td>
+                    <td><input type="text" name="[Students]Mailing_ZIP" value="" id="file_m_zip" /></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Primary Household Adult Contacts</h3>
+        
+        <table class="linkDescList" id="primaryHouseholdAdultContactsTable">
+            <colgroup>
+                <col style="width:20%">
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Adult Contact 1</th>
+                    <th>Adult Contact 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>First (Given) Name</td>
+                    <td><input type="text" name="[Students.U_Student_Demographics]PHA1_FirstName" value="" id="file_pha1_firstname" /></td>
+                    <td><input type="text" name="[Students.U_Student_Demographics]PHA2_FirstName" value="" id="file_pha2_firstname" /></td>
+                </tr>
+                <tr>
+                    <td>Last (Family) Name</td>
+                    <td><input type="text" name="[Students.U_Student_Demographics]PHA1_LastName" value="" id="file_pha1_lastname" /></td>
+                    <td><input type="text" name="[Students.U_Student_Demographics]PHA2_LastName" value="" id="file_pha2_lastname" /></td>
+                </tr>
+                <tr>
+                    <td>Relationship to Student</td>
+                    <td><select name="[Students.U_Student_Demographics]PHA1_Rel" id="file_pha1_rel">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    id as ID,
+                                    CASE WHEN (SELECT COUNT(*) FROM u_student_demographics WHERE studentsdcid=~(rn))=0 THEN '' ELSE CASE WHEN id=(SELECT pha1_rel FROM u_student_demographics WHERE studentsdcid=~(rn)) THEN 'selected="selected"' ELSE '' END END storedRel,
+                                    reltype as relType
+                                FROM
+                                    u_household_relationships
+                                ORDER BY
+                                    ID
+                            ]
+                            <option value="~(ID)" ~(storedRel)>~(relType)</option>
+                            [/tlist_sql]
+                        </select></td>
+                    <td><select name="[Students.U_Student_Demographics]PHA2_Rel" id="file_pha2_rel">
+                            <option value="">Please choose...</option>
+                            ~[tlist_sql;
+                                SELECT
+                                    id as ID,
+                                    CASE WHEN (SELECT COUNT(*) FROM u_student_demographics WHERE studentsdcid=~(rn))=0 THEN '' ELSE CASE WHEN id=(SELECT pha2_rel FROM u_student_demographics WHERE studentsdcid=~(rn)) THEN 'selected="selected"' ELSE '' END END storedRel,
+                                    reltype as relType
+                                FROM
+                                    u_household_relationships
+                                ORDER BY
+                                    ID
+                            ]
+                            <option value="~(ID)" ~(storedRel)>~(relType)</option>
+                            [/tlist_sql]
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>Cell Phone</td>
+                    <td><input type="text" name="[Students.U_Student_Demographics]PHA1_CellPhone" value="" id="file_pha1_cellphone" /></td>
+                    <td><input type="text" name="[Students.U_Student_Demographics]PHA2_CellPhone" value="" id="file_pha2_cellphone" /></td>
+                </tr>
+                <tr>
+                    <td>Home Phone</td>
+                    <td><input type="text" name="[Students]Father_Home_Phone" value="" id="file_pha1_homephone" /></td>
+                    <td><input type="text" name="[Students]Mother_Home_Phone" value="" id="file_pha2_homephone" /></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" name="[Students.U_Student_Demographics]PHA1_Email" value="" id="file_pha1_email" /></td>
+                    <td><input type="text" name="[Students.U_Student_Demographics]PHA2_Email" value="" id="file_pha2_email" /></td>
+                </tr>
+                <tr>
+                    <td>Employer</td>
+                    <td><input type="text" name="[Students]Father_Employer" value="" id="file_pha1_employer" /></td>
+                    <td><input type="text" name="[Students]Mother_Employer" value="" id="file_pha2_employer" /></td>
+                </tr>
+                <tr>
+                    <td>Work Phone</td>
+                    <td><input type="text" name="[Students]FatherDayPhone" value="" id="file_pha1_workphone" /></td>
+                    <td><input type="text" name="[Students]MotherDayPhone" value="" id="file_pha2_workphone" /></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>State-Specific</h2>
+        
+        ~[x:insertfile;state/demographics~[displaypref:districtstate].html]
+        
+        <div class="button-row"><input type="hidden" name="ac" value="prim">~[submitbutton]</div>
+	
+    </div>
+    
+</form>
+
+<script>
+    function copyField (legalId, mailingId) {
+        $j('#' + mailingId).val($j('#' + legalId).val());
+    };
+    function copyLegalToMailing () {
+        copyField ('file_l_street', 'file_m_street');
+        copyField ('file_l_city', 'file_m_city');
+        copyField ('file_l_state', 'file_m_state');
+        copyField ('file_l_zip', 'file_m_zip');
+    };
+</script>
+    
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+</body> 
+</html>

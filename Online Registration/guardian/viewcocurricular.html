@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Co-Curricular Agreement</title>
+<!-- start of page body --> 
+~[wc:guardian_header] 
+	<h1>Co-Curricular Agreement</h1> 
+<!-- start student content --> 
+	<div class="box-round">
+        
+		<h2>Co-Curricular Agreement for ~[tlist_sql;
+                    select
+                        u_cocurricular_activities.activity as ActivityName
+                    from
+                        u_cocurricular_activities
+                    left outer join
+                        u_cocurricular_agreements on u_cocurricular_agreements.activityid=u_cocurricular_activities.id
+                    where
+                        u_cocurricular_agreements.id=~(gpv.CCID)
+                ]
+                    ~(ActivityName)
+                [/tlist_sql] submitted on ~([U_COCURRICULAR_AGREEMENTS]WHENCREATED)</h2> 
+		
+        <h3>Regulations</h3>
+
+        <p>All co-curricular activities are covered by this regulation including athletic teams, select choir, dramatics, club activities, as well as any and all co-curricular school field trips. A student is eligible to participate in any co-curricular activity provided he/she complies with the following:</p>
+        <ol>
+            <li>The student is receiving a C or higher in all but one class with no F’s.</li>
+            <li>The student has not been placed on school probation during the season of the activity.</li>
+            <li>Abstinence from alcohol, drugs, tobacco, smoking of any kind, and any other drugs outlined in MRSA Title 17A, from 1101 and including 1116, during that activity season.</li>
+        </ol>
+        <p><i>Students who are in the presence of other individuals engaged in the illegal use, sale or possession of alcohol, drugs, tobacco, smoking of any kind, and any other drugs outlined in MRSA Title 17A, Sections from 1101 and including 1116, shall be considered in violation of this policy. The eligibility policy does not pertain to preseason. Ineligibility will begin the first 5 days following preseason.</i></p>
+        <p><b>Length of Season:</b></p>
+        <p>In each of the athletic seasons, the length of the season is defined by the periods of practice and performances up to and including school-sponsored, end-of-the-year awards presentations not including preseason.</p>
+        <p>In the case of dramatics, the length of the season will be the length of one performance with rehearsal (i.e., 6 weeks for 1 act, 8-9 weeks for 3 acts).</p>
+        <p>In the case of select choir and other clubs and activities, a 9 week ranking period will be considered a season.</p>
+        <p><b>Academic Suspension:</b></p>
+        <p>A student will be suspended from all co-curricular activities for violation of #1 but may be reinstated after confirmation from the teacher that they are no longer in violation. Students who are ineligible at the start of a semester will remain ineligible for the first five school days of the new semester. Eligibility will be checked following every grading period.</p>
+        <p><b>Drug and Alcohol Suspension:</b></p>
+        <p>A student will be suspended from all such activities upon the first violation of #3 for a period of 2 weeks. During this two week suspension the student may be required to participate in an alcohol education program which may be administered in house. If the program is successfully completed in the two week time frame the suspension will be lifted. During such period of suspension the student must attend practices as scheduled for each activity involved. If such counseling as above is not set forth, the suspension shall continue as to all activities during the remainder of their respective seasons in which the violation took place. Where the violation involves use of tobacco, the student may choose to participate in an intensive no smoking program as approved by the Head of School or his authorized agent in place of counseling. Violation of #3 makes a student ineligible for any post season individual recognition in that activity.</p>
+        <p>In the case of other clubs and activities, the length of the season coincides with the school year. A second violation of any student during the same school year will result in a suspension from all activities during the remainder of the current season and the next two respective seasons including the next school year as well as required counseling which will need to be paid for by the student or their family.</p>
+        <p><i>A student is in violation of the alcohol or drug provision of #3 at any time during the length of the season as defined in this policy, either through the direct use of, sale or possession or from being in the presence of other individuals engaged in the illegal use, sale or possession of drugs, tobacco, smoking of any kind, and any other drugs outlined in MRSA Title 17A, Sections from 1101 and including 1116.</i></p>
+        <p>It is the responsibility of the athletic coaches and/or co-curricular advisors to implement this policy by reporting infractions to the Assistant Head of School and/or the Athletic Director as appropriate. Appeals regarding student eligibility shall be directed to the Head of School or his designee.</p>
+                    
+        ~[DirectTable.Select:U_COCURRICULAR_AGREEMENTS;id:~(gpv.CCID)]
+        
+        ~[tlist_sql;
+            SELECT
+                first_name as Firstname,
+                last_name as Lastname
+            
+            FROM
+                students
+            
+            WHERE
+                dcid=~(rn)            
+            ]
+        
+        <h3>Student Agreement</h3>
+        
+        <p>I, ~(Firstname) ~(Lastname), agree to adhere to the regulations above set by Foxcroft Academy and also recognize that I may forfeit my privilege to represent Foxcroft Academy in co-curricular activities should I choose to violate the eligibility policy.</p>
+            
+            [/tlist_sql]
+    
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Student Signature</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>~([U_COCURRICULAR_AGREEMENTS]COCURRIC_SIG_STUDENT)</td>
+                    <td>~([U_COCURRICULAR_AGREEMENTS]WHENCREATED)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Parent Agreement</h3>
+            
+        <p>I have read the above and agree to help my son/daughter fulfill their obligations to the co-curricular eligibility regulations of Foxcroft Academy. With knowledge of these regulations, I am aware that my son/daughter may be dismissed from any athletic team upon violation of said code.</p>
+        <p>I hereby give my consent for the named student:</p>
+        <ol>
+            <li>To represent Foxcroft Academy in athletic activities.</li>
+            <li>To accompany any school team of which he/she is a member on any of its trips.</li>
+            <li>And I authorize the school to obtain, through a physician of its own choice, any emergency medical care that may become reasonably necessary for the student in the course of such athletic activities or travel.</li>
+        </ol>
+        <br>
+            
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Agreement (0=No, 1=Yes)</th>
+                    <th>Parent Signature</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                ~[tlist_sql;
+                    select
+                        u_cocurricular_activities.activity as ActivityName
+                    from
+                        u_cocurricular_activities
+                    left outer join
+                        u_cocurricular_agreements on u_cocurricular_agreements.activityid=u_cocurricular_activities.id
+                    where
+                        u_cocurricular_agreements.id=~(gpv.CCID)
+                ]
+                    <td>~(ActivityName)</td>
+                [/tlist_sql]
+                    <td>~([U_COCURRICULAR_AGREEMENTS]COCURRIC_AGREE)</td>
+                    <td>~([U_COCURRICULAR_AGREEMENTS]COCURRIC_SIG_PARENT)</td>
+                    <td>~([U_COCURRICULAR_AGREEMENTS]WHENCREATED)</td>
+                </tr>
+            </tbody>
+        </table>
+            
+        <h3>Insurance</h3>
+            
+        <p>Any student who will be involved in athletics must either apply for the insurance plan, or show evidence of adequate insurance before he/she is allowed to participate in any sport.</p>
+            
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Selection</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>~([U_COCURRICULAR_AGREEMENTS]SCHOOL_INS)</td>
+                    <td>1 = School Insurance, 0 = Personal Insurance (described below)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table class="grid">
+            <thead>
+                <tr>
+                    <td>Name of Insurance Company</td>
+                    <td>Policy Number</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>~([U_COCURRICULAR_AGREEMENTS]INS_CO)</td>
+                    <td>~([U_COCURRICULAR_AGREEMENTS]INS_POLICY)</td>
+                </tr>
+            </tbody>
+        </table>
+
+	</div> 
+<!-- end student content --> 
+<!-- Sets the navigation highlighting: the value is the ID value of the navigation element you want to highlight--> 
+<input id="activeNav" type="hidden" value="#onlineregistration"/> 
+<!-- end of page body --> 
+~[wc:guardian_footer] 
+</body> 
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dorms Setup</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+    <style>
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display:none !important;
+        }
+        .octet {
+            width:25px;
+            text-align:right;
+        }
+    </style>
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->
+    <a href="/admin/home.html" target="_top">Start Page</a>
+    &gt;
+    <a href="/admin/studentdemodatasetup/studentdemodatasetup.html" target="_top">Student Demographic Data Setup</a>
+    &gt; Dorms Setup
+    <!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Dorms Setup</h1> 
+<!-- start of content area --> 
+	<div class="box-round" ng-controller="dormsCtrl" id="dormsCtrlDiv"> 
+		 <h2>Dorms</h2> 
+		 <p> 
+		 	These dorms are used in Boarding Demographics to indicate on-campus residence location.
+		 </p>
+        <div class="button-row">
+            <a class="button dialogM dockedDialog" title="Add" href="editdorms.html?id=-1">Add Item</a>
+        </div>
+        <div id="ngDormsTable" ng-cloak>
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Dorm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in dormsList">
+                    <td><a href="editdorms.html?id={{item.id}}" class="dialogM dockedDialog" title="Edit">{{item.Dorm}}</a></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css]
+    <script>
+        require(['angular', 'studentdemodatasetup/dormssetup'], function(angular) {
+           angular.bootstrap(document, ['dormsApp']); 
+        });
+    </script>
+</body> 
+</html>

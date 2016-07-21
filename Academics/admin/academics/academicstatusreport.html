@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Academic Status Report</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->Your breadcrumbs go here<!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Academic Status Report</h1> 
+<!-- start of content area --> 
+	<div class="box-round">
+    
+    <form action="academicstatusreport.html?storecode=~(gpv.storecode)">
+    
+    <h2>Reporting Term: <select name="storecode">
+                        <option value=''>Choose reporting term</option>
+                        ~[tlist_sql;
+                            SELECT
+                                storecode as storeCode,
+                                CASE WHEN storecode='~(gpv.storecode)' THEN 'selected="selected"' ELSE '' END as selectedStoreCode
+
+                            FROM
+                                termbins
+                            WHERE
+                                termid=~(curyearid)*100
+                            ORDER BY
+                                date2
+                        ]
+                        <option value="~(storeCode)" ~(selectedStoreCode)>~(storeCode)</option>
+                        [/tlist_sql]
+                        </select></h2>
+    
+        <div class="button-row">
+            ~[submitbutton]
+        </div>
+        
+    </form>    
+    
+		 <table border="0" cellspacing="0" cellpadding="0" class="tableToGrid">
+             <thead>
+                 <th>Student Name</th>
+                 <th>Boarding Status</th>
+                 <th>Gender</th>
+                 <th>Grade Level</th>
+                 <th>Lunch Status</th>
+                 <th>DF Status</th>
+                 <th>Credits</th>
+                 <th>Academic At-Risk Points</th>
+             </thead>
+             <tbody>
+                 ~[tlist_sql;
+SELECT
+	students.lastfirst as studentName,
+	CASE studentcorefields.area WHEN 'Non-Resident' THEN 'BOARDING' ELSE 'DAY' END as boardingStatus,
+	CASE students.gender WHEN 'F' THEN 'FEMALE' WHEN 'M' THEN 'MALE' ELSE 'NA' END as gender,
+	storedgrades.grade_level as gradeLevel,
+	CASE ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig') WHEN 'F' THEN 'FR' WHEN 'R' THEN 'FR' ELSE 'NE' END as lunchStatus,
+	CASE WHEN SUM(CASE storedgrades.grade WHEN 'D' THEN 1 WHEN 'F' THEN 2 WHEN 'WF' THEN 2 ELSE 0 END)>0 THEN 'DF' ELSE 'P' END as dfStatus,
+	SUM(courses.credit_hours) as totalCredits,
+	SUM(CASE storedgrades.grade WHEN 'D' THEN 1 WHEN 'F' THEN 2 WHEN 'WF' THEN 2 ELSE 0 END) as aarp
+
+FROM
+	students
+
+INNER JOIN
+  studentcorefields on studentcorefields.studentsdcid=students.dcid
+
+INNER JOIN
+	storedgrades ON storedgrades.studentid=students.id AND storedgrades.storecode='~(gpv.storecode)'
+  
+INNER JOIN
+	courses on storedgrades.course_number=courses.course_number
+
+INNER JOIN
+	terms on storedgrades.termid=terms.id AND terms.yearid=~(curyearid) AND terms.schoolid=~(curschoolid)
+
+WHERE
+	students.enroll_status=0
+
+GROUP BY
+	students.lastfirst, studentcorefields.area, students.gender, storedgrades.grade_level, ps_customfields.getstudentscf(students.id, 'ME_SchoolLunchElig')
+
+ORDER BY
+	storedgrades.grade_level, students.lastfirst
+                 ]
+                 <tr>
+                     <td>~(studentName)</td>
+                     <td>~(boardingStatus)</td>
+                     <td>~(gender)</td>
+                     <td>~(gradeLevel)</td>
+                     <td>~(lunchStatus)</td>
+                     <td>~(dfStatus)</td>
+                     <td>~(totalCredits)</td>
+                     <td>~(aarp)</td>
+                 </tr>
+                 [/tlist_sql]
+             </tbody>
+         </table>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

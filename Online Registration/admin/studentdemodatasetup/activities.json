@@ -1,0 +1,9 @@
+[~[tlist_sql;
+select ID, ACTIVITY, SEASON
+from u_cocurricular_activities
+order by activity]
+    {"id":~(id),
+     "Activity":"~(activity;js)",
+     "Season":"~(season;js)"
+    },
+[/tlist_sql]{}]

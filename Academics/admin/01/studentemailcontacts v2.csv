@@ -1,0 +1,27 @@
+"FirstName", "LastName", "YOG", "Email", "BCC", "AccessID", "AccessPW"
+~[tlist_sql;
+SELECT
+	students.first_name as FirstName,
+	students.last_name as LastName,
+  students.sched_yearofgraduation as YOG,
+	(students.student_web_id || '@foxcroftacademy.org') as Email,
+  (SELECT	TO_CHAR (guardianemail) FROM students
+  UNION
+  SELECT pha1_email FROM u_student_demographics
+  UNION
+  SELECT pha2_email FROM u_student_demographics
+  UNION
+  SELECT sha1_email FROM u_secondary_household
+  UNION
+  SELECT sha2_email FROM u_secondary_household) as BCC  
+  
+FROM
+	students
+  
+WHERE
+  students.enroll_status=0
+  
+ORDER BY
+  students.lastfirst
+]"~(FirstName)", "~(LastName)", "~(YOG)", "~(Email)", "~(BCC)", "~(AccessID)", "~(AccessPassword)"
+[/tlist_sql]

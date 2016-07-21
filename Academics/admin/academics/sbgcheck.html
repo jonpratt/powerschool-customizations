@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Standards-Based Grading Check</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+
+<script type="text/javascript">
+	$j(function(){
+		$j("#storecode").change(function(){
+		window.location='sbgcheck.html?' + this.value
+		});
+	});
+</script>
+
+</head> 
+
+<body> 
+	~[wc:admin_header_css]
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Standards-Based Grading Check</h1> 
+<!-- start of content area --> 
+	<div class="box-round"> 
+		<h2>About this report</h2> 
+		<p>This report for shows historical data from stored course and standards grades for all students for ~(gpv.storecode).</p>
+        
+        <p><b>Please select a reporting term:</b>
+        <select id="storecode">
+        <option value=''>Select reporting term</option>
+        <option value="storecode=P1">P1</option>
+        <option value="storecode=Q1">Q1</option>
+        <option value="storecode=P2">P2</option>
+        <option value="storecode=Q2">Q2</option>
+        <option value="storecode=P3">P3</option>
+        <option value="storecode=Q3">Q3</option>
+        <option value="storecode=P4">P4</option>
+        <option value="storecode=Q4">Q4</option>
+        </select></p>
+
+        <h2>~(gpv.storecode) Course and Standards Grades</h2>
+        
+        <table class="grid" border="0" cellpadding="4" cellspacing="0" id="courseoverview" data-pstablefilter='{"cols":"6,9"}'>
+            <thead>
+                <tr>
+                    <th class="bold">Teacher</th>
+                    <th class="bold">Term</th>
+                    <th class="bold">Course</th>
+                    <th class="bold">SectionID</th>
+                    <th class="bold">Student</th>
+                    <th class="bold">~(gpv.storecode) Course Grade</th>
+                    <th class="bold">StandardID</th>
+                    <th class="bold">Standard</th>
+                    <th class="bold">~(gpv.storecode) Standard Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+            ~[tlist_sql;
+SELECT
+    storedgrades.teacher_name as teacher,
+    terms.abbreviation as termAbbreviation,
+    courses.course_name as courseName,
+    sections.id as sectionID,
+    students.lastfirst as studentName,
+    storedgrades.grade as courseGrade,
+    standard.standardid as standardID,
+    standard.name as standardName,
+    standardgradesection.standardgrade as standardGrade
+
+FROM
+    students
+
+INNER JOIN
+    cc ON cc.studentid=students.id AND cc.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10
+
+INNER JOIN
+    sections on sections.id=cc.sectionid
+                
+INNER JOIN
+    courses ON courses.course_number=cc.course_number
+
+INNER JOIN
+    storedgrades ON storedgrades.studentid=students.id AND storedgrades.sectionid=sections.id AND storedgrades.storecode='~(gpv.storecode)'
+
+INNER JOIN
+    terms on terms.id=cc.termid AND terms.schoolid=~(curschoolid)
+
+LEFT OUTER JOIN
+    standardcourseassoc ON standardcourseassoc.coursesdcid=courses.dcid
+
+LEFT OUTER JOIN
+    standard ON standard.standardid=standardcourseassoc.standardid
+
+LEFT OUTER JOIN
+    standardgradesection ON standardgradesection.standardid=standard.standardid AND standardgradesection.studentsdcid=students.dcid AND standardgradesection.sectionsdcid=sections.dcid AND standardgradesection.storecode=storedgrades.storecode
+
+WHERE
+    students.enroll_status=0 AND
+    (standard.yearid=~(curyearid) OR standard.yearid IS NULL)
+
+ORDER BY
+    storedgrades.teacher_name, terms.abbreviation, courses.course_name, sections.id, students.lastfirst, standard.displayposition
+	]
+            <tr>
+                <td>~(teacher)</td>
+                <td>~(termAbbreviation)</td>
+                <td>~(courseName)</td>
+                <td>~(sectionID)</td>
+                <td>~(studentName)</td>
+                <td>~(courseGrade)</td>
+                <td>~(standardID)</td>
+                <td>~(standardName)</td>
+                <td>~(standardGrade)</td>
+            </tr>
+            [/tlist_sql]
+            </tbody>
+        </table>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

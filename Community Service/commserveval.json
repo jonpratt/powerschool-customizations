@@ -1,0 +1,57 @@
+[~[tlist_sql;
+SELECT
+	teachers.lastfirst as Advisor,
+	students.lastfirst as Student,
+	students.id as StudentID,
+	students.grade_level as Grade,
+	SUM(CASE WHEN virtualtablesdata2.user_defined_integer=9 AND virtualtablesdata2.related_to_table='communityservice' THEN virtualtablesdata2.user_defined_numeric ELSE 0 END) as G09H,
+	SUM(CASE WHEN virtualtablesdata2.user_defined_integer=10 AND virtualtablesdata2.related_to_table='communityservice' THEN virtualtablesdata2.user_defined_numeric ELSE 0 END) as G10H,
+	SUM(CASE WHEN virtualtablesdata2.user_defined_integer=11 AND virtualtablesdata2.related_to_table='communityservice' THEN virtualtablesdata2.user_defined_numeric ELSE 0 END) as G11H,
+	SUM(CASE WHEN virtualtablesdata2.user_defined_integer=12 AND virtualtablesdata2.related_to_table='communityservice' THEN virtualtablesdata2.user_defined_numeric ELSE 0 END) as G12H,
+	SUM(CASE WHEN virtualtablesdata2.user_defined_numeric IS NOT NULL AND virtualtablesdata2.related_to_table='communityservice' THEN virtualtablesdata2.user_defined_numeric ELSE 0 END) as TotalHours,
+   u_extgradreqs.cshreqtotal as CSHReqTot,
+   u_extgradreqs.cshreqg12 as CSHReqG12
+
+FROM students
+
+INNER JOIN
+    u_extgradreqs on students.dcid=u_extgradreqs.studentsdcid
+   
+INNER JOIN
+	cc on students.id=cc.studentid AND cc.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10 AND cc.course_number='104'
+	
+INNER JOIN
+	teachers on cc.teacherid=teachers.id
+
+LEFT JOIN
+	virtualtablesdata2 on students.id=virtualtablesdata2.foreignkey
+
+WHERE
+	students.enroll_status=0
+
+GROUP BY
+	teachers.lastfirst,
+	students.lastfirst,
+	students.id,
+	students.grade_level,
+   u_extgradreqs.cshreqtotal,
+   u_extgradreqs.cshreqg12
+
+ORDER BY
+	students.grade_level,
+	teachers.lastfirst,
+	students.lastfirst]
+ {
+  "Advisor":"~(Advisor;js)",
+  "Student":"~(Student;js)",
+  "StudentID":~(StudentID;js),
+  "Grade":~(Grade;js),
+  "G09H":~(G09H;js),
+  "G10H":~(G10H;js),
+  "G11H":~(G11H;js),
+  "G12H":~(G12H;js),
+  "totH":~(totH;js),
+  "ReqTot":~(ReqTot;js),
+  "ReqG12":~(ReqG12;js)
+ },
+[/tlist_sql]{}]

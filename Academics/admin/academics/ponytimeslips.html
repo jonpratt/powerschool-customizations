@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pony Time Slips</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->Your breadcrumbs go here<!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Pony Time Slips</h1> 
+<!-- start of content area --> 
+	<div class="noprint box-round" id="reportSetupDiv">
+    
+    <form action="ponytimeslips.html?storecode=~(gpv.storecode)">
+    
+    <h2>Reporting Term: <select name="storecode">
+                        <option value=''>Choose reporting term</option>
+                        ~[tlist_sql;
+                            SELECT
+                                storecode as storeCode,
+                                CASE WHEN storecode='~(gpv.storecode)' THEN 'selected="selected"' ELSE '' END as selectedStoreCode
+
+                            FROM
+                                termbins
+                            WHERE
+                                termid=~(curyearid)*100
+                            ORDER BY
+                                date2
+                        ]
+                        <option value="~(storeCode)" ~(selectedStoreCode)>~(storeCode)</option>
+                        [/tlist_sql]
+                        </select></h2>
+    
+        <div class="button-row">
+            ~[submitbutton]
+        </div>
+        
+    </form>    
+    
+    </div>
+    
+    <div style="page-break-after: always">
+    </div>
+    
+    <div id="ponyTimeSlip">
+    ~[tlist_sql;
+SELECT
+	students.first_name as firstName, 
+	students.last_name as lastName,
+    storedgrades.storecode as storeCode,
+    storedgrades.grade as courseGrade,
+	storedgrades.course_name as courseName,
+	users.first_name as teacherFirstName,
+    users.last_name as teacherLastName
+	
+FROM
+	students
+
+INNER JOIN
+	storedgrades ON students.id=storedgrades.studentid
+                 AND storedgrades.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10 
+                 AND storedgrades.storecode='~(gpv.storecode)' 
+                 AND storedgrades.grade IN ('D', 'F')
+
+INNER JOIN
+    users on users.lastfirst=storedgrades.teacher_name
+
+WHERE
+	students.enroll_status=0
+
+ORDER BY
+	storedgrades.teacher_name, storedgrades.course_name, storedgrades.sectionid, students.lastfirst
+    ]
+    <h1>Pony Time Academic Support Plan</h1>
+        
+        <h3>Student Name: ~(firstName) ~(lastName)</h3>
+        
+        <p>Starting immediately, you are expected to report to Pony Time at 8:00am each day because you earned a ~(storecode) grade of ~(courseGrade) in <b>~(courseName)</b> with <b>~(teacherFirstName) ~(teacherLastName).</b></p>
+        
+        <p>You are expected to attend Pony Time as much as possible to work to demonstrate proficiency and earn a passing grade.</p>
+        
+        <p>You must at least attend Pony Time according to the following schedule:</p>
+        
+        <table class="grid">
+            <tr>
+                <td>Period 1 Classes</td>
+                <td>Monday</td>
+            </tr>
+            <tr>
+                <td>Period 2 Classes</td>
+                <td>Tuesday</td>
+            </tr>
+            <tr>
+                <td>Period 3 Classes</td>
+                <td>Wednesday</td>
+            </tr>
+            <tr>
+                <td>Period 4 Classes</td>
+                <td>Thursday</td>
+            </tr>
+            <tr>
+                <td>Period 5 Classes</td>
+                <td>Friday</td>
+            </tr>
+        </table>
+        
+        <div class="box-round">
+            <b>
+            <p>Please take advantage of this opportunity to show Pony Pride in your academics.</p>
+            <p>We are here to help you do what it takes to be successful!</p>
+            </b>
+        </div>
+        
+        <div style="page-break-after: always">
+        </div>
+    [/tlist_sql]
+        
+    </div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

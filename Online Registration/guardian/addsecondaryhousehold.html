@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Secondary Household Information</title>
+<!-- start of page body --> 
+~[wc:guardian_header] 
+	<h1>Add Secondary Household Information</h1> 
+<!-- start student content --> 
+	<div class="box-round"> 
+		<h2>Secondary Household</h2> 
+		<p>Please provide the information requested below.</p>
+        
+        <form action="formsubmitted.html" id="addSecondaryHousehold" method="POST">
+            
+    ~[DirectTable.Select:U_PORTALUPDATE;id:-1]
+    
+    <fieldset id="addSecondaryHouseholdFieldset">
+        
+        <h3>Secondary Household Details</h3>
+        <div>
+            <label>Custody Type</label>
+            <select name="[U_PORTALUPDATE]SH_Custody">
+                <option>Please choose...</option>
+                <option value="1">Shared</option>
+                <option value="2">Non-Custodial</option>
+            </select>
+        </div>
+        
+        <div>
+            <label>Mass Mailing Preference</label>
+            <input type="radio" name="[U_PORTALUPDATE]SH_PAPER" value="0" checked>Electronic</input>  <input type="radio" name="[U_PORTALUPDATE]SH_PAPER" value="1">Paper</input>
+        </div>
+        
+        <h3>Secondary Household Legal Address</h3>
+        <div>
+            <label>Legal Street Address</label>
+            <input type="text" name="[U_PORTALUPDATE]SH_Street_Legal" value="" id="legalStreet" />
+        </div>
+        
+        <div>
+            <label>Legal City or Town</label>
+            <input type="text" name="[U_PORTALUPDATE]SH_City_Legal" value="" id="legalCity" />
+        </div>
+        
+        <div>
+            <label>Legal State</label>
+            <input type="text" name="[U_PORTALUPDATE]SH_State_Legal" value="" id="legalState" />
+        </div>
+        
+        <div>
+            <label>Legal ZIP</label>
+            <input type="text" name="[U_PORTALUPDATE]SH_Zip_Legal" value="" id="legalZip" />
+        </div>
+        
+        <h3>Secondary Household Mailing Address</h3>
+        
+        <button type="button" id="copyFromLegal" onClick="copyLegalToMailing();">Copy to Mailing from Legal Address</button>
+        
+        <div>
+            <label>Mailing Street Address</label>
+            <input type="text" name="[U_PORTALUPDATE]SH_Street_Mailing" value="" id="mailingStreet" />
+        </div>
+        
+        <div>
+            <label>Mailing City or Town</label>
+            <input type="text" name="[U_PORTALUPDATE]SH_City_Mailing" value="" id="mailingCity" />
+        </div>
+        
+        <div>
+            <label>Mailing State</label>
+            <input type="text" name="[U_PORTALUPDATE]SH_State_Mailing" value="" id="mailingState" />
+        </div>
+        
+        <div>
+            <label>Mailing ZIP</label>
+            <input type="text" name="[U_PORTALUPDATE]SH_Zip_Mailing" value="" id="mailingZip" />
+        </div>
+        
+        <h3>Secondary Household Adult Contact 1</h3>
+        
+        <div>
+            <label>Adult Contact 1 First (Given) Name</label>
+            <input type="text" name="[U_PORTALUPDATE]SHA1_FirstName" value="" id="sha1FirstName" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Last (Family) Name</label>
+            <input type="text" name="[U_PORTALUPDATE]SHA1_LastName" value="" id="sha1LastName" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Relationship to Student</label>
+            <select name="[U_PORTALUPDATE]SHA1_Rel">~[wc:reltypepicker]</select>
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Primary Phone Number</label>
+            <input type="text" name="[U_PORTALUPDATE]SHA1_Phone" value="" id="sha1Phone" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Primary Phone Type</label>
+            <select name="[U_PORTALUPDATE]SHA1_Phone_Type">~[wc:ptypepicker]</select>
+        </div>
+        
+        <div>
+            <label>Adult Contact 1 Email</label>
+            <input type="text" name="[U_PORTALUPDATE]SHA1_Email" value="" id="sha1Email" />
+        </div>
+        
+        <h3>Secondary Household Adult Contact 2</h3>
+        
+        <div>
+            <label>Adult Contact 2 First (Given) Name</label>
+            <input type="text" name="[U_PORTALUPDATE]SHA2_FirstName" value="" id="sha2FirstName" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Last (Family) Name</label>
+            <input type="text" name="[U_PORTALUPDATE]SHA2_LastName" value="" id="sha2LastName" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Relationship to Student</label>
+            <select name="[U_PORTALUPDATE]SHA2_Rel">~[wc:reltypepicker]</select>
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Primary Phone Number</label>
+            <input type="text" name="[U_PORTALUPDATE]SHA2_Phone" value="" id="sha2Phone" />
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Primary Phone Type</label>
+            <select name="[U_PORTALUPDATE]SHA2_Phone_Type">~[wc:ptypepicker]</select>
+        </div>
+        
+        <div>
+            <label>Adult Contact 2 Email</label>
+            <input type="text" name="[U_PORTALUPDATE]SHA2_Email" value="" id="sha2Email" />
+        </div>
+        
+        <div class="button-row">
+            <input type="hidden" id="whoChanged" name="[U_PORTALUPDATE]updatedby" value="~[x:userid;guardianid]" />
+            <input type="hidden" id="needtoprocess" name="[U_PORTALUPDATE]SHUpdatePending" value="1" />
+            <input type="hidden" id="updateType" name="[U_PORTALUPDATE]UpdateType" value="2" />
+            <input type="hidden" id="shUpdatePendingInput" name="[Students.U_Student_Demographics]SHUpdatePending" value="1" />
+            <input type="hidden" name="ac" value="autosendupdate" />
+            
+            <button type="submit" id="btnSubmit" name="btnSubmit" onClick="shUpdatePending();">Submit</button>
+        </div>
+        
+    </fieldset>    
+</form>
+
+        
+	</div> 
+<!-- end student content --> 
+<!-- Sets the navigation highlighting: the value is the ID value of the navigation element you want to highlight--> 
+<input id="activeNav" type="hidden" value="#onlineregistration"/> 
+<!-- end of page body --> 
+~[wc:guardian_footer] 
+
+<script>
+    function copyField (legalId, mailingId) {
+        $j('#' + mailingId).val($j('#' + legalId).val());
+    };
+    function copyLegalToMailing () {
+        copyField ('legalStreet', 'mailingStreet');
+        copyField ('legalCity', 'mailingCity');
+        copyField ('legalState', 'mailingState');
+        copyField ('legalZip', 'mailingZip');
+    };
+    function shUpdatePending () {
+        $j('#shUpdatePendingInput').val("1");  
+    };
+</script>
+</body> 
+</html>

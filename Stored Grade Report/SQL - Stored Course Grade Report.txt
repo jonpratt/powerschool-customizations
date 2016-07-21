@@ -1,0 +1,77 @@
+SELECT
+	storedgrades.course_name as Course,
+	storedgrades.teacher_name as Teacher,
+	storedgrades.grade as Grade,
+	storedgrades.comment_value as TeacherComment
+	
+FROM
+	storedgrades
+
+WHERE
+	storedgrades.studentid=338
+	AND storedgrades.termid>=2300
+	AND storedgrades.storecode='Q4'
+	
+ORDER BY
+	storedgrades.course_name
+	
+	
+---ABOVE WORKS TO GET COURSE GRADE & COMMENT---
+
+SELECT
+	courses.course_name as Course,
+	storedgrades.grade as CourseGrade,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as StandardGrade
+
+FROM
+	standardsgrades
+	
+INNER JOIN
+	standards on standardsgrades.standardsid=standards.id
+  
+INNER JOIN
+	courses on (cast(standards.courses as varchar(11))=courses.course_number)
+
+INNER JOIN
+	storedgrades on storedgrades.course_number=courses.course_number
+	
+WHERE
+	standardsgrades.studentid=338
+	AND storedgrades.studentid=338
+	AND storedgrades.storecode='Q4'
+	AND standardsgrades.yearid>=23
+	AND standardsgrades.storecode='Q4'
+
+ORDER BY
+	courses.course_name, standards.sortorder
+	
+-=-=-=-=-=-
+
+SELECT
+	courses.course_name as Course,
+	storedgrades.grade as CourseGrade,
+	SELECT standards.name FROM standards WHERE  as Standard,
+	standardsgrades.transaveragescore as StandardGrade
+
+FROM
+	standardsgrades
+	
+INNER JOIN
+	standards on standardsgrades.standardsid=standards.id
+  
+INNER JOIN
+	courses on (cast(standards.courses as varchar(11))=courses.course_number)
+
+INNER JOIN
+	storedgrades on storedgrades.course_number=courses.course_number
+	
+WHERE
+	standardsgrades.studentid=338
+	AND storedgrades.studentid=338
+	AND storedgrades.storecode='Q4'
+	AND standardsgrades.yearid>=23
+	AND standardsgrades.storecode='Q4'
+
+ORDER BY
+	courses.course_name, standards.sortorder

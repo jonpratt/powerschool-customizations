@@ -1,0 +1,18 @@
+<div id="insertedContentDiv">
+
+    <span id="gradMods">
+    
+        <p>If the graduation cap icon is showing at the top of this screen, there are graduation requirement modifications in place for this student!</p>
+        
+    </span>
+
+</div>
+
+<script>
+
+    $j(document).ready(function() {
+            $j('.box-round > table:first').before($j('#gradMods').html());
+            $j('#insertedContentDiv').empty();
+            });
+
+</script>

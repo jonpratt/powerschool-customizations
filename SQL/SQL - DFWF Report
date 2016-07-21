@@ -1,0 +1,35 @@
+<!-- Ds, Fs, and WFs for a reporting term, with info for ASP processing & contact -->
+
+SELECT
+	students.first_name as FirstName, 
+	students.last_name as LastName,
+	storedgrades.grade as Grade,
+	storedgrades.course_name as Course,
+	(teachers.first_name || ' ' || teachers.last_name) as Teacher,
+	storedgrades.sectionid as SectionID,
+	storedgrades.comment_value as TeachComm,
+	students.student_web_id || '@foxcroftacademy.org' as Email,
+	(teachers.email_addr || ', ' ||
+	students.guardianemail || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'Non_Custodial___Email_Address') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_1') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_parent_email_2') || ', ' ||
+	ps_customfields.getstudentscf(students.id, 'international_agent_email')) as CC
+	
+FROM
+	students
+
+INNER JOIN
+	storedgrades ON students.id=storedgrades.studentid
+
+INNER JOIN
+	teachers ON storedgrades.teacher_name=teachers.lastfirst
+
+WHERE
+	students.enroll_status=0
+	AND storedgrades.termid BETWEEN 2400 AND 2410
+	AND storedgrades.storecode='P3'
+	AND storedgrades.grade IN ('D', 'F')
+
+ORDER BY
+	teachers.lastfirst, storedgrades.sectionid, students.lastfirst

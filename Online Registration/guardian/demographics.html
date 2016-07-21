@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Student Information and Annual Forms</title>    
+    
+<!-- start of page body --> 
+~[wc:guardian_header] 
+	<h1>Student Information and Annual Forms</h1> 
+    
+    ~[if#isstudent.isstudent]
+            <table border="0" cellspacing="0" cellpadding="0" align="center">
+                <tr align="center">
+                    <td>Only parent-guardian accounts can submit information updates and annual form agreements.</td>
+                </tr>
+            </table>
+    [else#isstudent]
+            
+    ~[if#parentverify.~([Students.U_Student_Demographics]UpdatePending)=1]
+    <div class="box-round" id="updatePending">
+        
+        <br>
+        <p>Information for this student has been submitted for processing. To reduce the potential for error, we can only process one submission at a time per student. Please check back in 24-48 hours.</p>
+        <br>
+        <p><a href="formsoverview.html">Return to Digital Forms Overview</a></p>
+        <br>
+
+    </div>
+    [else#parentverify]
+            
+<!-- start student content --> 
+    <div class="box-round" id="informationAndForms"> 
+
+        <form action="formsubmitted.html" method="POST" id="primaryUpdate">
+            
+        ~[DirectTable.Select:U_PORTALUPDATE;ID:-1]
+
+        <h2>Step 1: Review and Update Student Information</h2>
+            
+            <p>If the information on file is correct, you may leave the update field blank. Otherwise, please enter new information in the update fields to provide complete and accurate information. If there is a phone number on file that we should delete, please enter 000-000-0000 in the update field and the information will be removed from our system when your update is processed.</p>
+            
+            <h3>Primary Household Legal Address</h3>
+            
+            <table class="grid" id="PH_Legal_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Street Address</td>
+                        <td>~([Students]Street)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_L_STREET" value="" id="ph_l_street" /></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td>~([Students]City)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_L_CITY" value="" id="ph_l_city" /></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td>~([Students]State)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_L_STATE" value="" id="ph_l_state" /></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td>~([Students]ZIP)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_L_ZIP" value="" id="ph_l_zip" /></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Primary Household Mailing Address</h3>
+            
+            <button type="button" id="copyFromLegal" onClick="copyLegalToMailing();">Copy from Legal Address Update</button>
+            
+            <table class="grid" id="PH_Mailing_Address">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Street Address</td>
+                        <td>~([Students]Mailing_Street)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_M_STREET" value="" id="ph_m_street" /></td>
+                    </tr>
+                    <tr>
+                        <td>City or Town</td>
+                        <td>~([Students]Mailing_City)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_M_CITY" value="" id="ph_m_city" /></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td>~([Students]Mailing_State)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_M_STATE" value="" id="ph_m_state" /></td>
+                    </tr>
+                    <tr>
+                        <td>ZIP</td>
+                        <td>~([Students]Mailing_ZIP)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_M_ZIP" value="" id="ph_m_zip" /></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Primary Household Contact Information</h3>
+            
+            <table class="grid" id="PH_Contact_Info">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primary Phone Number</td>
+                        <td>~([Students]Home_Phone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PH_HOME_PHONE" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Primary Phone Number Type</td>
+                        <td>~[tlist_sql;
+                                select phonetype as PType from u_phones where id=~([Students.U_Student_Demographics]PH_Home_Phone_Type)
+                            ]~(PType)[/tlist_sql]</td>
+                        <td><select name="[U_PORTALUPDATE]PH_HOME_PHONE_TYPE">
+                            ~[wc:ptypepicker]
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Primary Email</td>
+                        <td>~([Students]GuardianEmail)</td>
+                        <td><input type="email" name="[U_PORTALUPDATE]PH_GUARDIANEMAIL" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Mass Mailing Preference</td>
+                        <td>~[if#PHPaper.~([Students.U_Student_Demographics]PH_Paper)=1]Paper [else#PHPaper]Electronic [/if#PHPaper]</td>
+                        <td><input type="radio" name="[U_PORTALUPDATE]PH_PAPER" value="0" checked>Electronic</input><br><input type="radio" name="[U_PORTALUPDATE]PH_PAPER" value="1">Paper</input></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Primary Household Adult Contact 1</h3>
+    
+            <table class="grid" id="PH_Adult1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (Given) Name</td>
+                        <td>~([Students.U_Student_Demographics]PHA1_FirstName)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_FirstName" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        <td>~([Students.U_Student_Demographics]PHA1_LastName)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_LastName" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        <td>~[tlist_sql;
+                                select reltype as RelType from u_household_relationships where id=~([Students.U_Student_Demographics]PHA1_Rel)
+                            ]~(RelType)[/tlist_sql]</td>
+                        <td><select name="[U_PORTALUPDATE]PHA1_Rel">
+                            ~[wc:reltypepicker]
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Cell Phone</td>
+                        <td>~([Students.U_Student_Demographics]PHA1_CellPhone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_CellPhone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Home Phone</td>
+                        <td>~([Students]Father_Home_Phone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_HomePhone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>~([Students.U_Student_Demographics]PHA1_Email)</td>
+                        <td><input type="email" name="[U_PORTALUPDATE]PHA1_Email" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Employer</td>
+                        <td>~([Students]Father_Employer)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_Employer" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Work Phone</td>
+                        <td>~([Students]FatherDayPhone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA1_WorkPhone" value="" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>Primary Household Adult Contact 2</h3>
+    
+            <table class="grid" id="PH_Adult2">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First (Given) Name</td>
+                        <td>~([Students.U_Student_Demographics]PHA2_FirstName)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_FirstName" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Last (Family) Name</td>
+                        <td>~([Students.U_Student_Demographics]PHA2_LastName)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_LastName" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship to Student</td>
+                        <td>~[tlist_sql;
+                                select reltype as RelType from u_household_relationships where id=~([Students.U_Student_Demographics]PHA2_Rel)
+                            ]~(RelType)[/tlist_sql]</td>
+                        <td><select name="[U_PORTALUPDATE]PHA2_Rel">
+                            ~[wc:reltypepicker]
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Cell Phone</td>
+                        <td>~([Students.U_Student_Demographics]PHA2_CellPhone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_CellPhone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Home Phone</td>
+                        <td>~([Students]Mother_Home_Phone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_HomePhone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>~([Students.U_Student_Demographics]PHA2_Email)</td>
+                        <td><input type="email" name="[U_PORTALUPDATE]PHA2_Email" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Employer</td>
+                        <td>~([Students]Mother_Employer)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_Employer" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Work Phone</td>
+                        <td>~([Students]MotherDayPhone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]PHA2_WorkPhone" value="" /></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Emergency Contact 1</h3>
+
+            <p>A neighbor or nearby relative who will assume temporary care of your child if you cannot be reached.</p>
+
+            <table class="grid" id="EC1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>~([Students]Emerg_Contact_1)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC1_Name" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship</td>
+                        <td>~([Students]Emerg_1_Rel)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC1_Rel" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>~([Students]Emerg_Phone_1)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC1_Phone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone Type</td>
+                        <td>~[tlist_sql;
+                                select phonetype as PType from u_phones where id=~([Students]Emerg_1_PType)
+                            ]~(PType)[/tlist_sql]</td>
+                        <td><select name="[U_PORTALUPDATE]EC1_Phone_Type">
+                            ~[wc:ptypepicker]
+                            </select></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Emergency Contact 2</h3>
+
+            <p>A neighbor or nearby relative who will assume temporary care of your child if you cannot be reached.</p>
+    
+            <table class="grid" id="EC2">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>~([Students]Emerg_Contact_2)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC2_Name" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship</td>
+                        <td>~([Students]Emerg_2_Rel)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC2_Rel" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>~([Students]Emerg_Phone_2)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC2_Phone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone Type</td>
+                        <td>~[tlist_sql;
+                                select phonetype as PType from u_phones where id=~([Students]Emerg_2_PType)
+                            ]~(PType)[/tlist_sql]</td>
+                        <td><select name="[U_PORTALUPDATE]EC2_Phone_Type">
+                            ~[wc:ptypepicker]
+                            </select></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Emergency Contact 3</h3>
+
+            <p>A neighbor or nearby relative who will assume temporary care of your child if you cannot be reached.</p>     
+    
+            <table class="grid" id="EC3">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>~([Students]Emerg_Contact_3)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC3_Name" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Relationship</td>
+                        <td>~([Students]Emerg_3_Rel)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC3_Rel" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>~([Students]Emerg_3_Phone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]EC3_Phone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone Type</td>
+                        <td>~[tlist_sql;
+                                select phonetype as PType from u_phones where id=~([Students]Emerg_3_PType)
+                            ]~(PType)[/tlist_sql]</td>
+                        <td><select name="[U_PORTALUPDATE]EC3_Phone_Type">
+                            ~[wc:ptypepicker]
+                            </select></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Medical Information</h3>
+    
+            <table class="grid" id="medicalinfo">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>On File</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Doctor Name</td>
+                        <td>~([Students]Doctor_Name)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Doctor_Name" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Doctor Phone</td>
+                        <td>~([Students]Doctor_Phone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Doctor_Phone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Dentist Name</td>
+                        <td>~([Students]Dentist_Name)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Dentist_Name" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Dentist Phone</td>
+                        <td>~([Students]Dentist_Phone)</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Dentist_Phone" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Over-The-Counter (OTC) Medication Notes (Clinic Agreement required for administration)</td>
+                        <td>~([Students.U_Student_Demographics]Clinic_OTC_Note)</td>
+                        <td><textarea name="[U_PORTALUPDATE]Clinic_OTC_Note" rows="5" cols="50" value=""></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Prescription Medications and-or Medical Remarks</td>
+                        <td>~([Students]Medical_Considerations)</td>
+                        <td><textarea name="[U_PORTALUPDATE]Medical_Considerations" rows="5" cols="50" value=""></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Allergies and-or Disabilities</td>
+                        <td>~([Students]Allergies)</td>
+                        <td><textarea name="[U_PORTALUPDATE]Allergies" rows="5" cols="50" value=""></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <h2>Step 2: Sign Annual Agreements</h2>
+            
+            <h3>Emergency Agreement</h3>
+
+            ~[if#emergencyagree.~([Students.U_Student_Demographics]Emergency_Agree)=1]
+            <b><p>Your Emergency Agreement has been submitted and is on file.</p></b>
+            [else#emergencyagree]
+
+            <p>In case of accident or serious illness, I request the school to contact me. If the school is unable to reach me, I hearby authorize the school to call the medical provider indicated above and follow his/her instructions. If it is impossible to contact this medical provider the school may make whatever arrangements seem necessary to provide care and treatment for my child.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Agreement</th>
+                        <th>Parent-Guardian Signature</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]Emergency_Agree" value="0" checked>No</input><br><input type="radio" name="[U_PORTALUPDATE]Emergency_Agree" value="1">Yes</input></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Emergency_Sig" value="" /></td>
+                        <td>~[date]</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            [/if#emergencyagree]
+
+            <h3>Clinic Agreement</h3>
+
+            ~[if#clinicagree.~([Students.U_Student_Demographics]Clinic_Agree)=1]
+            <b><p>Your Clinic Agreement has been submitted and is on file.</p></b>
+            [else#clinicagree]
+
+            <p>The clinic has permission to administer to my student over-the-counter (OTC) medications such as Tylenol, Ibuprofen, Tums, Mylanta, and cough drops as deemed necessary by the school nurse. If you wish to specify a certain dosage, please do so above (Medical Information > OTC Notes). This agreement must be signed before the school nurse can administer OTC medications, and provides permission for the clinic to both release and receive information from the student's health care provider(s).</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Agreement</th>
+                        <th>Parent-Guardian Signature</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]Clinic_Agree" value="0" checked>No</input><br><input type="radio" name="[U_PORTALUPDATE]Clinic_Agree" value="1">Yes</input></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Clinic_Sig" value="" /></td>
+                        <td>~[date]</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Prescribed Medication Expectations</h3>
+
+            <p>Effective the first day of school, all medications to be taken at school must be cleared with the Health Center nurse and we must have the <a href="http://www.foxcroftacademy.org/wp-content/uploads/2013/07/Health-Center-Mailing-2015-2016.pdf" target="_blank">Prescription Medication Form</a> filled out by the student’s medical provider. Whenever possible, the scheduling of medication should be altered to allow the student to receive all doses at home. Students may not transport their own medications to school except as defined below. It is the responsibility of the parent/guardian to know and follow these directions.</p>
+            <p>Both over-the-counter medications and short-term prescriptions need to be in a sealed envelope or container with the student’s name, medication name, dosage and instructions. Your written request is required for medications to be administered to your child.</p>
+            <p>Prescription medications to be administered for longer than two weeks must be sent in the current prescription container with the student’s name, medication name, special instructions and provider’s name. Upon request, your pharmacist will provide you with a second empty prescription container with the required information. Your written request, as well as the provider’s order, must be on file before we can give your child his/her medication. Students may carry their inhalers and/or epinephrine pens with them. You <b>MUST</b> have your medical provider complete the <a href="http://www.foxcroftacademy.org/wp-content/uploads/2013/07/Health-Center-Mailing-2015-2016.pdf" target="_blank">Prescription Medication Form</a> and return it to the school nurse at the time of the request.</p>
+
+            <h3>Immunization Expectations</h3>
+
+            <p><b>All students must comply with the State of Maine requirements for immunizations to attend Foxcroft Academy.</b> If you have submitted your child’s immunization records once, or if they attended SeDoMoCha and are moving into 9th grade, their immunization record should be complete. If you have any questions or concerns, please contact the Health Center at 564-8351.</p>
+            <p><b>State of Maine requirements for Immunizations</b></p>
+            <p>All children entering the schools will be required to present their medical immunization records that show compliance with current state law requirements at the time of school admission.  This is shown by:</p>
+            <ul>
+                <li>Up-to-date Certificate of Immunization</li>
+                <li>A note from your physician stating that child has had chickenpox</li>
+                <li>Exemption as described below</li>
+            </ul>
+            <p>If a child is unable to have the required immunizations for medical reasons, a statement to that effect will be required from the family’s doctor.</p>
+            <p>If a child’s parent objects to the required immunizations based on religion or personal/philosophical reasons, an annual written statement indicating this will be required from the parent. However, during an outbreak of a disease, a child who has not been immunized will be excluded from school for the duration of the outbreak, as determined by Maine CDC.</p>
+            <p>School health records need to include the following information:</p>
+            <ul>
+                <li>The child’s name and date of birth</li>
+                <li>A minimum of:
+                    <ul>
+                        <li>5 DPT (4 DPT if 4th given after 4th birthday)</li>
+                        <li>4 Polio (3 Polio if 3rd given after 4th birthday)</li>
+                        <li>2 MMR (measles, mumps, rubella) which must be given on or after the first birthday</li>
+                        <li>Varicella- one dose if given before age 13; or, children age 13 or over with no reliable history of chickenpox or vaccination should receive 2 doses of Varicella vaccine given at least 4 weeks apart.</li>
+                    </ul>
+                    </li>
+                <li>Each immunization entry must include:
+                    <ul>
+                        <li>Vaccine type</li>
+                        <li>Date administered</li>
+                        <li>Name of provider or:
+                            <ul>
+                                <li>Proof of disease by note from provider (chickenpox only)</li>
+                                <li>A signed letter of exemption for missing immunizations</li>
+                            </ul>
+                            </li>
+                    </ul>
+                    </li>
+            </ul>
+            <p>Legal Reference:	Title 20-A MRSA Sec. 6352-6358. Cross Reference: JEA Compulsory Attendance Ages, JFAA Residency Requirements, JECB Admission of Non-Resident Students</p>
+
+            [/if#clinicagree]
+
+            <h3>RSU 68 and Foxcroft Academy School Bus Safety and Riding Regulations</h3>
+
+            ~[if#busagree.~([Students.U_Student_Demographics]Bus_Agree)=1]
+            <b><p>Your Bus Agreement has been submitted and is on file.</p></b>
+            [else#busagree]
+
+            <p>The riding of tax-supported school buses to and from the schools of MSAD#68 and Foxcroft  Academy is a privilege granted by the Board of Directors and conditioned on each rider’s individual behavior and observance of the Safety and Riding Regulations. Drivers are authorized to enforce these rules and to make decisions as necessary in the interest of the safe conveyance of school children. Failure to comply with the regulations or wishes of the bus driver may result in suspension of expulsion of riding privileges.</p>
+            <p>All pupils shall be ready in the morning at the usual time the bus arrives at their homes or at the designated bus stop. Due to school schedules the bus cannot wait for those who are tardy.</p>
+            <p><b>Bus Safety Regulations</b></p>
+            <ol>
+                <li>Be respectful to the bus driver and do not distract him/her.</li>
+                <li>Report all emergencies to the driver immediately.</li>
+                <li>Sit properly in the seat while the bus is in motion.</li>
+                <li>Do not run, push or shove while entering or exiting the bus. Always wait for the driver to fully open the door.</li>
+                <li>Do not litter or clutter the bus aisle.</li>
+                <li>Do not place any part of your body outside of the bus at any time.</li>
+                <li>If the student must cross in front of the bus, he/she should walk at least twelve feet in front of the bus, stop when he/she reaches the driver’ side and look both ways. Continue when clear by walking to the other side of the street.</li>
+                <li>While waiting for the bus, students should stay out of the roadway and not engage in play or activity that can be dangerous or distracting to motorists or the oncoming bus.</li>
+                <li>Do not stop to pick up dropped objects near the bus. Leave them for an adult.</li>
+                <li>Permission from a parent or guardian must be given to the driver to change destination or bus routes.</li>
+                <li>The following articles are not allowed on regular runs: sleds, skis, and ski poles, hockey sticks, animals of any type, large school projects, large musical instruments, spiked track, football or baseball shoes, and any other object that may interfere with the safety of the passengers or the safe operation of the bus.</li>
+            </ol>
+            <p><b>Bus Riding Regulations</b></p>
+            <ol>
+                <li>Student will sit properly in the seats and remain seated while the bus is in motion.</li>
+                <li>Students will be respectful of the bus driver and refrain form the use of loud, boisterous, vulgar or inappropriate language or gestures at all times.</li>
+                <li>While entering, exiting or moving on the bus, students will walk in an orderly fashion and not push or shove others.</li>
+                <li>Students will not place any part of their body out the windows or display any inappropriate gestures through the windows.</li>
+                <li>There will be no use or display of alcohol, drugs, tobacco, or flame-producing device.  The possession of any knife or weapon is strictly prohibited, and will be referred to law enforcement officials.</li>
+                <li>There will be no throwing of any object within or out of the bus at any time.</li>
+                <li>There will be no fighting while riding on the bus.</li>
+                <li>There will be no lollipops, nuts, seeds, or popcorn consumed on the bus.</li>
+                <li>No perfumes, colognes or sprays may be used on the bus.</li>
+            </ol>
+            <p>Violation of regulations 2, 5, 6, and 7 will result in immediate suspension. Violation of any other regulations may as well if the driver determines it necessary and justified.</p>
+            <p><b>Consequences</b></p>
+            <p>Drivers of school buses are authorized to enforce the safety and riding regulations and to make decisions as necessary in the interest of the safe conveyance of school children. If children fail to comply with regulations or wishes of the bus driver, suspension or expulsion from riding privileges may result.</p>
+            <p>Discipline forms will be used by all drivers to keep student, parents, the school and bus contractor informed about noncompliance of regulations. These will be given directly to the students mailed to the parents, or given to school officials and must be signed by a parent or guardian and returned to the bus driver before the student is allowed to continue riding.</p>
+            <p>Depending on the severity and nature of the incident will depend upon the consequences. As the riding regulations state, numbers 2, 5, 6, and 7 will result in immediate suspension; however, violation of any others may also if the drive determines it necessary. The first suspension of riding privileges will be three school days in length the second will be five, and if continual misbehavior results in a third suspension, riding privileges will be suspended for the reminder for the school year or until the bus driver, contractor, parents and student meet with the Superintendent to determine whether the student will be allowed to ride the school bus.</p>
+            <p>The school bus disciplinary form will explain the incident and consequences and must be returned to the driver before the student is allowed to continue riding. These notices will be kept on file throughout the school year at each school and the contractor’s office.</p>
+            <p>It must be noted that any student suspended from riding one bus will not be permitted to ride on any other bus. This includes sports events and field trips.</p>
+            <p>Parents are encouraged to contact the bus contractor if they have any concerns. Drivers will make themselves available to explain any incident in question and how they determined the consequences. If any parent is not satisfied with his/her communication with the contractor or driver, they should then contact the Superintendent of Schools. A log of this communication will be kept at the contractor’s office throughout the school year.</p>
+            
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Agreement</th>
+                        <th>Student Signature</th>
+                        <th>Date</th>
+                        <th>Parent-Guardian Signature</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]Bus_Agree" value="0" checked>No</input><br><input type="radio" name="[U_PORTALUPDATE]Bus_Agree" value="1">Yes</input></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Bus_Sig_Student" value="" /></td>
+                        <td>~[date]</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Bus_Sig_Parent" value="" /></td>
+                        <td>~[date]</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            [/if#busagree]
+
+            <h3>Student Handbook Agreement</h3>
+
+            ~[if#handbookagree.~([Students.U_Student_Demographics]Handbook_Agree)=1]
+            <b><p>Your Student Handbook Agreement has been submitted and is on file.</p></b>
+            [else#handbookagree]
+
+            <p>We, the student and parent/guardian, verify by signing on the appropriate spaces below that we have read, understand, and agree to follow and to be held accountable to the rules, policies, procedures, and other information provided in the Foxcroft Academy Student Handbook for 2015-2016 school year.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Agreement</th>
+                        <th>Student Signature</th>
+                        <th>Date</th>
+                        <th>Parent-Guardian Signature</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]Handbook_Agree" value="0" checked>No</input><br><input type="radio" name="[U_PORTALUPDATE]Handbook_Agree" value="1">Yes</input></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Handbook_Sig_Student" value="" /></td>
+                        <td>~[date]</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Handbook_Sig_Parent" value="" /></td>
+                        <td>~[date]</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            [/if#handbookagree]
+
+            <h3>Student Technology and Internet Use Rules and Permission</h3>
+
+            ~[if#ipadagree.~([Students.U_Student_Demographics]iPad_Agree)=1]
+            <b><p>Your iPad Agreement has been submitted and is on file.</p></b>
+            [else#ipadagree]
+
+            <p>All students are responsible for their actions and activities involving Foxcroft Academy (FA) computers, iPads, network and Internet services, and for their computer files, passwords and accounts. The Technology and Internet Use Rules are included in the Student Handbook. These rules provide general guidance concerning the use of FA’s resources and examples of prohibited uses. The rules do not attempt to describe every possible prohibited activity by students. Students, parents and school staff who have questions about whether a particular activity is prohibited are encouraged to contact the Assistant Head of School for Academics. These rules apply to all FA provided computers and iPads wherever used, and all uses of FA’s servers, Internet access and networks regardless of how they are accessed.</p>
+            <p>My signature below indicates that I have read and understand the Technology and Internet Use Rules. I agree to allow my student to take the iPad home with full understanding that any damage, loss or theft will be my responsibility and not the responsibility of Foxcroft Academy.</p>
+            <p>There are three available insurance options. Please indicate your choice below.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]iPad_Insurance" value="1" checked></td>
+                        <td>I <b>will</b> purchase the insurance that is provided to me by Foxcroft Academy and my student <b>will</b> be allowed to take their iPad home upon receipt of the full insurance payment ($50 annual premium, please make check payable to Foxcroft Academy). An additional $15 deductible will apply for each incident resulting in an insurance claim.</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]iPad_Insurance" value="2"></td>
+                        <td>I <b>will</b> purchase the insurance that is provided to me by Foxcroft Academy and I request that my student <b>will not</b> be allowed to take their iPad home ($50 annual premium, please make check payable to Foxcroft Academy). An additional $15 deductible will apply for each incident resulting in an insurance claim.</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]iPad_Insurance" value="3"></td>
+                        <td>I <b>will not</b> purchase the insurance that is provided to me by Foxcroft Academy and I understand that my student <b>will not</b> be allowed to take their iPad home and any damage, loss or theft will be my responsibility and not the responsibility of Foxcroft Academy.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Agreement</th>
+                        <th>Parent Signature</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]iPad_Agree" value="0" checked>No</input><br><input type="radio" name="[U_PORTALUPDATE]iPad_Agree" value="1">Yes</input></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]iPad_Sig" value="" /></td>
+                        <td>~[date]</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            [/if#ipadagree]
+
+            <h3>Enrollment Agreement</h3>
+
+            ~[if#enrollmentagree.~([Students.U_Student_Demographics]Enrollment_Agree)=1]
+            <b><p>Your Enrollment Agreement has been submitted and is on file.</p></b>
+            [else#enrollmentagree]
+
+            <p>Foxcroft Academy is an independent school that accepts public tuition students, at the Maximum Allowable Tuition rate, which includes tuition and Insured Value Factor payment, as stipulated under Title 20-A M.R.S.A. Section 2701. Parents who are legal residents of the communities within RSU #68 will have their tuition paid for by RSU #68 as provided by state statute.</p>
+            <p><b>For tuition purposes, we are legal residents of: <select name="[U_PORTALUPDATE]Area">
+                            <option>...</option>
+                            ~[tlist_sql; select area from u_areas order by area]
+                            <option value="~(area)">~(area)</option>
+                            [/tlist_sql]</select></b></p>
+            <p>Upon enrollment, the student will conform to all regulations of Foxcroft Academy.</p>
+            <p>Enrollment at Foxcroft Academy for a Choice town (non RSU #68) is a privilege, not a right; failure to comply with regulations as stipulated in the Student Handbook by a student, may result in disenrollment of the student by administration.</p>
+            <p>Foxcroft Academy reserves the right to use photos, videos, audio and other recordings or representations of its students and their work in its various publications, website, and news releases. If you need more information regarding this policy, or do not want your child’s photos or videos used, please contact the Head of School’s office.</p>
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Agreement</th>
+                        <th>Student Signature</th>
+                        <th>Date</th>
+                        <th>Parent-Guardian Signature</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="radio" name="[U_PORTALUPDATE]Enrollment_Agree" value="0" checked>No</input><br><input type="radio" name="[U_PORTALUPDATE]Enrollment_Agree" value="1">Yes</input></td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Enrollment_Sig_Student" value="" /></td>
+                        <td>~[date]</td>
+                        <td><input type="text" name="[U_PORTALUPDATE]Enrollment_Sig_Parent" value="" /></td>
+                        <td>~[date]</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            [/if#enrollmentagree]
+
+            <h2>Step 3: Submit</h2>
+
+            <table class="grid">
+                <tbody>
+                    <tr>
+                        <td><b>I have reviewed, and if necessary for accuracy or completeness, updated all information on file for my student. (You must check this box to submit this form.)</b></td>
+                        <td><input type="checkbox" id="checky"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="button-row">
+                <input type="hidden" name="[U_PORTALUPDATE]DemoReviewComplete" value="0" id="demoReviewCompleteInput" />
+                <input type="hidden" id="whoChanged" name="[U_PORTALUPDATE]updatedby" value="~[x:userid;guardianid]" />
+                <input type="hidden" id="needtoprocess" name="[U_PORTALUPDATE]UpdatePending" value="1" />
+                <input type="hidden" id="updateType" name="[U_PORTALUPDATE]UpdateType" value="1" />
+                <input type="hidden" id="parentverified" name="[Students.U_Student_Demographics]UpdatePending" value="1" />
+                <input type="hidden" name="ac" value="autosendupdate" />
+                <span id="buttonShow">
+                    
+                </span>
+            </div>
+
+        </form>
+	</div> 
+    [/if#parentverify]
+    [/if#isstudent]
+<!-- end student content --> 
+<!-- Sets the navigation highlighting: the value is the ID value of the navigation element you want to highlight--> 
+<input id="activeNav" type="hidden" value="#onlineregistration"/> 
+<!-- end of page body --> 
+~[wc:guardian_footer] 
+
+<script>
+    function reviewVerified () {
+        
+        $j('#buttonShow').html('');
+    };   
+</script>
+
+<script type='text/javascript'>
+$j(document).ready(function(){
+    $j('#checky').click(function(){
+        var thisCheck = $j(this);
+        if (thisCheck.is (':checked')) {
+            $j('#buttonShow').html('<button name="btnSubmit" id="btnSubmit" type="submit" onClick="setParentVerified();">Submit</button>');
+            $j('#demoReviewCompleteInput').val('1');
+        }
+        else {
+            $j('#buttonShow').html('');
+            $j('#demoReviewCompleteInput').val('0');
+        }
+    });
+});
+</script>
+
+<script>
+    function copyField (legalId, mailingId) {
+        $j('#' + mailingId).val($j('#' + legalId).val());
+    };
+    function copyLegalToMailing () {
+        copyField ('ph_l_street', 'ph_m_street');
+        copyField ('ph_l_city', 'ph_m_city');
+        copyField ('ph_l_state', 'ph_m_state');
+        copyField ('ph_l_zip', 'ph_m_zip');
+    };
+</script>
+
+<SCRIPT LANGUAGE="JavaScript">
+    function setParentVerified() {
+        document.getElementById("parentverified").value='1';
+    }
+</SCRIPT>
+
+</body>
+</html>

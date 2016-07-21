@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Laptop Inventory</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+    <style>
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display:none !important;
+        }
+        .octet {
+            width:25px;
+            text-align:right;
+        }
+    </style>
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start --><!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Laptop Inventory</h1> 
+<!-- start of content area --> 
+	<div class="box-round" ng-controller="invCtrl" id="invCtrlDiv"> 
+		<h2>Laptop Inventory</h2>
+        <div class="button-row">
+            <a class="button dialogM dockedDialog" title="Add" href="editdialog.html?id=-1">Add Item</a>
+        </div>
+        <div id="ngLaptopInventoryTable" ng-cloak data-pss-grid-widget data-data="invList" data-filtered-data="invListFilt" data-client-side-pagination="true">
+        <label pss-filter-field="IP1|number">IP Octet 1</label>
+        <label pss-filter-field="IP2|number">IP Octet 2</label>
+        <label pss-filter-field="IP3|number">IP Octet 3</label>
+        <label pss-filter-field="IP4|number">IP Octet 4</label>
+        <label pss-filter-field="FullIP">FullIP</label>
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th data-pss-sort-fields="InvID|number">Inventory ID</th>
+                    <th data-pss-sort-fields="Manufacturer">Manufacturer</th>
+                    <th data-pss-sort-fields="Make">Make</th>
+                    <th data-pss-sort-fields="Model">Model</th>
+                    <th data-pss-sort-fields="SerialNumber">Serial Number</th>
+                    <th data-pss-sort-fields="CPUType">CPU Type</th>
+                    <th data-pss-sort-fields="CPUSpeed|number">CPU Speed</th>
+                    <th data-pss-sort-fields="RAMSize|number">RAM (GB)</th>
+                    <th data-pss-sort-fields="HDSize|number">HD (GB)</th>
+                    <th data-pss-sort-fields="Platform">Platform</th>
+                    <th data-pss-sort-fields="OS">OS</th>
+                    <th data-pss-sort-fields="IP1|number,IP2|number,IP3|number,IP4|number">IP Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in invListFilt">
+                    <td><a href="editdialog.html?id={{item.id}}" class="dialogM dockedDialog" title="Edit">{{item.InvID}}</a></td>
+                    <td>{{item.Manufacturer}}</td>
+                    <td>{{item.Make}}</td>
+                    <td>{{item.Model}}</td>
+                    <td>{{item.SerialNumber}}</td>
+                    <td>{{item.CPUType}}</td>
+                    <td>{{item.CPUSpeed}}</td>
+                    <td>{{item.RAMSize}}</td>
+                    <td>{{item.HDSize}}</td>
+                    <td>{{item.Platform}}</td>
+                    <td>{{item.OS}}</td>
+                    <td>{{item.FullIP}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+    <script>
+        require(['angular', 'inventory/inventory'], function(angular) {
+           angular.bootstrap(document, ['invApp']); 
+        });
+    </script>
+</body> 
+</html>

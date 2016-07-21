@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Portal Updates</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_frame_css]
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/home.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Portal Updates
+	<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css]
+<!-- start of main menu and content -->
+~[wc:title_student_begin_css]Portal Updates~[wc:title_student_end_css]
+
+<!-- start of content area -->
+	
+    <div class="box-round" id="primaryUpdatesDiv">
+        <h2>Primary Household Updates and Annual Forms</h2>
+        
+        <table class="grid" id="primaryUpdatesTable">
+            <thead>
+                <tr>
+                    <th>Update</th>
+                    <th>Submitted By Account Name</th>
+                    <th>Submitted On Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                ~[tlist_sql;
+                    SELECT
+                        studentsdcid as DCID,
+                        id as UpdateID,
+                        whocreated as Who,
+                        whencreated as When
+                    FROM
+                        u_portalupdate
+                    WHERE
+                        studentsdcid=~(rn) AND
+                        updatetype=1
+                    ORDER BY
+                        whencreated
+                ]
+                <tr>
+                    <td><a href="viewphupdate.html?frn=001~(DCID)&phid=~(UpdateID)">View</a></td>
+                    <td>~(Who)</td>
+                    <td>~(When)</td>
+                </tr>
+                [/tlist_sql]
+            </tbody>
+        </table>
+
+    </div>
+    
+    <div class="box-round" id="secondaryUpdatesDiv">
+        <h2>Secondary Household Updates</h2>
+		 
+        <table class="grid" id="secondaryUpdatesTable">
+            <thead>
+                <tr>
+                    <th>Update</th>
+                    <th>Submitted By Account Name</th>
+                    <th>Submitted On Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                ~[tlist_sql;
+                    SELECT
+                        studentsdcid as DCID,
+                        id as UpdateID,
+                        whocreated as Who,
+                        whencreated as When
+                    FROM
+                        u_portalupdate
+                    WHERE
+                        studentsdcid=~(rn) AND
+                        updatetype=2
+                    ORDER BY
+                        whencreated
+                ]
+                <tr>
+                    <td><a href="viewshupdate.html?frn=001~(DCID)&shid=~(UpdateID)">View</a></td>
+                    <td>~(Who)</td>
+                    <td>~(When)</td>
+                </tr>
+                [/tlist_sql]
+            </tbody>
+        </table>
+        
+	</div>
+    
+    <div class="box-round" id="cocurricularUpdatesDiv">
+        <h2>Cocurricular Forms</h2>
+		 
+        <table class="grid" id="cocurricularUpdatesTable">
+            <thead>
+                <tr>
+                    <th>Update</th>
+                    <th>Activity</th>
+                    <th>Submitted By Account Name</th>
+                    <th>Submitted On Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                ~[tlist_sql;
+                    SELECT
+                        u_cocurricular_agreements.studentsdcid as DCID,
+                        u_cocurricular_agreements.id as AgreementID,
+                        u_cocurricular_activities.activity as Activity,
+                        u_cocurricular_agreements.whocreated as Who,
+                        u_cocurricular_agreements.whencreated as When
+                    FROM
+                        u_cocurricular_agreements
+                    INNER JOIN
+                        u_cocurricular_activities on u_cocurricular_activities.id=u_cocurricular_agreements.activityid
+                    WHERE
+                        u_cocurricular_agreements.studentsdcid=~(rn)
+                    ORDER BY
+                        u_cocurricular_agreements.whencreated
+                ]
+                <tr>
+                    <td><a href="viewcocurricular.html?frn=001~(DCID)&ccid=~(AgreementID)">View</a></td>
+                    <td>~(Activity)</td>
+                    <td>~(Who)</td>
+                    <td>~(When)</td>
+                </tr>
+                [/tlist_sql]
+            </tbody>
+        </table>
+        
+	</div>
+
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+</body> 
+</html>

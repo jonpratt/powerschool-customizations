@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Secondary Household</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_frame_css]
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/home.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Secondary Household
+	<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css]
+<!-- start of main menu and content -->
+~[wc:title_student_begin_css]Secondary Household~[wc:title_student_end_css]
+
+<!-- start of content area -->
+
+~[if#existsecondaryhousehold.~([Students.U_Student_Demographics]HasSecondaryHousehold)=1]
+            
+    <div class="box-round" id="editSecondaryHouseholdDiv">
+        
+        <h2>Secondary Household Details</h2>
+        <div class="button-row">
+            ~[tlist_sql;
+            SELECT
+               U_SECONDARY_HOUSEHOLD.STUDENTSDCID as DCID,
+               U_SECONDARY_HOUSEHOLD.ID as SHID
+            
+            FROM
+               U_SECONDARY_HOUSEHOLD
+
+            WHERE
+               U_SECONDARY_HOUSEHOLD.STUDENTSDCID=~(rn)
+            ]
+            <a class="button dialogM dockedDialog" href="editsecondaryhousehold.html?frn=001~(DCID)&shid=~(SHID)">Modify or Delete Record ~(SHID)</a>
+            [/tlist_sql]
+        </div>
+        
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Field</th>
+                    <th>Information on file</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+            ~[tlist_sql;
+            SELECT
+               (SELECT CUSTODYTYPE FROM U_CUSTODY INNER JOIN U_SECONDARY_HOUSEHOLD ON U_SECONDARY_HOUSEHOLD.SH_CUSTODY=U_CUSTODY.ID WHERE U_SECONDARY_HOUSEHOLD.STUDENTSDCID=~(rn)) as shCustody,
+               CASE WHEN U_SECONDARY_HOUSEHOLD.SH_PAPER=1 THEN 'Paper' ELSE 'Email' END as shMassMailingPref,
+               U_SECONDARY_HOUSEHOLD.SH_STREET_LEGAL as shStreetLegal,
+               U_SECONDARY_HOUSEHOLD.SH_CITY_LEGAL as shCityLegal,
+               U_SECONDARY_HOUSEHOLD.SH_STATE_LEGAL as shStateLegal,
+               U_SECONDARY_HOUSEHOLD.SH_ZIP_LEGAL as shZipLegal,
+               U_SECONDARY_HOUSEHOLD.SH_STREET_MAILING as shStreetMailing,
+               U_SECONDARY_HOUSEHOLD.SH_CITY_MAILING as shCityMailing,
+               U_SECONDARY_HOUSEHOLD.SH_STATE_MAILING as shStateMailing,
+               U_SECONDARY_HOUSEHOLD.SH_ZIP_MAILING as shZipMailing,
+               U_SECONDARY_HOUSEHOLD.SHA1_FIRSTNAME as sha1FirstName,
+               U_SECONDARY_HOUSEHOLD.SHA1_LASTNAME as sha1LastName,
+               (SELECT RELTYPE FROM U_HOUSEHOLD_RELATIONSHIPS INNER JOIN U_SECONDARY_HOUSEHOLD ON U_SECONDARY_HOUSEHOLD.SHA1_REL=U_HOUSEHOLD_RELATIONSHIPS.ID WHERE U_SECONDARY_HOUSEHOLD.STUDENTSDCID=~(rn)) as sha1Rel,
+               U_SECONDARY_HOUSEHOLD.SHA1_PHONE as sha1Phone,
+               (SELECT PHONETYPE FROM U_PHONES INNER JOIN U_SECONDARY_HOUSEHOLD ON U_SECONDARY_HOUSEHOLD.SHA1_PHONE_TYPE=U_PHONES.ID WHERE U_SECONDARY_HOUSEHOLD.STUDENTSDCID=~(rn)) as sha1PhoneType,
+               U_SECONDARY_HOUSEHOLD.SHA1_EMAIL as sha1Email,
+               U_SECONDARY_HOUSEHOLD.SHA2_FIRSTNAME as sha2FirstName,
+               U_SECONDARY_HOUSEHOLD.SHA2_LASTNAME as sha2LastName,
+               (SELECT RELTYPE FROM U_HOUSEHOLD_RELATIONSHIPS INNER JOIN U_SECONDARY_HOUSEHOLD ON U_SECONDARY_HOUSEHOLD.SHA2_REL=U_HOUSEHOLD_RELATIONSHIPS.ID WHERE U_SECONDARY_HOUSEHOLD.STUDENTSDCID=~(rn)) as sha2Rel,
+               U_SECONDARY_HOUSEHOLD.SHA2_PHONE as sha2Phone,
+               (SELECT PHONETYPE FROM U_PHONES INNER JOIN U_SECONDARY_HOUSEHOLD ON U_SECONDARY_HOUSEHOLD.SHA2_PHONE_TYPE=U_PHONES.ID WHERE U_SECONDARY_HOUSEHOLD.STUDENTSDCID=~(rn)) as sha2PhoneType,
+               U_SECONDARY_HOUSEHOLD.SHA2_EMAIL as sha2Email
+
+            FROM
+               U_SECONDARY_HOUSEHOLD
+            
+            WHERE
+               U_SECONDARY_HOUSEHOLD.STUDENTSDCID=~(rn)
+            ]
+                
+                <tr>
+                    <td rowspan="2">Household Info</td>
+                    <td>Custody Type</td>
+                    <td>~(shCustody)</td>
+                </tr>
+                <tr>
+                    <td>Mass Mailing Preference</td>
+                    <td>~(shMassMailingPref)</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">Legal Address</td>
+                    <td>Street</td>
+                    <td>~(shStreetLegal)</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>~(shCityLegal)</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>~(shStateLegal)</td>
+                </tr>
+                <tr>
+                    <td>ZIP</td>
+                    <td>~(shZipLegal)</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">Mailing Address</td>
+                    <td>Street</td>
+                    <td>~(shStreetMailing)</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>~(shCityMailing)</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>~(shStateMailing)</td>
+                </tr>
+                <tr>
+                    <td>ZIP</td>
+                    <td>~(shZipMailing)</td>
+                </tr>
+                <tr>
+                    <td rowspan="6">Adult Contact 1</td>
+                    <td>First (Given) Name</td>
+                    <td>~(sha1FirstName)</td>
+                </tr>
+                <tr>
+                    <td>Last (Family) Name</td>
+                    <td>~(sha1LastName)</td>
+                </tr>
+                <tr>
+                    <td>Relationship to Student</td>
+                    <td>~(sha1Rel)</td>
+                </tr>
+                <tr>
+                    <td>Best Phone</td>
+                    <td>~(sha1Phone)</td>
+                </tr>
+                <tr>
+                    <td>Phone Type</td>
+                    <td>~(sha1PhoneType)</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>~(sha1Email)</td>
+                </tr>
+                <tr>
+                    <td rowspan="6">Adult Contact 2</td>
+                    <td>First (Given) Name</td>
+                    <td>~(sha2FirstName)</td>
+                </tr>
+                <tr>
+                    <td>Last (Family) Name</td>
+                    <td>~(sha2LastName)</td>
+                </tr>
+                <tr>
+                    <td>Relationship to Student</td>
+                    <td>~(sha2Rel)</td>
+                </tr>
+                <tr>
+                    <td>Best Phone</td>
+                    <td>~(sha2Phone)</td>
+                </tr>
+                <tr>
+                    <td>Phone Type</td>
+                    <td>~(sha2PhoneType)</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>~(sha2Email)</td>
+                </tr>
+                
+            [/tlist_sql]                    
+                
+            </tbody>
+        </table>
+        </div>
+	</div>
+        
+[else#existsecondaryhousehold]
+    
+~[if#pendingsecondaryhousehold.~([Students.U_Student_Demographics]SHUpdatePending)=1]
+    
+    <div class="box-round" id="secondaryHouseholdUpdatePendingDiv">
+    
+        <br>
+        <p>Information for this student has been submitted for processing. To reduce the potential for error, we can only process one submission at a time per student. Please check back in 24-48 hours.</p>
+        <br>
+        <p><a href="formsoverview.html">Return to Digital Forms Overview</a></p>
+        <br>
+        
+    </div>
+    
+[else#pendingsecondaryhousehold]
+    
+    <div class="box-round" id="addSecondaryHouseholdDiv">
+        
+        <br>
+        <p><a class="button dialogM dockedDialog" href="addsecondaryhousehold.html?frn=~(studentfrn)">Add Secondary Household</a></p>
+        <br>
+    
+    </div>
+
+[/if#pendingsecondaryhousehold]
+    
+[/if#existsecondaryhousehold]
+
+
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+</body> 
+</html>

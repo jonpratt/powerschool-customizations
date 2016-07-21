@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Standard Completion Eligibility Letters</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->Your breadcrumbs go here<!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Standard Completion Eligibility Letters</h1> 
+<!-- start of content area --> 
+	<div class="noprint box-round" id="reportSetupDiv">
+    
+    <form action="scoeligibilityletters.html?storecode=~(gpv.storecode)&excludeterm=~(gpv.termid)">
+    
+    <h2>Reporting Term: <select name="storecode">
+                        <option value=''>Choose reporting term</option>
+                        ~[tlist_sql;
+                            SELECT
+                                storecode as storeCode,
+                                CASE WHEN storecode='~(gpv.storecode)' THEN 'selected="selected"' ELSE '' END as selectedStoreCode
+
+                            FROM
+                                termbins
+
+                            WHERE
+                                termid=~(curyearid)*100
+
+                            ORDER BY
+                                date2
+                        ]
+                        <option value="~(storeCode)" ~(selectedStoreCode)>~(storeCode)</option>
+                        [/tlist_sql]
+                        </select></h2>
+ 
+ 	<h2>Exclude Scheduling Term: <select name="excludeterm">
+                        <option value=''>Choose scheduling term to EXCLUDE</option>
+                        ~[tlist_sql;
+                            SELECT
+                                id as termID,
+                                CASE WHEN id='~(gpv.termid)' THEN 'selected="selected"' ELSE '' END as selectedTerm,
+                                abbreviation as termAbbreviation
+
+                            FROM
+                                terms
+
+                            WHERE
+                                yearid=~(curyearid) AND
+                                schoolid=~(curschoolid)
+
+                            ORDER BY
+                                abbreviation
+                        ]
+                        <option value="~(termID)" ~(selectedTerm)>~(termAbbreviation)</option>
+                        [/tlist_sql]
+                        </select></h2>
+    
+        <div class="button-row">
+            ~[submitbutton]
+        </div>
+        
+    </form>    
+    
+    </div>
+    
+    <div style="page-break-after: always">
+    </div>
+    
+    <div id="ponyTimeSlip">
+    ~[tlist_sql;
+SELECT
+	students.first_name as firstName, 
+	students.last_name as lastName,
+    storedgrades.storecode as storeCode,
+    storedgrades.grade as courseGrade,
+	storedgrades.course_name as courseName,
+	users.first_name as teacherFirstName,
+    users.last_name as teacherLastName
+	
+FROM
+	students
+
+INNER JOIN
+	storedgrades ON students.id=storedgrades.studentid
+                 AND storedgrades.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10 
+                 AND storedgrades.storecode='~(gpv.storecode)' 
+                 AND storedgrades.grade='D'
+                 AND storedgrades.potentialcrhrs>0
+                 AND storedgrades.termid!=~(gpv.excludeterm)
+
+INNER JOIN
+    users on users.lastfirst=storedgrades.teacher_name
+
+WHERE
+	students.enroll_status=0
+
+ORDER BY
+	students.lastfirst
+    ]
+    <h1>Standard Completion Opportunity Eligibility Notification</h1>
+        
+        <p>~[date]</p>
+        
+        <h3>Student Name: ~(firstName) ~(lastName)</h3>
+        
+        <p>Per the Foxcroft Academy Student Handbook:</p>
+        
+        <div class="box-round">
+            
+            <p><em>"Students with one unmet standard from a previously-taken course (resulting in a course grade of D) will have a 9 week standard completion opportunity (SCO) in the quarter immediately following to work on improving that standard. Students who want to take advantage of the SCO may be assigned to an ASP if possible. However, even if assignment to an ASP is not possible given schedule constraints, it is the student's sole responsibility to work with the teacher to improve the unmet standard. If the teacher validates that the student demonstrates proficiency in that standard at or before the end of the SCO timeframe, the student's course grade will be retroactively changed to a C and course credit will be awarded. If the student does not take advantage of the SCO, or does not demonstrate proficiency in that standard at or before the end of the SCO timeframe, the student's course grade will remain a D and course credit will only be earned if and when the student repeats the course and earns a passing grade."</em></p>
+            
+        </div>
+        
+        <p><b>Because you earned a ~(storecode) grade of ~(courseGrade) in ~(courseName) with ~(teacherFirstName) ~(teacherLastName), you are eligible for SCO.</b></p>
+        
+        <p>Mrs. Bickford coordinates the standard completion process, and is available to help. You can stop by Room 402 to see her in person, or email her at jbickford@foxcroftacademy.org.</p>
+        
+        <p>Please take advantage of this opportunity to show Pony Pride in your academics, earn credit, improve your GPA, and better prepare yourself for success after high school.</p>
+        
+        <p>If you have any questions or concerns, please let me know. We are all here to help you do what it takes to be successful!</p>
+        
+        <p>Jonathan Pratt
+            <br>
+            Assistant Head of School for Academics
+            <br>
+            jon.pratt@foxcroftacademy.org
+            <br>
+            207-564-8351 x1517
+        </p>
+        
+        <br>
+        
+        <h3></h3>
+        
+        <div class="box-round">
+            
+            <p><b><em>Failure to sign and return this form to Mrs. Bickford by the end of add/drop may result in disciplinary consequences.</em></b></p>
+            
+            <p><input type="checkbox"> I understand the information above and <b>WILL</b> take advantage of this Standard Completion Opportunity.</p>
+            <p><input type="checkbox"> I understand the information above and <b>WILL NOT</b> take advantage of this Standard Completion Opportunity.</p>
+
+            <br>
+            
+            <p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>_____________________________________</td>
+                            <td>_____________________________________</td>
+                            <td>_____________________________________</td>
+                            <td>_____________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>Student Signature</td>
+                            <td>Date</td>
+                            <td>Parent-Guardian Signature</td>
+                            <td>Date</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
+            
+        </div>
+        
+        <div style="page-break-after: always">
+        </div>
+    [/tlist_sql]
+        
+    </div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

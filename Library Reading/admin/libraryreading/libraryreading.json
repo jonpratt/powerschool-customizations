@@ -1,0 +1,25 @@
+[~[tlist_sql;
+select ID, INVID, MANUFACTURER, MAKE, MODEL, SERIALNUMBER, PURCHDATE, PURCHPRICE, PLATFORM, OS, HDSIZE, RAMSIZE, CPUTYPE, CPUSPEED, nvl(IP1,0), nvl(IP2,0), nvl(IP3,0), nvl(IP4,0), NOTES
+from u_inventory]
+    {"id":~(id),
+     "InvID":"~(invid;js)",
+     "Manufacturer":"~(manufacturer;js)",
+     "Make":"~(make;js)",
+     "Model":"~(model;js)",
+     "SerialNumber":"~(serialnumber;js)",
+     "PurchDate":"~(purchdate;js)",
+     "PurchPrice":"~(purchprice;js)",
+     "Platform":"~(platform;js)",
+     "OS":"~(os;js)",
+     "HDSize":"~(hdsize;js)",
+     "RAMSize":"~(ramsize;js)",
+     "CPUType":"~(cputype;js)",
+     "CPUSpeed":"~(cpuspeed;js)",
+     "IP1":~(ip1;js),
+     "IP2":~(ip2;js),
+     "IP3":~(ip3;js),
+     "IP4":~(ip4;js),
+     "FullIP":"~(ip1).~(ip2).~(ip3).~(ip4)",
+     "Notes":"~(notes;js)"
+    },
+[/tlist_sql]{}]

@@ -1,0 +1,12 @@
+<option value="">Please choose...</option>
+~[tlist_sql;
+    SELECT
+        id as ID,
+        heritagename as heritageName
+    FROM
+        u_countries
+    ORDER BY
+        heritagename
+]
+<option value="~(ID)">~(heritageName)</option>
+[/tlist_sql]

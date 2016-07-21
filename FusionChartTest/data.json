@@ -1,0 +1,19 @@
+{
+    "chart" : {
+        "caption" : "Teacher Grade Distribution",
+        "xAxisName" : "Letter Grade",
+        "yAxisname" : "Count"
+        
+    },
+    "data" :
+        [~[tlist_sql;
+         SELECT sg.Grade LetterGrade, COUNT(*) GradeCount
+        FROM StoredGrades sg
+        INNER JOIN Students s
+        ON sg.StudentID=s.ID
+        WHERE sg.Teacher_Name='Almasi, Brett (B)' AND sg.TermID>=~(curyearid)*100 AND sg.Grade IS NOT NULL AND s.Enroll_Status=0
+        GROUP BY sg.Grade
+        ORDER BY sg.Grade;]
+        {"label":"~(LetterGrade)", "value":"~(GradeCount)"},
+        [/tlist_sql]{}]
+}

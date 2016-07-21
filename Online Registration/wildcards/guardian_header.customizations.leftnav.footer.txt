@@ -1,0 +1,19 @@
+<!-- Official Grade Reports -->
+<script>
+$j(document).ready($j('div#nav-main > ul').children('li#btn-gradesHistory').before('<li id="officialgradereports"><a href="officialgradereportspp.html">Official Grade Reports</a></li>'));
+</script>
+<style>
+#officialgradereports {background-image: url("/guardian/officialgradereport.png");
+}    
+</style>
+
+<!-- Online Registration and Forms -->
+<!--
+<script>
+$j(document).ready($j('div#nav-main > ul').children('li#btn-schoolInformation').before('<li id="onlineregistration"><a href="formsoverview.html">Online Registration and Forms</a></li>'));
+</script>
+<style>
+#onlineregistration {background-image: url("/guardian/formsoverview.png");
+}
+</style>
+-->

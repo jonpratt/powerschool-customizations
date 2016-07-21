@@ -1,0 +1,32 @@
+SELECT
+	students.lastfirst as Name,
+	storedgrades.grade_level as GradeLevel,
+	storedgrades.termid as TermID,
+	storedgrades.course_name as Course,
+	storedgrades.storecode as StoreCode,
+	storedgrades.grade as CourseGrade,
+	storedgrades.potentialcrhrs as PCredit,
+	storedgrades.earnedcrhrs as ECredit,
+	storedgrades.comment_value as Comment,
+	storedgrades.log as Log
+	
+FROM
+	students
+
+INNER JOIN
+	storedgrades ON students.id=storedgrades.studentid
+	
+WHERE
+	storedgrades.termid>=2100 AND
+	storedgrades.termid<2300 AND
+	storedgrades.potentialcrhrs>0 AND
+	(storedgrades.course_number='312' OR
+		storedgrades.course_number='311' OR
+		storedgrades.course_number='310' OR
+		storedgrades.course_number='332' OR
+		storedgrades.course_number='331' OR
+		storedgrades.course_number='330' OR
+		storedgrades.course_number='307' OR
+		storedgrades.course_number='322' OR
+		storedgrades.course_number='321' OR
+		storedgrades.course_number='320')

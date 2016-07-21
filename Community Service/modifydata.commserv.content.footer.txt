@@ -1,0 +1,16 @@
+<div id="insertedContentDiv" style="display: none">
+
+    <span id="commservreq">
+        <tr><td>Community Service Hours Required</td><td><input type="text" name="[Students.U_ExtGradReqs]CSHReqTotal" value="" size="5"></td></tr>
+    </span>
+
+</div>
+
+<script>
+    
+    $j(document).ready(function() {
+        $j('tr:last').before($j('#commservreq').html());
+        $j('#insertedContentDiv').empty();
+    });
+
+</script>

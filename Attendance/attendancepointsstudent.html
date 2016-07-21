@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+<title>Attendance Points</title>
+~[wc:commonscripts]
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head>
+
+<body>
+
+~[wc:admin_header_frame_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.misc.start_page]</a> &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.misc.student_selection]</a> &gt; Attendance Points<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
+
+~[wc:title_student_begin_css]Attendance Points~[wc:title_student_end_css]
+
+<!-- start of content and bounding box -->
+<div class="box-round">
+
+<!-- start custom content here -->
+<h2>Attendance Points</h2>
+<p>
+The Attendance Policy is violated when the Adjusted Points value for any class exceeds 15.
+<table>
+	<thead>
+		<th>Attendance Code</th>
+		<th>Description</th>
+		<th>Point Value</th>
+	</thead>
+	<tbody>
+		~[tlist_sql;
+SELECT
+	attendance_code.att_code as AttCode,
+	attendance_code.description as AttCodeDesc,
+	attendance_code.course_credit_points as AttPoints
+FROM
+	attendance_code
+INNER JOIN
+  terms ON terms.yearid=attendance_code.yearid
+WHERE
+	terms.id=2204 AND att_code IS NOT NULL
+ORDER BY
+	attendance_code.course_credit_points;]
+
+		<tr>
+			<td>~(AttCode)</td>
+			<td>~(AttCodeDesc)</td>
+			<td>~(AttPoints)</td>
+		</tr>
+		[/tlist_sql]
+	</tbody>
+</table>
+</p>
+	<table>
+			<thead>
+				<th>Course</th>
+				<th>Term</th>
+				<th>Credits</th>
+				<th>Raw Points</th>
+				<th>Adjusted Points</th>
+			</thead>
+			<tbody>
+				~[tlist_sql;
+SELECT
+  courses.course_name as Course,
+  terms.abbreviation as Term,
+  courses.credit_hours as Credits,
+  SUM(attendance_code.course_credit_points) as RawPoints,
+  round((SUM(attendance_code.course_credit_points)/courses.credit_hours)) as AdjustedPoints
+
+FROM students
+
+INNER JOIN
+  cc on students.id=cc.studentid
+INNER JOIN
+  terms on cc.termid=terms.id
+INNER JOIN
+  courses on cc.course_number=courses.course_number
+INNER JOIN
+  attendance on cc.id=attendance.ccid
+INNER JOIN
+  attendance_code on attendance.attendance_codeid=attendance_code.id
+  
+WHERE
+  students.id=~(curstudid) AND
+  courses.credit_hours>0 AND
+  cc.termid>=0 AND
+  terms.yearid=(SELECT yearid from terms where id=~(curtermid)) AND
+  attendance_code.course_credit_points>0 AND
+  terms.schoolid=1036
+
+GROUP BY courses.course_name, terms.abbreviation, courses.credit_hours
+
+ORDER BY terms.abbreviation, courses.course_name;
+					alternatecolor;]
+					<tr>
+						<td>~(Course)</td>
+						<td>~(Term)</td>
+						<td>~(Credits)</td>
+						<td>~(RawPoints)</td>
+						<td>~(AdjustedPoints)</td>
+					</tr>
+					[/tlist_sql]
+				</tbody>
+		</table>	
+<!-- end custom content here -->
+</div>
+<!-- end of content of bounding box -->
+</body>
+</html><!-- end right frame -->

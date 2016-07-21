@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+<title>Foxcroft Academy Report Card</title>
+~[wc:commonscripts]
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+<!--
+~(f.suv;name={storecode};value={~[tlist_sql;select value as CurFG from prefs where name='curfgname-S1036';]~(CurFG)[/tlist_sql]})
+-->
+</head>
+
+<body>
+
+~[wc:admin_header_frame_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.misc.start_page]</a> &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.misc.student_selection]</a> &gt; Report Card<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
+
+~[wc:title_student_begin_css]Foxcroft Academy Report Card~[wc:title_student_end_css]
+
+<!-- start of content and bounding box -->
+	<div class="box-round"> 
+		<h2>About this report</h2> 
+			<p>This report for ~(studentname) shows historical data from stored course and standards grades for ~[gpv:storecode].</p>
+			<p><b>Please select a reporting term:</b>
+	<select id="storecode">
+	<option value=''>Change reporting term</option>
+	<option value="frn=~(studentfrn)&storecode=P1">P1</option>
+	<option value="frn=~(studentfrn)&storecode=Q1">Q1</option>
+	<option value="frn=~(studentfrn)&storecode=P2">P2</option>
+	<option value="frn=~(studentfrn)&storecode=Q2">Q2</option>
+	<option value="frn=~(studentfrn)&storecode=P3">P3</option>
+	<option value="frn=~(studentfrn)&storecode=Q3">Q3</option>
+	<option value="frn=~(studentfrn)&storecode=P4">P4</option>
+	<option value="frn=~(studentfrn)&storecode=Q4">Q4</option>
+	</select></p>
+    	<h2>~[gpv:storecode] Course Overview</h2>
+<table border="0" cellpadding="4" cellspacing="0" class="linkDescList" id="courseoverview"> 
+	<thead>
+	<tr>
+		<th class="bold">Course</th>
+		<th class="bold">Teacher</th>
+		<th class="bold">~[gpv:storecode] Grade</th>
+		<th class="bold">~[gpv:storecode] Teacher Comment</th>
+		<th class="bold">Earned Credit</th>
+	</tr>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+		SELECT
+			storedgrades.course_name as Course,
+			storedgrades.teacher_name as Teacher,
+			storedgrades.grade as Grade,
+			storedgrades.comment_value as TeacherComment,
+			storedgrades.earnedcrhrs as EarnedCredit
+		FROM
+			storedgrades
+		WHERE
+			storedgrades.studentid=~(curstudid)
+			AND storedgrades.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10
+			AND storedgrades.storecode='~[gpv:storecode]'
+		ORDER BY
+			storedgrades.course_name
+	;]
+	<tr>
+		<td>~(Course)</td>
+		<td>~(Teacher)</td>
+		<td>~(Grade)</td>
+		<td>~(TeacherComment)</td>
+		<td>~(EarnedCredit)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody>
+</table>
+		<h2>~[gpv:storecode] Standards Overview</h2>
+<table border="0" cellpadding="4" cellspacing="0" class="linkDescList" id="standardsoverview">
+	<thead>
+	<tr>
+		<th class="bold">Course</th>
+		<th class="bold">~[gpv:storecode] Course Grade</th>
+		<th class="bold">Standard</th>
+		<th class="bold">~[gpv:storecode] Standard Grade</th>
+	</tr>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+SELECT
+	courses.course_name as Course,
+	storedgrades.grade as CourseGrade,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as StandardGrade
+
+FROM
+	standardsgrades
+	
+INNER JOIN
+	standards on standardsgrades.standardsid=standards.id
+  
+INNER JOIN
+	courses on (cast(standards.courses as varchar(11))=courses.course_number)
+
+INNER JOIN
+	storedgrades on storedgrades.course_number=courses.course_number
+	
+WHERE
+	standardsgrades.studentid=~(curstudid)
+	AND storedgrades.studentid=~(curstudid)
+	AND storedgrades.storecode='~[gpv:storecode]'
+	AND standardsgrades.yearid=~(curyearid)
+	AND standardsgrades.storecode='~[gpv:storecode]'
+	AND storedgrades.termid BETWEEN ~(curyearid)*100 and ~(curyearid)*100+10
+	
+ORDER BY
+	courses.course_name, standards.sortorder
+	;]
+	<tr>
+		<td>~(Course)</td>
+		<td>~(CourseGrade)</td>
+		<td>~(Standard)</td>
+		<td>~(StandardGrade)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody>
+</table>
+</div> 
+<!-- end custom content here -->
+<br>
+</div>
+<br>
+<!-- end of content of bounding box -->
+
+~[wc:admin_footer_frame_css]
+
+</body>
+</html><!-- end right frame -->
+

@@ -1,0 +1,56 @@
+<!-- Portal Updates place before Access Accounts -->
+
+<!-- Community Service and Library Reading place before Graduation Progress -->
+
+<!-- Modify Grad Reqs place before Graduation Progress -->
+
+<!-- Official Grade Report place before Honor Roll -->
+
+<!-- View Next Year Requests place after Schedule Setup (end of list) -->
+
+<div id="insertedContentDiv" style="display: none">
+
+    <span id="portalUpdates">
+        ~[if.~(studentscreenaccess;accessaccounts.html)=1]<li><a href="portalupdates.html?frn=~(studentfrn)">Portal Updates</a></li>[/if]
+    </span>
+    
+    <span id="demographics">
+        ~[if.~(studentscreenaccess;generaldemographics.html)=1]<li><a href="demographics.html?frn=~(studentfrn)">~[text:psx.html.admin_students.more2.demographics]</a></li>[/if]
+    </span>
+    
+    <span id="secondaryhousehold">
+        ~[if.~(studentscreenaccess;generaldemographics.html)=1]<li><a href="secondaryhousehold.html?frn=~(studentfrn)">Secondary Household</a></li>[/if]
+    </span>
+    
+    <span id="communityService">
+        ~[if.~(studentscreenaccess;cumulative.html)=1]<li><a href="communityservice.html?frn=~(studentfrn)">Community Service</a></li>[/if]
+    </span>
+
+    <span id="modGradReqs">
+        ~[if.~(studentscreenaccess;graduationcheck.html)=1]<li><a href="gradreqsmods.html?frn=~(studentfrn)">Modify Graduation Reqs</a></li>[/if]
+    </span>
+    
+    <span id="officialGradeReport">
+        ~[if.~(studentscreenaccess;cumulative.html)=1]<li><a href="officialgradereportap.html?frn=~(studentfrn)&storecode=~[tlist_sql;SELECT value as curFG FROM prefs WHERE name='curfgname-S1036']~(curFG)[/tlist_sql]">Official Grade Report</a></li>[/if]
+    </span>
+    
+    <span id="nextYearRequests">
+        ~[if.~(studentscreenaccess;schedulesetup.html)=1]<li><a href="requests.html?frn=~(studentfrn)&schedulerequestyearid=2500">View 15-16 Requests</a></li>[/if]
+    </span>
+    
+</div>
+
+<script>
+    
+    $j(document).ready(function() {
+        $j('[href*="accessaccounts.html"]').closest('li').before($j('#portalUpdates').html());
+        $j('[href*="generaldemographics.html"]').closest('li').html($j('#demographics').html());
+        $j('[href*="emergency.html"]').closest('li').before($j('#secondaryhousehold').html());
+        $j('[href*="GraduationProgress.html"]').closest('li').before($j('#communityService').html());
+        $j('[href*="communityservice.html"]').closest('li').after($j('#modGradReqs').html());
+        $j('[href*="honorroll.html"]').closest('li').before($j('#officialGradeReport').html());
+        $j('[href*="schedulesetup.html"]').closest('li').after($j('#nextYearRequests').html());
+        $j('#insertedContentDiv').empty();
+    });
+
+</script>

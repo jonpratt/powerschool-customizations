@@ -1,0 +1,17 @@
+SELECT
+	students.lastfirst as Name,
+	storedgrades.termid as TermID,
+	storedgrades.storecode as StoreCode,
+	storedgrades.course_name as Course,
+	storedgrades.potentialcrhrs as PCredit,
+	storedgrades.grade as Grade,
+	storedgrades.gpa_points as GradePoints
+
+FROM
+	students
+	
+INNER JOIN
+	storedgrades on students.id=storedgrades.studentid
+
+WHERE
+	students.id=273

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Boarding Student Demographics</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_frame_css]
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/home.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Boarding Student Demographics
+	<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css]
+<!-- start of main menu and content -->
+~[wc:title_student_begin_css]Boarding Student Demographics~[wc:title_student_end_css]
+
+<!-- start of content area -->
+
+<!--Add logic re: boardingstudentstatus, radio input to change status -->
+    
+~[if#existboardingdemodata.~([Students.U_Student_Demographics]HasBoardingDemoData)=1]
+            
+    <div class="box-round" id="editBoardingDemoDataDiv">
+        
+        <h2>Boarding Student Demographic Data</h2>
+        <div class="button-row">
+            ~[tlist_sql;
+            SELECT
+               U_INTERNATIONAL_DEMOGRAPHIC.STUDENTSDCID as DCID,
+               U_INTERNATIONAL_DEMOGRAPHIC.ID as BDID
+            
+            FROM
+               U_INTERNATIONAL_DEMOGRAPHIC
+
+            WHERE
+               U_INTERNATIONAL_DEMOGRAPHIC.STUDENTSDCID=~(rn)
+            ]
+            <a class="button dialogM dockedDialog" href="editboarding.html?frn=001~(DCID)&shid=~(BDID)">Modify or Delete Record ~(BDID)</a>
+            [/tlist_sql]
+        </div>
+        
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Field</th>
+                    <th>Information on file</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+            ~[tlist_sql;
+            SELECT
+                u_student_demographics.preferredname as preferredName,
+                (SELECT citizenshipname FROM u_countries INNER JOIN u_student_demographics ON u_student_demographics.citizenship1=u_countries.id WHERE u_student_demographics.studentsdcid=~(rn)) as citizenship1,
+                (SELECT citizenshipname FROM u_countries INNER JOIN u_student_demographics ON u_student_demographics.citizenship2=u_countries.id WHERE u_student_demographics.studentsdcid=~(rn)) as citizenship2,
+                (SELECT heritagename FROM u_countries INNER JOIN u_student_demographics ON u_student_demographics.heritage1=u_countries.id WHERE u_student_demographics.studentsdcid=~(rn)) as heritage1,
+                (SELECT heritagename FROM u_countries INNER JOIN u_student_demographics ON u_student_demographics.heritage2=u_countries.id WHERE u_student_demographics.studentsdcid=~(rn)) as heritage2,
+                u_student_demographics.personalemail as personalEmail,
+                u_international_demographic.insurance as insurance,
+                (SELECT dorm FROM u_dorms INNER JOIN u_international_demographic ON u_international_demographic.dorm=u_dorms.id WHERE u_international_demographic.studentsdcid=~(rn)) as dorm,
+                u_international_demographic.room as room,
+                u_international_demographic.father as father,
+                u_international_demographic.mother as mother,
+                u_international_demographic.homephone as homePhone,
+                u_international_demographic.cellphone as cellPhone,
+                u_international_demographic.email1 as email1,
+                u_international_demographic.email2 as email2,
+                u_international_demographic.street1 as street1,
+                u_international_demographic.street2 as street2,
+                u_international_demographic.city as city,
+                u_international_demographic.state as state,
+                u_international_demographic.country as country,
+                u_international_demographic.postalcode as postalCode,
+                u_international_demographic.agent_co as agencyCompany,
+                u_international_demographic.agent_name as agentName,
+                u_international_demographic.agent_email as agentEmail
+                u_international_demographic.projectid as projectID
+                
+            FROM
+                u_international_demographic
+                
+            WHERE
+                u_international_demographic.studentsdcid=~(rn)
+            ]
+                
+                <tr>
+                    <td rowspan="6">Student Info</td>
+                    <td>Preferred Name</td>
+                    <td>~(preferredName)</td>
+                </tr>
+                <tr>
+                    <td>Citizenship 1</td>
+                    <td>~(citizenship1)</td>
+                </tr>
+                <tr>
+                    <td>Citizenship 2</td>
+                    <td>~(citizenship2)</td>
+                </tr>
+                <tr>
+                    <td>Heritage 1</td>
+                    <td>~(heritage1)</td>
+                </tr>
+                <tr>
+                    <td>Heritage 2</td>
+                    <td>~(heritage2)</td>
+                </tr>
+                <tr>
+                    <td>Personal Email</td>
+                    <td>~(personalEmail)</td>
+                </tr>
+                <tr>
+                    <td>Insurance</td>
+                    <td>~(insurance)</td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Campus Residence</td>
+                    <td>Dorm</td>
+                    <td>~(dorm)</td>
+                </tr>
+                <tr>
+                    <td>Room</td>
+                    <td>~(room)</td>
+                </tr>
+                <tr>
+                    <td rowspan="12">Parent Info</td>
+                    <td>Father Name</td>
+                    <td>~(father)</td>
+                </tr>
+                <tr>
+                    <td>Mother Name</td>
+                    <td>~(mother)</td>
+                </tr>
+                <tr>
+                    <td>Home Phone</td>
+                    <td>~(homePhone)</td>
+                </tr>
+                <tr>
+                    <td>Cell Phone</td>
+                    <td>~(cellPhone)</td>
+                </tr>
+                <tr>
+                    <td>Email 1</td>
+                    <td>~(email1)</td>
+                </tr>
+                <tr>
+                    <td>Email 2</td>
+                    <td>~(email2)</td>
+                </tr>
+                <tr>
+                    <td>Street Address Line 1</td>
+                    <td>~(street1)</td>
+                </tr>
+                <tr>
+                    <td>Street Address Line 2</td>
+                    <td>~(street2)</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>~(city)</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>~(state)</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>~(country)</td>
+                </tr>
+                <tr>
+                    <td>Postal Code</td>
+                    <td>~(postalCode)</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">Agent Info</td>
+                    <td>Agency Company</td>
+                    <td>~(agencyCompany)</td>
+                </tr>
+                <tr>
+                    <td>Agent Name</td>
+                    <td>~(agentName)</td>
+                </tr>
+                <tr>
+                    <td>Agent Email</td>
+                    <td>~(agentEmail)</td>
+                </tr>
+                <tr>
+                    <td>Project ID</td>
+                    <td>~(projectID)</td>
+                </tr>
+                
+            [/tlist_sql]                    
+                
+            </tbody>
+        </table>
+        </div>
+	</div>
+        
+[else#existboardingdemodata]
+    
+    <div class="box-round" id="addBoardingDemoDataDiv">
+        
+        <br>
+        <p><a class="button dialogM dockedDialog" href="addboarding.html?frn=~(studentfrn)">Add Boarding Demographic Data</a></p>
+        <br>
+    
+    </div>
+    
+[/if#existboardingdemodata]
+
+
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+</body> 
+</html>

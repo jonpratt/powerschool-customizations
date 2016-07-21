@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Primary Household Updates and Annual Forms</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_frame_css]
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/portalupdates.html?frn=~(studentfrn)">Portal Updates</a> &gt; Primary Household Updates and Annual Forms
+	<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css]
+<!-- start of main menu and content -->
+~[wc:title_student_begin_css]Primary Household Updates and Annual Forms~[wc:title_student_end_css]
+<!-- start of content area -->
+    
+	<div class="box-round">
+        
+        ~[DirectTable.Select:U_PORTALUPDATE;id:~(gpv.phid)]
+        
+        <h2>Primary Household Updates for ~([STUDENTS]LASTFIRST) submitted by ~([U_PORTALUPDATE]WHOCREATED) on ~([U_PORTALUPDATE]WHENCREATED).</h2>
+		
+            <h3>Primary Household Legal Address</h3>
+        
+                <table class="grid" id="legalAddressTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Street Address</td>
+                            <td>~([U_PORTALUPDATE]PH_L_STREET)</td>
+                        </tr>
+                        <tr>
+                            <td>City or Town</td>
+                            <td>~([U_PORTALUPDATE]PH_L_CITY)</td>
+                        </tr>
+                        <tr>
+                            <td>State</td>
+                            <td>~([U_PORTALUPDATE]PH_L_STATE)</td>
+                        </tr>
+                        <tr>
+                            <td>ZIP</td>
+                            <td>~([U_PORTALUPDATE]PH_L_ZIP)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Primary Household Mailing Address</h3>
+        
+                <table class="grid" id="mailingAddressTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Street Address</td>
+                            <td>~([U_PORTALUPDATE]PH_M_STREET)</td>
+                        </tr>
+                        <tr>
+                            <td>City or Town</td>
+                            <td>~([U_PORTALUPDATE]PH_M_CITY)</td>
+                        </tr>
+                        <tr>
+                            <td>State</td>
+                            <td>~([U_PORTALUPDATE]PH_M_STATE)</td>
+                        </tr>
+                        <tr>
+                            <td>ZIP</td>
+                            <td>~([U_PORTALUPDATE]PH_M_ZIP)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Primary Household Contact Information</h3>
+        
+                <table class="grid" id="householdContactInfoTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Primary Phone Number</td>
+                            <td>~([U_PORTALUPDATE]PH_HOME_PHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Primary Phone Number Type</td>
+                            <td>~([U_PORTALUPDATE]PH_HOME_PHONE_TYPE)</td>
+                        </tr>
+                        <tr>
+                            <td>Primary Email Address</td>
+                            <td>~([U_PORTALUPDATE]PH_GUARDIANEMAIL)</td>
+                        </tr>
+                        <tr>
+                            <td>Mass Mailing Preference</td>
+                            <td>~([U_PORTALUPDATE]PH_PAPER)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Primary Household Adult Contact 1</h3>
+        
+                <table class="grid" id="adultContact1Table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>First (Given) Name</td>
+                            <td>~([U_PORTALUPDATE]PHA1_FIRSTNAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Last (Family) Name</td>
+                            <td>~([U_PORTALUPDATE]PHA1_LASTNAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship to Student</td>
+                            <td>~([U_PORTALUPDATE]PHA1_REL)</td>
+                        </tr>
+                        <tr>
+                            <td>Cell Phone</td>
+                            <td>~([U_PORTALUPDATE]PHA1_CELLPHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Home Phone</td>
+                            <td>~([U_PORTALUPDATE]PHA1_HOMEPHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>~([U_PORTALUPDATE]PHA1_EMAIL)</td>
+                        </tr>
+                        <tr>
+                            <td>Employer</td>
+                            <td>~([U_PORTALUPDATE]PHA1_EMPLOYER)</td>
+                        </tr>
+                        <tr>
+                            <td>Work Phone</td>
+                            <td>~([U_PORTALUPDATE]PHA1_WORKPHONE)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Primary Household Adult Contact 2</h3>
+        
+                <table class="grid" id="adultContact2Table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>First (Given) Name</td>
+                            <td>~([U_PORTALUPDATE]PHA2_FIRSTNAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Last (Family) Name</td>
+                            <td>~([U_PORTALUPDATE]PHA2_LASTNAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship to Student</td>
+                            <td>~([U_PORTALUPDATE]PHA2_REL)</td>
+                        </tr>
+                        <tr>
+                            <td>Cell Phone</td>
+                            <td>~([U_PORTALUPDATE]PHA2_CELLPHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Home Phone</td>
+                            <td>~([U_PORTALUPDATE]PHA2_HOMEPHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>~([U_PORTALUPDATE]PHA2_EMAIL)</td>
+                        </tr>
+                        <tr>
+                            <td>Employer</td>
+                            <td>~([U_PORTALUPDATE]PHA2_EMPLOYER)</td>
+                        </tr>
+                        <tr>
+                            <td>Work Phone</td>
+                            <td>~([U_PORTALUPDATE]PHA2_WORKPHONE)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>~([STUDENTS]FIRST_NAME)'s Emergency Contact 1</h3>
+        
+                <table class="grid" id="emergencyContact1Table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>~([U_PORTALUPDATE]EC1_NAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship</td>
+                            <td>~([U_PORTALUPDATE]EC1_REL)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td>~([U_PORTALUPDATE]EC1_PHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Type</td>
+                            <td>~([U_PORTALUPDATE]EC1_PHONE_TYPE)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>~([STUDENTS]FIRST_NAME)'s Emergency Contact 2</h3>
+        
+                <table class="grid" id="emergencyContact2Table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>~([U_PORTALUPDATE]EC2_NAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship</td>
+                            <td>~([U_PORTALUPDATE]EC2_REL)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td>~([U_PORTALUPDATE]EC2_PHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Type</td>
+                            <td>~([U_PORTALUPDATE]EC2_PHONE_TYPE)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>~([STUDENTS]FIRST_NAME)'s Emergency Contact 3</h3>
+        
+                <table class="grid" id="emergencyContact3Table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>~([U_PORTALUPDATE]EC3_NAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship</td>
+                            <td>~([U_PORTALUPDATE]EC3_REL)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td>~([U_PORTALUPDATE]EC3_PHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Type</td>
+                            <td>~([U_PORTALUPDATE]EC3_PHONE_TYPE)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>~([STUDENTS]FIRST_NAME)'s Medical Information</h3>
+        
+                <table class="grid" id="medicalInfoTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Doctor Name</td>
+                            <td>~([U_PORTALUPDATE]DOCTOR_NAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Doctor Phone</td>
+                            <td>~([U_PORTALUPDATE]DOCTOR_PHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>Dentist Name</td>
+                            <td>~([U_PORTALUPDATE]DENTIST_NAME)</td>
+                        </tr>
+                        <tr>
+                            <td>Dentist Phone</td>
+                            <td>~([U_PORTALUPDATE]DENTIST_PHONE)</td>
+                        </tr>
+                        <tr>
+                            <td>OTC Notes</td>
+                            <td>~([U_PORTALUPDATE]CLINIC_OTC_NOTE)</td>
+                        </tr>
+                        <tr>
+                            <td>Medications and-or Medical Remarks</td>
+                            <td>~([U_PORTALUPDATE]MEDICAL_CONSIDERATIONS)</td>
+                        </tr>
+                        <tr>
+                            <td>Allergies and-or Disabilities</td>
+                            <td>~([U_PORTALUPDATE]ALLERGIES)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+        <h2>Annual Forms for ~([STUDENTS]LASTFIRST) submitted by ~([U_PORTALUPDATE]WHOCREATED) on ~([U_PORTALUPDATE]WHENCREATED).</h2>
+        
+            <h3>Emergency Agreement</h3>
+        
+                <table class="grid" id="emergencyAgreementTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Agreement</td>
+                            <td>~([U_PORTALUPDATE]EMERGENCY_AGREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Signature</td>
+                            <td>~([U_PORTALUPDATE]EMERGENCY_SIG)</td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Clinic Agreement</h3>
+        
+                <table class="grid" id="clinicAgreementTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Agreement</td>
+                            <td>~([U_PORTALUPDATE]CLINIC_AGREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Signature</td>
+                            <td>~([U_PORTALUPDATE]CLINIC_SIG)</td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Bus Agreement</h3>
+        
+                <table class="grid" id="busAgreementTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Agreement</td>
+                            <td>~([U_PORTALUPDATE]BUS_AGREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Signature</td>
+                            <td>~([U_PORTALUPDATE]BUS_SIG_PARENT)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                        <tr>
+                            <td>Student Signature</td>
+                            <td>~([U_PORTALUPDATE]BUS_SIG_STUDENT)</td>
+                        </tr>
+                        <tr>
+                            <td>Student Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Student Handbook Agreement</h3>
+        
+                <table class="grid" id="handbookAgreementTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Agreement</td>
+                            <td>~([U_PORTALUPDATE]HANDBOOK_AGREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Signature</td>
+                            <td>~([U_PORTALUPDATE]HANDBOOK_SIG_PARENT)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                        <tr>
+                            <td>Student Signature</td>
+                            <td>~([U_PORTALUPDATE]HANDBOOK_SIG_STUDENT)</td>
+                        </tr>
+                        <tr>
+                            <td>Student Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>iPad Agreement</h3>
+        
+                <table class="grid" id="iPadAgreementTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Insurance Option</td>
+                            <td>~([U_PORTALUPDATE]IPAD_INSURANCE)</td>
+                        </tr>
+                        <tr>
+                            <td>Agreement</td>
+                            <td>~([U_PORTALUPDATE]IPAD_AGREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Signature</td>
+                            <td>~([U_PORTALUPDATE]IPAD_SIG)</td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            <h3>Enrollment Agreement</h3>
+        
+                <table class="grid" id="enrollmentAgreementTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Agreement</td>
+                            <td>~([U_PORTALUPDATE]ENROLLMENT_AGREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Signature</td>
+                            <td>~([U_PORTALUPDATE]ENROLLMENT_SIG_PARENT)</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                        <tr>
+                            <td>Student Signature</td>
+                            <td>~([U_PORTALUPDATE]ENROLLMENT_SIG_STUDENT)</td>
+                        </tr>
+                        <tr>
+                            <td>Student Date</td>
+                            <td>~([U_PORTALUPDATE]WHENCREATED)</td>
+                        </tr>
+                        <tr>
+                            <td>Area</td>
+                            <td>~([U_PORTALUPDATE]AREA)</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+	</div>
+    
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+</body> 
+</html>

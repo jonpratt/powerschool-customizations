@@ -1,0 +1,24 @@
+SELECT
+	students.lastfirst as Name,
+	students.grade_level as GradeLevel,
+	storedgrades.course_name as Course,
+	storedgrades.teacher_name as Teacher,
+	storedgrades.sectionid as SectionID,
+	storedgrades.grade as Grade,
+	storedgrades.storecode as StoreCode,
+	storedgrades.termid as TermID
+		
+FROM
+	students
+	
+INNER JOIN
+	storedgrades ON students.id=storedgrades.studentid
+	
+WHERE
+	students.enroll_status=0
+	AND students.grade_level=12
+	AND storedgrades.potentialcrhrs>0
+	AND storedgrades.grade='WF'
+
+ORDER BY
+	students.lastfirst

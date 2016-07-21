@@ -1,0 +1,182 @@
+SELECT
+	courses.course_name as Course,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as Grade
+
+FROM
+	standardsgrades
+	
+INNER JOIN
+	standards on standardsgrades.standardsid=standards.id
+  
+INNER JOIN
+  courses on (cast(standards.courses as varchar(11))=courses.course_number)
+	
+WHERE
+	standardsgrades.studentid=338
+	AND standardsgrades.yearid>=23
+	AND standardsgrades.storecode='Q4'
+
+ORDER BY
+  courses.course_name, standards.sortorder
+  
+  
+  ---ABOVE THIS WORKS!!---
+
+SELECT
+	courses.course_name as Course,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as Grade
+	
+FROM
+	students
+
+INNER JOIN
+	cc on cc.studentid=students.id
+
+INNER JOIN
+	courses on cc.course_number=courses.course_number
+
+INNER JOIN
+	standards on (cast(standards.courses as varchar(11))=courses.course_number)
+
+INNER JOIN
+	standardsgrades on students.id=standardsgrades.studentid
+	
+WHERE
+	students.id=338
+	AND cc.termid BETWEEN 2300 AND 2310
+	AND standardsgrades.storecode='Q4'
+	
+---try to get course names from CC records THIS WORKS---
+
+SELECT
+	courses.course_name as Course
+	
+FROM
+	courses
+
+INNER JOIN
+	cc on cc.course_number=courses.course_number
+	
+WHERE
+	cc.studentid=338
+	AND cc.termid BETWEEN 2300 AND 2310
+	AND courses.credit_hours>0
+	
+---try to get course names and standards from CC records THIS WORKS---
+
+SELECT
+	courses.course_name as Course,
+	standards.name as Standard
+	
+FROM
+	courses
+
+INNER JOIN
+	cc on cc.course_number=courses.course_number
+	
+INNER JOIN
+	standards on (cast(standards.courses as varchar(11))=courses.course_number)
+		
+WHERE
+	cc.studentid=338
+	AND cc.termid BETWEEN 2300 AND 2310
+	AND courses.credit_hours>0
+	
+ORDER BY
+	courses.course_name, standards.sortorder
+	
+	
+---get course names and standards and standards grades (or null) for a specific grade reporting term---
+
+SELECT
+	courses.course_name as Course,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as Grade
+	
+FROM
+	courses
+
+INNER JOIN
+	cc on cc.course_number=courses.course_number
+	
+INNER JOIN
+	standards on (cast(standards.courses as varchar(11))=courses.course_number)
+	
+JOIN
+	standardsgrades on standardsgrades.standardsid=standards.id
+		
+WHERE
+	cc.studentid=338
+	AND cc.termid BETWEEN 2300 AND 2310
+	AND courses.credit_hours>0
+	AND standardsgrades.storecode='Q4'
+	
+-=-=-=-=-
+
+SELECT
+	courses.course_name as Course,
+	storedgrades.grade as CourseGrade,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as StandardGrade
+	
+FROM
+	cc
+
+INNER JOIN
+	courses on cc.course_number=courses.course_number
+	
+INNER JOIN
+	standards 
+		LEFT JOIN
+			standardsgrades on standards.id=standardsgrades.standardsid
+	on (cast(standards.courses as varchar(11))=courses.course_number)
+	
+WHERE
+	cc.studentid=338
+	AND cc.termid BETWEEN 2300 and 2310
+	AND courses.credit_hours>0
+	AND standardsgrades.storecode='Q4'
+	
+ORDER BY
+	courses.course_name, standards.sortorder
+	
+-=-=-=-=-=- 2014-10-03 9:04 am
+
+SELECT
+	storedgrades.dcid as SGID,
+  standardsgrades.id as STGID,
+  courses.course_name as Course,
+  storedgrades.grade as CourseGrade,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as StandardGrade,
+  storedgrades.studentid as SGSID,
+  standardsgrades.studentid as STGSID,
+  storedgrades.termid as SGTerm,
+  standardsgrades.yearid as STGYear,
+  storedgrades.storecode as STStoreCode,
+  standardsgrades.storecode as STGStoreCode,
+  storedgrades.datestored as SGDateStored,
+  standardsgrades.datestored as STGDateStored
+
+FROM
+	standardsgrades
+	
+INNER JOIN
+	standards on standardsgrades.standardsid=standards.id
+  
+INNER JOIN
+  courses on (cast(standards.courses as varchar(11))=courses.course_number)
+
+INNER JOIN
+  storedgrades on storedgrades.studentid=standardsgrades.studentid AND standardsgrades.storecode=storedgrades.storecode
+	
+WHERE
+	standardsgrades.studentid=1389
+	AND standardsgrades.yearid>=24
+	AND standardsgrades.storecode='P1'
+  AND storedgrades.termid>=2400
+
+ORDER BY
+  courses.course_name, standards.sortorder

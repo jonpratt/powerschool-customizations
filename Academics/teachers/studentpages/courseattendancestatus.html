@@ -1,0 +1,54 @@
+<div class="box-round">
+<h2>About Attendance Status</h3>
+    <p>Your Attendance Status number IS NOT the number of absences in the class. It is the sum of the raw attendance points accumulated, divided by the potential credit value for the course.</p>
+    <p>When your Attendance Status number for a class exceeds 15, you have violated the Attendance Policy and credit may be withheld.</p>
+    <p>Please re-read the Attendance Policy in the Student Handbook for specific detail on how many attendance points are earned for various attendance codes, and how many points may be accummulated per potential credit value for the course before credit may be withheld.</p>
+    
+<h2>Attendance Report for ~[tlist_sql;
+    SELECT
+        courses.course_name as courseName
+    FROM
+        courses
+    INNER JOIN
+        cc ON cc.course_number=courses.course_number
+    WHERE
+        cc.id=~(gpv.ccid)
+    ]~(courseName)[/tlist_sql]</h2>
+    <table class="grid">
+        <thead>
+            <tr>
+                <td class="bold">Date</td>
+                <td class="bold">Description</td>
+                <td class="bold">Points</td>
+            </tr>
+        </thead>
+        <tbody>
+            ~[tlist_sql;
+            SELECT
+              attendance.att_date as attendanceDate,
+              attendance_code.description as description,
+              attendance_code.course_credit_points as points
+
+            FROM
+              attendance
+
+            INNER JOIN
+              attendance_code ON attendance_code.id=attendance.attendance_codeid AND attendance_code.yearid=~(curyearid)
+
+            WHERE
+              attendance_code.att_code IS NOT NULL AND
+              attendance.studentid=~(curstudid) AND
+              attendance.ccid=~(gpv.ccid)
+
+            ORDER BY
+              attendance.att_date
+            ]
+            <tr>
+                <td>~(attendanceDate;d)</td>
+                <td>~(description)</td>
+                <td>~(points)</td>
+            </tr>
+            [/tlist_sql]
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,57 @@
+<select name="-studpage">
+<option value="/admin/students/quicklookup.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.quick_lookup]</option>
+<option value="/admin/students/quicklookup.html?plce=hldr">-------------------------</option>
+~[if.~(studentscreenaccess;accessaccounts.html)=1]<option value="/admin/students/accessaccounts.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.access_accounts]</option>[/if]
+~[if.~(studentscreenaccess;addresses.html)=1]<option value="/admin/students/addresses.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.addresses]</option>[/if]
+~[if.~(studentscreenaccess;demo.html)=1]<option value="/admin/students/demo.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.demographics_view]</option>[/if]
+~[if.~(studentscreenaccess;generaldemographics.html)=1]<option value="/admin/students/generaldemographics.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.demographics_modify]</option>[/if]
+<option value="/admin/students/autoemailsetup.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.auto_email_reports]</option>
+~[if.~(studentscreenaccess;emergency.html)=1]<option value="/admin/students/emergency.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.emergencymedical]</option>[/if]
+~[if.~(studentscreenaccess;health/home_health.html)=1]<option value="/admin/students/health/home_health.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.health_immunizations]</option>
+<option value="/admin/students/health/home_screen.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.health_screenings]</option>
+<option value="/admin/students/health/home_officevisit.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.health_officevisits]</option>
+<option value="/admin/students/health/home_gradelevel.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.health_certifications]</option>[/if]
+~[if.~(studentscreenaccess;modifydata.html)=1]<option value="/admin/students/modifydata.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.modify_info]</option>[/if]
+~[if.~(studentscreenaccess;misc.html)=1]<option value="/admin/students/misc.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.other_information]</option>[/if]
+~[if.~(studentscreenaccess;parentsguardian.html)=1]<option value="/admin/students/parentsguardian.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.parentsguardian]</option>[/if]
+~[if.~(studentscreenaccess;photo.html)=1]<option value="/admin/students/photo.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.photo]</option>[/if]
+~[if.~(studentscreenaccess;state.html)=1]<option value="/admin/students/state/state~[displaypref:districtstate].html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.stateprovince_,param:~[displaypref:districtstate]]</option>[/if]
+<option value="/admin/students/quicklookup.html?plce=hldr">-------------------------</option>
+~[if.~(studentscreenaccess;attendance.html)=1]<option value="~(ATT_SetDefaultScreenHREF)?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.attendance]</option>[/if]
+~[if.~(studentscreenaccess;attendance.html)=1]~[wc:att_MeetingEntryCounselor][/if]
+<!-- Begin custom -->
+~[if.~(studentscreenaccess;cumulative.html)=1]<option value="/admin/students/officialgradereportap.html?plce=hldr">Official Grade Report</option>[/if]
+<!-- End custom -->
+~[if.~(studentscreenaccess;cumulative.html)=1]<option value="/admin/students/cumulative.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.cumulative_info]</option>[/if]
+~[if.~(studentscreenaccess;graduationcheck.html)=1]<option value="/admin/students/graduationcheck.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.graduation_progress]</option>[/if]
+~[if.~(studentscreenaccess;previousgrades.html)=1]<option value="/admin/students/previousgrades.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.historical_grades]</option>[/if]
+~[if.~(studentscreenaccess;standards.html)=1]<option value="/admin/students/standards.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.standards]</option>[/if]
+~[if.~(studentscreenaccess;teachercomments.html)=1]<option value="/admin/students/teachercomments.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.teacher_comments]</option>[/if]
+~[if.~(studentscreenaccess;termgrades.html)=1]<option value="/admin/students/termgrades.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.term_grades]</option>[/if]
+~[if.~(studentscreenaccess;testlist.html)=1]<option value="/admin/students/testlist.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.test_scores]</option>[/if]
+~[if.~(studentscreenaccess;truancieslist.html)=1]<option value="/admin/students/truancieslist.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.truancies]</option>[/if]
+<option value="/admin/students/quicklookup.html?plce=hldr">-------------------------</option>
+~[if.~(studentscreenaccess;district/home.html)=1]<option value="/admin/students/district/home.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.district_specific]</option>[/if]
+~[if.~(studentscreenaccess;fees.html)=1]<option value="/admin/students/fees.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.fee_transactions]</option>[/if]
+~[if.~(studentscreenaccess;log.html)=1]<option value="/admin/students/log.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.log_entries]</option>[/if]
+~[if.~(studentscreenaccess;lunch.html)=1]<option value="/admin/students/lunch.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.lunch]</option>[/if]
+~[if.~(studentscreenaccess;transactions.html)=1]<option value="/admin/students/transactions.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.lunch_transactions]</option>[/if]
+~[if.~(studentscreenaccess;parentaccess.html)=1]<option value="/admin/students/parentaccess.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.netphone_access]</option>[/if]
+~[if.~(studentscreenaccess;/admin/seop/home.html)=1]<option value="/admin/seop/home.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.seop_review]</option>[/if]
+~[if.~(studentscreenaccess;/admin/students/incidents/home_student.html)=1]<option value="/admin/students/incidents/home_student.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.incidents]</option>[/if]
+<option value="/admin/students/quicklookup.html?plce=hldr">-------------------------</option>
+~[if.~(studentscreenaccess;activities.html)=1]<option value="/admin/students/activities.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.activities]</option>[/if]
+~[if.~(studentscreenaccess;allenrollments.html)=1]<option value="/admin/students/allenrollments.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.all_enrollments]</option>[/if]
+~[if.~(studentscreenaccess;functions.html)=1]<option value="/admin/students/functions.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.functions]</option>[/if]
+~[if.~(studentscreenaccess;specialprograms.html)=1]<option value="/admin/students/specialprograms.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.special_programs]</option>[/if]
+~[if.~(studentscreenaccess;transferinfo.html)=1]<option value="/admin/students/transferinfo.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.transfer_info]</option>[/if]
+<option value="/admin/students/quicklookup.html?plce=hldr">-------------------------</option>
+~[if.~(studentscreenaccess;schedule.html)=1]<option value="/admin/students/schedule.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.bell_schedule_view]</option>[/if]
+~[if.~(studentscreenaccess;schedulelist.html)=1]<option value="/admin/students/schedulelist.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.list_view]</option>[/if]
+~[if.~(studentscreenaccess;schedulematrix.html)=1]<option value="/admin/students/schedulematrix.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.matrix_view]</option>[/if]
+~[if.~(studentscreenaccess;scheduleplusreq.html)=1]<option value="/admin/students/scheduleplusreq.html?schedulerequestyearid=~(schedule.yearidcurrent)">~[text:psx.txt.wildcards.students_screenselect.modify_schedule]</option>[/if]
+~[if.~(studentscreenaccess;managerequests.html)=1]<option value="/admin/students/managerequests.html?plce=hldr">~[text:psx.txt.wildcards.students_screenselect.manage_requests]</option>[/if]
+<!--Begin Custom-->
+~[if.~(studentscreenaccess;managerequests.html)=1]<option value="/admin/students/requests.html?plce=hldr&schedulerequestyearid=2500">15-16 Schedule Requests</option>[/if]
+<!--End Custom-->
+</select>

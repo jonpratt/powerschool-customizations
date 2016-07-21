@@ -1,0 +1,32 @@
+SELECT
+  storedgrades.dcid as StoredGradesDCID,
+  storedgrades.studentid as StudentID,
+  students.lastfirst as StudentName,
+  storedgrades.course_name as CourseName,
+  storedgrades.course_number as CourseNumber,
+  storedgrades.grade as Grade,
+  storedgrades.GPA_Points as GPAPoints,
+  courses.credit_hours as PotentialCH,
+  storedgrades.storecode as StoreCode,
+  storedgrades.termID as TermID,
+  storedgrades.excludefromgpa as ExcludeGradeFlag
+  
+FROM
+  students
+  
+INNER JOIN
+  storedgrades on students.id=storedgrades.studentid
+
+INNER JOIN
+  courses on storedgrades.course_number=courses.course_number
+
+WHERE
+  students.enroll_status=0 AND
+  students.grade_level=12 AND
+  storedgrades.storecode='Q3' AND
+  storedgrades.termid>=2400 AND
+  storedgrades.grade IS NOT NULL
+  
+ORDER BY
+  students.lastfirst,
+  storedgrades.course_name

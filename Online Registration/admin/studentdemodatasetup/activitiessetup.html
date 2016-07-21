@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Co-Curricular Activities Setup</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+    <style>
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display:none !important;
+        }
+        .octet {
+            width:25px;
+            text-align:right;
+        }
+    </style>
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->
+    <a href="/admin/home.html" target="_top">Start Page</a>
+    &gt;
+    <a href="/admin/studentdemodatasetup/studentdemodatasetup.html" target="_top">Student Demographic Data Setup</a>
+    &gt; Co-Curricular Activities Setup
+    <!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Co-Curricular Activities Setup</h1> 
+<!-- start of content area --> 
+	<div class="box-round" ng-controller="activitiesCtrl" id="activitiesCtrlDiv"> 
+		 <h2>Activities</h2> 
+		 <p> 
+		 	These activities are used in Student Demographics to indicate declaration of residency.
+		 </p>
+        <div class="button-row">
+            <a class="button dialogM dockedDialog" title="Add" href="editactivities.html?id=-1">Add Item</a>
+        </div>
+        <div id="ngActivitiesTable" ng-cloak>
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Season</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in activitiesList">
+                    <td><a href="editactivities.html?id={{item.id}}" class="dialogM dockedDialog" title="Edit">{{item.Activity}}</a></td>
+                    <td>{{item.Season}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+	</div> 
+<!-- end of content area --> 
+	~[wc:admin_footer_css]
+    <script>
+        require(['angular', 'studentdemodatasetup/activitiessetup'], function(angular) {
+           angular.bootstrap(document, ['activitiesApp']); 
+        });
+    </script>
+</body> 
+</html>

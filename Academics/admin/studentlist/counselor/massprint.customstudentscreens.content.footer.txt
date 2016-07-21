@@ -1,0 +1,5 @@
+<script>
+
+~[if.~(studentscreenaccess;generaldemographics.html)=1]$j("option[value*='termgrades.html']").after('<option value="/admin/students/officialgradereportap.html?plce=hldr&storecode=~[tlist_sql;SELECT value as curFG FROM prefs WHERE name='curfgname-S1036']~(curFG)">Official Grade Report for Current Final Grade (~(curFG))[/tlist_sql]</option>');[/if]
+
+</script>

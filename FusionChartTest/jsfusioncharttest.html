@@ -1,0 +1,14 @@
+<html>
+  <head>        
+    <title>My First chart using FusionCharts XT - Using JavaScript and JSON</title>      
+    <script type="text/javascript" src="/flash/FusionCharts.js"></script>
+  </head>   
+  <body>     
+    <div id="chartContainer">FusionCharts XT will load here!</div>          
+    <script type="text/javascript">
+      var myChart = new FusionCharts( "Column3D", "myChartId", "400", "300", "0" );
+      myChart.setJSONUrl("data.json");
+      myChart.render("chartContainer");
+    </script>      
+  </body> 
+</html>

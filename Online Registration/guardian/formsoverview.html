@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Digital Forms Overview</title>
+<!-- start of page body --> 
+~[wc:guardian_header] 
+	<h1>Digital Forms Overview</h1> 
+<!-- start student content --> 
+	<div class="box-round"> 
+		<h2>Digital Forms</h2> 
+		<p>Please use the links on the left side of the table below to submit required and optional digital forms.</p>
+        <table class="linkDescList">
+            <thead>
+                <tr>
+                    <th>Link</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="demographics.html?frn=001~(rn)">Student Information and Annual Forms</a></td>
+                    <td>(<b>Required</b>) Review and update student information and submit annual agreement forms.</td>
+                </tr>
+                <tr>
+                    <td><a href="secondaryhousehold.html?frn=001~(rn)">Secondary Household Information</a></td>
+                    <td>(Optional) Provide contact information for shared custody or non-custodial households.</td>
+                </tr>
+                <tr>
+                    <td><a href="cocurricular.html?frn=001~(rn)">Co-Curricular Agreements</a></td>
+                    <td>(Optional) Provide permission for your student to participate in a co-curricular sport or activity.</td>
+                </tr>
+            </tbody>
+        </table>
+	</div>
+    <div class="box-round" id="formsOnRecord">
+        <h3>Annual forms on record</h3>
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Agreement</th>
+                        <th>Status (1=complete, 0=incomplete)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Emergency</td>
+                        <td>~([Students.U_Student_Demographics]Emergency_Agree)</td>
+                    </tr>
+                    <tr>
+                        <td>Health Clinic</td>
+                        <td>~([Students.U_Student_Demographics]Clinic_Agree)</td>
+                    </tr>
+                    <tr>
+                        <td>Bus</td>
+                        <td>~([Students.U_Student_Demographics]Bus_Agree)</td>
+                    </tr>
+                    <tr>
+                        <td>Handbook</td>
+                        <td>~([Students.U_Student_Demographics]Handbook_Agree)</td>
+                    </tr>
+                    <tr>
+                        <td>iPad</td>
+                        <td>~([Students.U_Student_Demographics]iPad_Agree)</td>
+                    </tr>
+                    <tr>
+                        <td>Enrollment</td>
+                        <td>~([Students.U_Student_Demographics]Enrollment_Agree)</td>
+                    </tr>                   
+                </tbody>
+            </table>
+    </div>
+    <div class="box-round">
+        <p>PDF copies of these forms are available on the <a href="http://www.foxcroftacademy.org/about/communications/" target="_blank">Foxcroft Academy Communications page</a>.</p>
+        <p>The <a href="http://www.foxcroftacademy.org/wp-content/uploads/2013/07/School-Lunch-Forms-2015-2016.pdf" target="_blank">School Lunch Forms</a> must be printed and returned to the school by hand.</p>
+    </div>
+<!-- end student content --> 
+<!-- Sets the navigation highlighting: the value is the ID value of the navigation element you want to highlight--> 
+<input id="activeNav" type="hidden" value="#onlineregistration"/> 
+<!-- end of page body --> 
+~[wc:guardian_footer] 
+</body> 
+</html>

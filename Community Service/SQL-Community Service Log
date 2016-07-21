@@ -1,0 +1,22 @@
+SELECT
+	students.lastfirst as Student,
+	students.id as StudentID,
+    students.grade_level as StudentGradeLevel,
+    virtualtablesdata2.user_defined_integer as ServiceGradeLevel,
+    virtualtablesdata2.user_defined_date as ServiceDate,
+    virtualtablesdata2.user_defined_numeric as ServiceHours,
+    virtualtablesdata2.user_defined_text as ServiceDescription
+
+FROM
+    students
+
+LEFT JOIN
+	virtualtablesdata2 on students.id=virtualtablesdata2.foreignkey
+
+WHERE
+    students.enroll_status=0 AND
+    virtualtablesdata2.related_to_table='communityservice'
+
+ORDER BY
+    students.grade_level,
+    students.lastfirst

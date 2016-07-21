@@ -1,0 +1,138 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+<script type="text/javascript">
+	$j(function(){
+		$j("#storecode").change(function(){
+		window.location='officialgradereportspp.html?' + this.value
+		});
+	});
+</script>
+<title>Official Grade Report</title>
+<!-- start of page body --> 
+~[wc:guardian_header] 
+	<h1>Official Grade Report</h1> 
+<!-- start student content --> 
+	<div class="box-round"> 
+		<h2>About this report</h2> 
+			<p>This grade report for ~(studentname) indicates the ~[gpv:storecode] status of your student in each standard and in each course according to our standards-based grading system. Assignments are associated with one or more standard(s), a grade is determined for each standard, and then the overall course grade is determined. Students must earn a C or better in every standard to earn a passing grade of C or better for the course. With one unmet standard the course grade will be "D", and with two or more unmet standards the course grade will be "F".</p>
+			<p>For more detailed information on the assignment grades that influenced the grades here, please use the "Grades and Attendance" page. Click on the overall course grade to view a list of assignments.</p>
+<p><b>Please select a reporting term:</b>
+<!--
+	<select id="storecode">
+	<option value=''>Select reporting term</option>
+	<option value="storecode=P1">P1</option>
+	<option value="frn=~(studentfrn)&storecode=Q1">Q1</option>
+	<option value="frn=~(studentfrn)&storecode=P2">P2</option>
+	<option value="frn=~(studentfrn)&storecode=Q2">Q2</option>
+	<option value="frn=~(studentfrn)&storecode=P3">P3</option>
+	<option value="frn=~(studentfrn)&storecode=Q3">Q3</option>
+	<option value="frn=~(studentfrn)&storecode=P4">P4</option>
+	<option value="frn=~(studentfrn)&storecode=Q4">Q4</option>
+	</select>
+-->
+	<a href="officialgradereportspp.html?storecode=P1">P1</a>,
+	<a href="officialgradereportspp.html?storecode=Q1">Q1</a>,
+	<a href="officialgradereportspp.html?storecode=P2">P2</a>,
+	<a href="officialgradereportspp.html?storecode=Q2">Q2</a>,
+	<a href="officialgradereportspp.html?storecode=P3">P3</a>,
+	<a href="officialgradereportspp.html?storecode=Q3">Q3</a>,
+	<a href="officialgradereportspp.html?storecode=P4">P4</a>,
+	<a href="officialgradereportspp.html?storecode=Q4">Q4</a>
+	</p>
+    	<h2>~[gpv:storecode] Course Overview</h2>
+<table border="0" cellpadding="4" cellspacing="0" class="linkDescList" id="courseoverview"> 
+	<thead>
+	<tr>
+		<th class="bold">Course</th>
+		<th class="bold">Teacher</th>
+		<th class="bold">~[gpv:storecode] Grade</th>
+		<th class="bold">~[gpv:storecode] Teacher Comment</th>
+		<th class="bold">Earned Credit</th>
+	</tr>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+		SELECT
+			storedgrades.course_name as Course,
+			storedgrades.teacher_name as Teacher,
+			storedgrades.grade as Grade,
+			storedgrades.comment_value as TeacherComment,
+			storedgrades.earnedcrhrs as EarnedCredit
+		FROM
+			storedgrades
+		WHERE
+			storedgrades.studentid=~(curstudid)
+			AND storedgrades.termid BETWEEN ~(curyearid)*100 AND ~(curyearid)*100+10
+			AND storedgrades.storecode='~[gpv:storecode]'
+		ORDER BY
+			storedgrades.course_name
+	;]
+	<tr>
+		<td>~(Course)</td>
+		<td>~(Teacher)</td>
+		<td>~(Grade)</td>
+		<td>~(TeacherComment)</td>
+		<td>~(EarnedCredit)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody>
+</table>
+		<h2>~[gpv:storecode] Standards Overview</h2>
+<table border="0" cellpadding="4" cellspacing="0" class="linkDescList" id="standardsoverview">
+	<thead>
+	<tr>
+		<th class="bold">Course</th>
+		<th class="bold">~[gpv:storecode] Course Grade</th>
+		<th class="bold">Standard</th>
+		<th class="bold">~[gpv:storecode] Standard Grade</th>
+	</tr>
+	</thead>
+	<tbody>
+	~[tlist_sql;
+SELECT
+	courses.course_name as Course,
+	storedgrades.grade as CourseGrade,
+	standards.name as Standard,
+	standardsgrades.transaveragescore as StandardGrade
+
+FROM
+	standardsgrades
+	
+INNER JOIN
+	standards on standardsgrades.standardsid=standards.id
+  
+INNER JOIN
+	courses on (cast(standards.courses as varchar(11))=courses.course_number)
+
+INNER JOIN
+	storedgrades on storedgrades.course_number=courses.course_number
+	
+WHERE
+	standardsgrades.studentid=~(curstudid)
+	AND storedgrades.studentid=~(curstudid)
+	AND storedgrades.storecode='~[gpv:storecode]'
+	AND standardsgrades.yearid=~(curyearid)
+	AND standardsgrades.storecode='~[gpv:storecode]'
+	AND storedgrades.termid BETWEEN ~(curyearid)*100 and ~(curyearid)*100+10
+	
+ORDER BY
+	courses.course_name, standards.sortorder
+	;]
+	<tr>
+		<td>~(Course)</td>
+		<td>~(CourseGrade)</td>
+		<td>~(Standard)</td>
+		<td>~(StandardGrade)</td>
+	</tr>
+	[/tlist_sql]
+	</tbody>
+</table>
+</div> 
+<!-- end student content --> 
+<!-- Sets the navigation highlighting: the value is the ID value of the navigation element you want to highlight--> 
+<input id="activeNav" type="hidden" value="#btn-gradesAttendance"/> 
+<!-- end of page body --> 
+~[wc:guardian_footer] 
+</body> 
+</html>

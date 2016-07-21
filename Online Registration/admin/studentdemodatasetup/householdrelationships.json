@@ -1,0 +1,8 @@
+[~[tlist_sql;
+select ID, RELTYPE
+from u_household_relationships
+order by ID]
+    {"id":~(id),
+     "Reltype":"~(reltype;js)"
+    },
+[/tlist_sql]{}]

@@ -1,0 +1,28 @@
+<form id="ajaxSubmit">
+    ~[DirectTable.Select:U_HOUSEHOLD_RELATIONSHIPS;id:~[gpv:id;htmlencode]]
+    <fieldset id="householdrelationshipsForm">
+        <div>
+            <label>Household Relationship Type</label>
+            <input type="text" name="[U_HOUSEHOLD_RELATIONSHIPS]Reltype" value="" id="Reltype" />
+        </div>
+        <div class="button-row">
+            <input type="hidden" name="ac" value="prim" />
+            <button type="button" id="btnDelete" class="confirmationReq">Delete</button>
+            <button type="button" id="btnSubmit" name="btnSubmit">Submit</button>
+        </div>
+    </fieldset>    
+</form>
+<form id="ajaxDelete">
+    <input type="hidden" name="DD-U_HOUSEHOLD_RELATIONSHIPS.ID:~[gpv:id;htmlencode]" value="1" />
+    <input type="hidden" name="ac" value="prim" />
+</form>
+<script>
+    $j('#btnSubmit').click(function() {
+       var dataString = $j('#ajaxSubmit').serialize();
+        angular.element($j('#householdrelationshipsCtrlDiv')).scope().householdrelationshipsEdit(dataString);
+    });
+    $j('#btnDelete').click(function() {
+       var dataString = $j('#ajaxDelete').serialize();
+        angular.element($j('#householdrelationshipsCtrlDiv')).scope().householdrelationshipsEdit(dataString);
+    });
+</script>

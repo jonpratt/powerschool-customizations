@@ -1,0 +1,8 @@
+[~[tlist_sql;
+select ID, PHONETYPE
+from u_phones
+order by ID]
+    {"id":~(id),
+     "Phonetype":"~(phonetype;js)"
+    },
+[/tlist_sql]{}]
