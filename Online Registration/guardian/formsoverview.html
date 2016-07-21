@@ -25,10 +25,6 @@
                     <td><a href="secondaryhousehold.html?frn=001~(rn)">Secondary Household Information</a></td>
                     <td>(Optional) Provide contact information for shared custody or non-custodial households.</td>
                 </tr>
-                <tr>
-                    <td><a href="cocurricular.html?frn=001~(rn)">Co-Curricular Agreements</a></td>
-                    <td>(Optional) Provide permission for your student to participate in a co-curricular sport or activity.</td>
-                </tr>
             </tbody>
         </table>
 	</div>
@@ -38,33 +34,57 @@
                 <thead>
                     <tr>
                         <th>Agreement</th>
-                        <th>Status (1=complete, 0=incomplete)</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Emergency</td>
-                        <td>~([Students.U_Student_Demographics]Emergency_Agree)</td>
+                        ~[if#emergencystatus.~([Students.U_Student_Demographics]Emergency_Agree)=1]
+                        <td><p class='feedback-confirm'>Complete</p></td>
+                        [else#emergencystatus]
+                        <td><p class='feedback-alert'>Incomplete</p></td>
+                        [/if#emergencystatus]
                     </tr>
                     <tr>
                         <td>Health Clinic</td>
-                        <td>~([Students.U_Student_Demographics]Clinic_Agree)</td>
+                        ~[if#healthclinicstatus.~([Students.U_Student_Demographics]Clinic_Agree)=1]
+                        <td><p class='feedback-confirm'>Complete</p></td>
+                        [else#healthclinicstatus]
+                        <td><p class='feedback-alert'>Incomplete</p></td>
+                        [/if#healthclinicstatus]
                     </tr>
                     <tr>
                         <td>Bus</td>
-                        <td>~([Students.U_Student_Demographics]Bus_Agree)</td>
+                        ~[if#busstatus.~([Students.U_Student_Demographics]Bus_Agree)=1]
+                        <td><p class='feedback-confirm'>Complete</p></td>
+                        [else#busstatus]
+                        <td><p class='feedback-alert'>Incomplete</p></td>
+                        [/if#busstatus]
                     </tr>
                     <tr>
                         <td>Handbook</td>
-                        <td>~([Students.U_Student_Demographics]Handbook_Agree)</td>
+                        ~[if#handbookstatus.~([Students.U_Student_Demographics]Handbook_Agree)=1]
+                        <td><p class='feedback-confirm'>Complete</p></td>
+                        [else#handbookstatus]
+                        <td><p class='feedback-alert'>Incomplete</p></td>
+                        [/if#handbookstatus]
                     </tr>
                     <tr>
                         <td>iPad</td>
-                        <td>~([Students.U_Student_Demographics]iPad_Agree)</td>
+                        ~[if#ipadstatus.~([Students.U_Student_Demographics]iPad_Agree)=1]
+                        <td><p class='feedback-confirm'>Complete</p></td>
+                        [else#ipadstatus]
+                        <td><p class='feedback-alert'>Incomplete</p></td>
+                        [/if#ipadstatus]
                     </tr>
                     <tr>
                         <td>Enrollment</td>
-                        <td>~([Students.U_Student_Demographics]Enrollment_Agree)</td>
+                        ~[if#enrollmentstatus.~([Students.U_Student_Demographics]Enrollment_Agree)=1]
+                        <td><p class='feedback-confirm'>Complete</p></td>
+                        [else#enrollmentstatus]
+                        <td><p class='feedback-alert'>Incomplete</p></td>
+                        [/if#enrollmentstatus]<td></td>
                     </tr>                   
                 </tbody>
             </table>
