@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Annual Agreements</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head> 
+<body> 
+	~[wc:admin_header_frame_css]
+	<!-- breadcrumb start -->
+		<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/students/home.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Annual Agreements
+	<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css]
+<!-- start of main menu and content -->
+~[wc:title_student_begin_css]Annual Agreements~[wc:title_student_end_css]
+<form action="/~[self.page]?frn=~(studentfrn)&changesSaved=true" method="POST">
+<!-- start of content area -->
+~[if.~(gpv.changesSaved)=true]<div class="feedback-confirm">~[text:psx.common.changes_recorded]</div>[/if]
+	<div class="box-round">
+		 <h2>Annual Agreements</h2>
+		 <p>
+		 	Your paragraph text goes here.
+		 </p>
+        
+        <table>
+            <thead>
+                <th>Agreement</th>
+                <th>Status</th>
+            </thead>
+            <tbody>
+                ~[tlist_sql;
+                    SELECT
+                        CASE WHEN enrollment_agree=1 THEN 'feedback-confirm' ELSE 'feedback-alert' END as enrollmentAlert,
+                        enrollmentagree as enrollmentValue,
+                        CASE WHEN enrollment_agree=1 THEN 'checked' ELSE '' END as enrollmentStatus
+                        
+                    FROM
+                    	u_student_demographics
+                    	
+                    WHERE
+                    	studentsdcid=~(rn)
+                ]
+                <tr>
+                    <td>Enrollment</td>
+                    <td><p class="~(enrollmentalert)"><input type="checkbox" name="handbookcheck" value="~(enrollmentvalue)" ~(enrollmentstatus)></p></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <input name="handbook" id="handbookcheckbox" type="checkbox" ~(handbookstatus)>
+        
+        
+        
+        <div class="button-row"><input type="hidden" name="ac" value="prim">~[submitbutton]</div>
+	</div>
+</form>
+<!-- end of content area -->
+	~[wc:admin_footer_frame_css]
+</body> 
+</html>
