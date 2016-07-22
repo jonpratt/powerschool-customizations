@@ -22,19 +22,40 @@
 	<div class="box-round">
 		 <h2>Annual Agreements</h2>
 		 <p>
-		 	Your paragraph text goes here.
+		 	Check the box for each form that is complete and on file.
 		 </p>
         
-        <table>
+        <table class="grid">
             <thead>
                 <th>Agreement</th>
-                <th>Status</th>
+                <th>Value</th>
+                <th>Status Indicator</th>
             </thead>
             <tbody>
                 ~[tlist_sql;
                     SELECT
+                        emergency_agree as emergencyValue,
+                        CASE WHEN emergency_agree=1 THEN 'feedback-confirm' ELSE 'feedback-alert' END as emergencyAlert,
+                        CASE WHEN emergency_agree=1 THEN 'checked' ELSE '' END as emergencyStatus,
+                        
+                        clinic_agree as clinicValue,
+                        CASE WHEN clinic_agree=1 THEN 'feedback-confirm' ELSE 'feedback-alert' END as clinicAlert,
+                        CASE WHEN clinic_agree=1 THEN 'checked' ELSE '' END as clinicStatus,
+
+                    	bus_agree as busValue,
+                        CASE WHEN bus_agree=1 THEN 'feedback-confirm' ELSE 'feedback-alert' END as busAlert,
+                        CASE WHEN bus_agree=1 THEN 'checked' ELSE '' END as busStatus,
+                        
+                        handbook_agree as handbookValue,
+                        CASE WHEN handbook_agree=1 THEN 'feedback-confirm' ELSE 'feedback-alert' END as handbookAlert,
+                        CASE WHEN handbook_agree=1 THEN 'checked' ELSE '' END as handbookStatus,
+                        
+                        ipad_agree as ipadValue,
+                        CASE WHEN ipad_agree=1 THEN 'feedback-confirm' ELSE 'feedback-alert' END as ipadAlert,
+                        CASE WHEN ipad_agree=1 THEN 'checked' ELSE '' END as ipadStatus,
+                        
+                        enrollment_agree as enrollmentValue,
                         CASE WHEN enrollment_agree=1 THEN 'feedback-confirm' ELSE 'feedback-alert' END as enrollmentAlert,
-                        enrollmentagree as enrollmentValue,
                         CASE WHEN enrollment_agree=1 THEN 'checked' ELSE '' END as enrollmentStatus
                         
                     FROM
@@ -44,17 +65,71 @@
                     	studentsdcid=~(rn)
                 ]
                 <tr>
-                    <td>Enrollment</td>
-                    <td><p class="~(enrollmentalert)"><input type="checkbox" name="handbookcheck" value="~(enrollmentvalue)" ~(enrollmentstatus)></p></td>
+                    <td>Emergency</td>
+                    <td>~(emergencyValue)</td>
+                    <td><p class="~(emergencyAlert)"><input type="checkbox" id="emergencyCheckbox" name="[Students.U_Student_Demographics]emergency_agree" value="" ~(emergencyStatus)></p></td>
                 </tr>
+                <tr>
+                	<td>Clinic</td>
+                	<td>~(clinicValue)</td>
+                    <td><p class="~(clinicAlert)"><input type="checkbox" id="clinicCheckbox" name="[Students.U_Student_Demographics]clinic_agree" value="" ~(clinicStatus)></p></td>
+                </tr>
+                <tr>
+                	<td>Bus</td>
+                	<td>~(busValue)</td>
+                    <td><p class="~(busAlert)"><input type="checkbox" id="busCheckbox" name="[Students.U_Student_Demographics]bus_agree" value="" ~(busStatus)></p></td>
+                </tr>
+                <tr>
+                    <td>Handbook</td>
+                    <td>~(handbookValue)</td>
+                    <td><p class="~(handbookAlert)"><input type="checkbox" id="handbookCheckbox" name="[Students.U_Student_Demographics]handbook_agree" value="" ~(handbookStatus)></p></td>
+                </tr>
+                <tr>
+                	<td>iPad</td>
+                	<td>~(ipadValue)</td>
+                    <td><p class="~(ipadAlert)"><input type="checkbox" id="ipadCheckbox" name="[Students.U_Student_Demographics]ipad_agree" value="" ~(ipadStatus)></p></td>
+                </tr>
+                <tr>
+                	<td>Enrollment</td>
+                	<td>~(enrollmentValue)</td>
+                    <td><p class="~(enrollmentAlert)"><input type="checkbox" id="enrollmentCheckbox" name="[Students.U_Student_Demographics]enrollment_agree" value="" ~(enrollmentStatus)></p></td>
+                </tr>
+                [/tlist_sql]
             </tbody>
         </table>
         
-        <input name="handbook" id="handbookcheckbox" type="checkbox" ~(handbookstatus)>
+        <p>Click here to indicate that all forms are complete: <input id="formsComplete" type="checkbox" name="[Students.U_Student_Demographics]forms_complete" value=""></p>
         
+        <h2>iPad Insurance & Take-Home Options</h2>
         
+        <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Option Selected</th>
+                        <th>Insurance Status</th>
+                        <th>Take-Home Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<tr>
+                        <td><input type="radio" name="[Students.U_Student_Demographics]iPad_Insurance" value="1"></td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="[Students.U_Student_Demographics]iPad_Insurance" value="2"></td>
+                        <td>Yes</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="[Students.U_Student_Demographics]iPad_Insurance" value="3"></td>
+                        <td>No</td>
+                        <td>No</td>
+                    </tr>
+                </tbody>
+            </table>
         
-        <div class="button-row"><input type="hidden" name="ac" value="prim">~[submitbutton]</div>
+        <div class="button-row"><input id="btnSubmit" type="hidden" name="ac" value="prim">~[submitbutton]</div>
 	</div>
 </form>
 <!-- end of content area -->
