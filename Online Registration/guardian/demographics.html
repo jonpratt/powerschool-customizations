@@ -37,7 +37,7 @@
 
         <h2>Step 1: Review and Update Student Information</h2>
             
-            <p>If the information on file is correct, you may leave the update field blank. Otherwise, please enter new information in the update fields to provide complete and accurate information. If there is a phone number on file that we should delete, please enter 000-000-0000 in the update field and the information will be removed from our system when your update is processed.</p>
+            <p><strong>If the information on file is correct, you may leave the update field blank.</strong> Otherwise, please enter new information in the update fields to provide complete and accurate information. If there is a phone number on file that we should delete, please enter 000-000-0000 in the update field and the information will be removed from our system when your update is processed.</p>
             
             <h3>Primary Household Legal Address</h3>
             
@@ -437,7 +437,7 @@
             <h3>Emergency Agreement</h3>
 
             ~[if#emergencyagree.~([Students.U_Student_Demographics]Emergency_Agree)=1]
-            <b><p>Your Emergency Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Your Emergency Agreement has been submitted and is on file.</p></b>
             [else#emergencyagree]
 
             <p>In case of accident or serious illness, I request the school to contact me. If the school is unable to reach me, I hearby authorize the school to call the medical provider indicated above and follow his/her instructions. If it is impossible to contact this medical provider the school may make whatever arrangements seem necessary to provide care and treatment for my child.</p>
@@ -464,7 +464,7 @@
             <h3>Clinic Agreement</h3>
 
             ~[if#clinicagree.~([Students.U_Student_Demographics]Clinic_Agree)=1]
-            <b><p>Your Clinic Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Your Clinic Agreement has been submitted and is on file.</p></b>
             [else#clinicagree]
 
             <p>The clinic has permission to administer to my student over-the-counter (OTC) medications such as Tylenol, Ibuprofen, Tums, Mylanta, and cough drops as deemed necessary by the school nurse. If you wish to specify a certain dosage, please do so above (Medical Information > OTC Notes). This agreement must be signed before the school nurse can administer OTC medications, and provides permission for the clinic to both release and receive information from the student's health care provider(s).</p>
@@ -535,10 +535,10 @@
             <h3>RSU 68 and Foxcroft Academy School Bus Safety and Riding Regulations</h3>
 
             ~[if#busagree.~([Students.U_Student_Demographics]Bus_Agree)=1]
-            <b><p>Your Bus Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Your Bus Agreement has been submitted and is on file.</p></b>
             [else#busagree]
 
-            <p>The riding of tax-supported school buses to and from the schools of MSAD#68 and Foxcroft  Academy is a privilege granted by the Board of Directors and conditioned on each rider’s individual behavior and observance of the Safety and Riding Regulations. Drivers are authorized to enforce these rules and to make decisions as necessary in the interest of the safe conveyance of school children. Failure to comply with the regulations or wishes of the bus driver may result in suspension of expulsion of riding privileges.</p>
+            <p>The riding of tax-supported school buses to and from the schools of RSU 68 and Foxcroft Academy is a privilege granted by the Board of Directors and conditioned on each rider’s individual behavior and observance of the Safety and Riding Regulations. Drivers are authorized to enforce these rules and to make decisions as necessary in the interest of the safe conveyance of school children. Failure to comply with the regulations or wishes of the bus driver may result in suspension of expulsion of riding privileges.</p>
             <p>All pupils shall be ready in the morning at the usual time the bus arrives at their homes or at the designated bus stop. Due to school schedules the bus cannot wait for those who are tardy.</p>
             <p><b>Bus Safety Regulations</b></p>
             <ol>
@@ -601,10 +601,10 @@
             <h3>Student Handbook Agreement</h3>
 
             ~[if#handbookagree.~([Students.U_Student_Demographics]Handbook_Agree)=1]
-            <b><p>Your Student Handbook Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Your Student Handbook Agreement has been submitted and is on file.</p></b>
             [else#handbookagree]
 
-            <p>We, the student and parent/guardian, verify by signing on the appropriate spaces below that we have read, understand, and agree to follow and to be held accountable to the rules, policies, procedures, and other information provided in the Foxcroft Academy Student Handbook for 2015-2016 school year.</p>
+            <p>We, the student and parent/guardian, verify by signing on the appropriate spaces below that we have read, understand, and agree to follow and to be held accountable to the rules, policies, procedures, and other information provided in the Foxcroft Academy Student Handbook for this school year.</p>
 
             <table class="grid">
                 <thead>
@@ -632,7 +632,7 @@
             <h3>Student Technology and Internet Use Rules and Permission</h3>
 
             ~[if#ipadagree.~([Students.U_Student_Demographics]iPad_Agree)=1]
-            <b><p>Your iPad Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Your iPad Agreement has been submitted and is on file.</p></b>
             [else#ipadagree]
 
             <p>All students are responsible for their actions and activities involving Foxcroft Academy (FA) computers, iPads, network and Internet services, and for their computer files, passwords and accounts. The Technology and Internet Use Rules are included in the Student Handbook. These rules provide general guidance concerning the use of FA’s resources and examples of prohibited uses. The rules do not attempt to describe every possible prohibited activity by students. Students, parents and school staff who have questions about whether a particular activity is prohibited are encouraged to contact the Assistant Head of School for Academics. These rules apply to all FA provided computers and iPads wherever used, and all uses of FA’s servers, Internet access and networks regardless of how they are accessed.</p>
@@ -684,7 +684,7 @@
             <h3>Enrollment Agreement</h3>
 
             ~[if#enrollmentagree.~([Students.U_Student_Demographics]Enrollment_Agree)=1]
-            <b><p>Your Enrollment Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Your Enrollment Agreement has been submitted and is on file.</p></b>
             [else#enrollmentagree]
 
             <p>Foxcroft Academy is an independent school that accepts public tuition students, at the Maximum Allowable Tuition rate, which includes tuition and Insured Value Factor payment, as stipulated under Title 20-A M.R.S.A. Section 2701. Parents who are legal residents of the communities within RSU #68 will have their tuition paid for by RSU #68 as provided by state statute.</p>
