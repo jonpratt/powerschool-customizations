@@ -1,0 +1,19 @@
+<html>
+<body>
+<table>
+~[tlist_sql;
+	SELECT ps_customfields.getcoursescf(c.id, 'levelofstudy') levelofstudy, sg.grade LetterGrade
+	FROM StoredGrades sg
+	INNER JOIN Students s
+	ON sg.StudentID=s.ID AND s.Enroll_Status=0 AND s.SchoolID=~(curschoolid)
+	INNER JOIN Courses c
+	ON c.Course_Number=sg.Course_Number
+	WHERE ps_customfields.getcoursescf(c.id,'levelofstudy') IS NOT NULL AND sg.TermID>=~(curyearid)*100 AND sg.Grade IS NOT NULL;]
+	<tr>
+		<td>~(levelofstudy)</td>
+		<td>~(lettergrade)</td>
+	</tr>
+[/tlist_sql]
+</table>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!--
+			<th class="bold">Modification Course</th>
+			<th class="bold">Approved By</th>
+			<th class="bold">Approved Date</th>
+			<th class="bold">Note</th>
+-->
+<!--
+			<td>
+			<!--Graduation Requirement, use select drop-down-->
+			<!--In future, want to use Students.GradReqSetID=GradReq.GradReqSetID, join with GradReq.Name-->
+				<select name="[01]GradReqToMod">
+					<option value="">Graduation requirement...</option>
+					<option value="EnglishI">English I</option>
+					<option value="EnglishII">English II</option>
+					<option value="EnglishIII">English III</option>
+					<option value="SeniorEnglish">Senior English</option>
+					<option value="Math1">Math-Credit 1</option>
+					<option value="Math2">Math-Credit 2</option>
+					<option value="Math3">Math-Credit 3</option>
+					<option value="SSWorldCiv">SS-World Civ</option>
+					<option value="SSAmHistA">SS-Am Hist A</option>
+					<option value="SSElective1">SS-Elective 1</option>
+					<option value="SSElective2">SS-Elective 2</option>
+					<option value="Biology">Biology</option>
+					<option value="Chemistry">Chemistry</option>
+					<option value="Physics">Physics</option>
+					<option value="Health">Health</option>
+					<option value="PhysEd">Phys Ed</option>
+					<option value="FineArt">Fine Art</option>
+					<option value="Computer">Computer</option>
+					<option value="Elective">Elective</option>
+				</select>
+			</td>
+			<td>
+			<!--Modification course, use select drop-down with SQL of courses-->
+				<select name="[01]GradReqModCourse">
+					<option value="">Modification course...</option>
+					~[tlist_sql;
+						SELECT Course_Number, Course_Name
+						FROM PS.Courses
+						ORDER BY Course_Name;]
+					<option value="CNum=~(Course_Number)&CName=~(Course_Name)">~(Course_Name)</option>
+					[/tlist_sql]
+				</select>
+			</td>
+			<td>
+			<!--Approved By, use select drop-down (Head, Asst. Head for Academics, IEP)-->
+				<select name="[01]GradReqModApprovedBy">
+					<option value="">Approved by...</option>
+					<option value="HeadOfSchool">Head of School</option>
+					<option value="AsstHeadForAcademics">Asst Head-Academics</option>
+					<option value="IEP">IEP Team</option>
+					<option value="Other">Other (Use Note)</option>
+				</select>
+			</td>
+			<td>
+			<!--Approved Date, use UI widget for date selection, name="[01]GradReqModApprovedDate"-->
+				<input name="[01]GradReqModApprovedDate" type="text" class="psDateWidget" size="10">
+			</td>
+-->

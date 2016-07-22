@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Graduation Plan Modifications</title>
+~[wc:commonscripts]
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head>
+
+<body class="popUp">
+
+<!-- Start of shaded content table -->
+<div class="box-round">
+
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="42"><img src="/images/gradcap.jpg" width="50" height="40" alt="" border="0"></td>
+<td width="5"><img src="/images/misc_trans.gif" width="5" height="1"></td>
+<td width="100%"><span class="header">GRADUATION REQUIREMENTS MODIFICATION(S) FOR:</span><br>~(studentname)</td>
+</tr>
+<tr>
+<td colspan="3">
+<hr />
+</tr>
+<tr>
+<td colspan="3">
+<!--CONTENT GOES HERE-->
+			<table border="0" cellspacing="0" cellpadding="4" width="300">
+				<thead> 
+					<tr bgcolor="#f6f6f6">
+						<th class="bold">Modifications</th>
+					</tr>
+				</thead>
+				<tbody>
+					~[tlist_sql;
+						select ps_customfields.getstudentscf(id,'gradreqmodnote') as gradreqmodnote
+						from students
+						where ps_customfields.getstudentscf(id,'gradreqmodified')='1'
+						and id=~(curstudid);]
+						<tr>
+							<td width="250">~(gradreqmodnote)</td>
+						</tr>
+					[/tlist_sql]
+				</tbody>
+		</table>
+
+</td>
+</tr>
+</table>
+<center><a href="javascript:window.close()">~[text:psx.html.admin_alerts.otheralert.close]</a></center>
+
+</div>
+~[wc:legal_copyright]
+
+</body>
+</html>

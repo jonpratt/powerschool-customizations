@@ -1,0 +1,15 @@
+<graph caption='Grade Count' subCaption='Current Year, ~[gpv:storecode], Current School'
+       xaxisname='Letter Grade' yaxisname='Count' 
+       decimalPrecision="0" formatNumberScale="0"
+       bgcolor="f6f6f6"
+       canvasBorderThickness="1">
+~[tlist_sql; 
+SELECT sg.Grade LetterGrade, COUNT(*) GradeCount
+FROM StoredGrades sg
+INNER JOIN Students s
+ON sg.StudentID=s.ID AND s.Enroll_Status=0 AND s.SchoolID=~(curschoolid)
+WHERE sg.StoreCode='~[gpv:storecode]' AND sg.TermID>=~(curyearid)*100 AND sg.Grade IS NOT NULL
+GROUP BY sg.Grade
+ORDER BY sg.Grade;]
+<set name='~(LetterGrade)' value='~(GradeCount)'/>
+[/tlist_sql]</graph>

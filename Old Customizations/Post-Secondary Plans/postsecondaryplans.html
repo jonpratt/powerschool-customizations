@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+<title>Post-Secondary Plans</title>
+~[wc:commonscripts]
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head>
+
+<body>
+
+<form action="/admin/changesrecorded.white.html" method="POST">
+~[wc:admin_header_frame_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.misc.start_page]</a> &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.misc.student_selection]</a> &gt; Post-Secondary Plans<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
+
+~[wc:title_student_begin_css]Post-Secondary Plans~[wc:title_student_end_css]
+
+<!-- start of content and bounding box -->
+<div class="box-round">
+
+<!-- start custom content here -->
+<table>
+<tr>
+	<td>Planned Post-Secondary Institution</td>
+	<td><select name="[01]PostSecInstitution">
+		<option value="">Select a Post-Secondary Institution</option>
+		<option value="work">Work</option>
+		<option value="military">Military</option>
+		<option value="certificate">Certificate Program</option>
+		<option value="community">Community / Technical College</option>
+		<option value="midrange">Mid-range 4-year University / College</option>
+		<option value="serviceacademy">Service Academy</option>
+		<option value="selective">Selective 4-year University / College</option>
+		</select></td>
+</tr>
+<tr>
+	<td>Major of Interest</td>
+	<td><select name="[01]PostSecMajor">
+		<option value="~([01]PostSecMajor)">~([01]PostSecMajor)</option>
+		~[tlist_sql;
+		SELECT user_defined_text major
+		FROM virtualtablesdata
+		WHERE related_to_table='postsecmajors'
+		ORDER BY major;]
+		<option value="~(major)">~(major)</option>
+		[/tlist_sql]
+		</select></td>
+</tr>
+<tr>
+	<td>Counselor Notes on Post-Secondary Plan</td>
+	<td><textarea name="[01]PostSecCounselorNotes" value="" rows=5 cols=60></textarea></td>
+</tr>
+<table>
+<!-- end custom content here -->
+<br>
+	<div class="button-row">
+		<input type="hidden" name="ac" value="prim">
+		~[submitbutton]
+	</div>
+</div>
+<br>
+<!-- end of content of bounding box -->
+
+~[wc:admin_footer_frame_css]
+</form>
+
+</body>
+</html><!-- end right frame -->

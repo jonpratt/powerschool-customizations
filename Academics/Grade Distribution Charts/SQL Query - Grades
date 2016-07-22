@@ -1,0 +1,7 @@
+SELECT sg.Grade LetterGrade, COUNT(*) GradeCount
+FROM StoredGrades sg
+INNER JOIN Students s
+ON sg.StudentID=s.ID AND s.Enroll_Status=0 AND s.SchoolID=~(currschoolid)
+WHERE sg.TERMID>=~(curryearid)*100 AND sg.Grade IS NOT NULL
+GROUP BY sg.Grade
+ORDER BY sg.Grade

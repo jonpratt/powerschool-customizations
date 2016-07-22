@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<!-- non framed -->
+<head>
+<title>Jon's Grade Distribution Chart</title>
+~[wc:commonscripts]
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head>
+<body>
+
+<form action="home.html" method="POST">
+
+~[wc:admin_header_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/reports/home.html">Reports</a> &gt; <a href="/admin/reports/runreports.html">Run Reports</a> &gt; Grade Distribution Chart<!-- breadcrumb end -->~[wc:admin_navigation_css]
+
+<h1>Grade Distribution<span>~[text:psx.html.admin_reports.ethnicitybreakdown.as_of,param:~[eaodate;dayabbr]]<br>~[schoolname]</span></h1>
+
+<div class="box-round">
+
+<!-- start of report -->
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
+	codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" 
+	WIDTH="100%" HEIGHT="500" 
+	id="FusionCharts" ALIGN="center">
+<PARAM NAME="movie" VALUE="/flash/Column2D.swf">
+<PARAM NAME="FlashVars" value="&dataURL=/admin/portlets/gradeDistAll06.xml&chartWidth=100%&chartHeight=500">
+<PARAM NAME="quality" VALUE="high">
+<PARAM NAME="bgcolor" VALUE="#f6f6f6">
+<PARAM NAME="wmode" VALUE="opaque" />
+<EMBED src="/flash/Column2D.swf" 
+	FlashVars="&dataURL=/admin/portlets/gradeDistAll06.xml&chartWidth=100%&chartHeight=500" 
+	quality="high" bgcolor="#f6f6f6" 
+	WIDTH="100%" HEIGHT="500"
+	NAME="FusionCharts" ALIGN="center" 
+	TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+</EMBED>
+</OBJECT>
+
+
+<!-- end of report -->
+</div>
+
+~[wc:admin_footer_css]
+</form>
+
+</body>
+</html><!-- non framed -->

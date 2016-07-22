@@ -1,0 +1,4 @@
+SELECT COUNT(attendance_codeID) AS NonExempt, StudentID as StudentID
+FROM PS.attendance
+WHERE attendance_codeID=2 OR attendance_codeid=3
+GROUP BY StudentID

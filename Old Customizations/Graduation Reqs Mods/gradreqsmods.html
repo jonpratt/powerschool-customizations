@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+<title>Graduation Requirements Modification</title>
+~[wc:commonscripts]
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+</head>
+
+<body>
+
+<form action="/admin/changesrecorded.white.html" method="POST">
+~[wc:admin_header_frame_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.misc.start_page]</a> &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.misc.student_selection]</a> &gt; Graduation Requirements Modification<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
+
+~[wc:title_student_begin_css]Graduation Requirements Modification~[wc:title_student_end_css]
+
+<!-- start of content and bounding box -->
+<div class="box-round">
+
+<!-- start custom content here -->
+		<h2>Modification</h2> 
+		<p> 
+		 	Enter approved modification(s) to ~(first_name)'s graduation requirements. These modifications will appear in an alert screen (graduation hat icon) on ~(first_name)'s screens.
+		<p>
+			<b>Modifications entered here will not be reflected as customization on the student graduation plan progress screen.</b>
+		</p>
+<table border="0" cellpadding="4" cellspacing="4" class="linkDescList">
+	<thead>
+		<tr>
+			<th class="bold">Graduation Requirement Modification(s)</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<!--Note, text area-->
+				<textarea name="[01]GradReqModNote" value="" rows=5 cols=60></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span>This box must be checked in order for the above notes to appear as an alert that graduation requirements have been modified.</span>
+				<input type="checkbox" name="[01]GradReqModified" value="1">
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!-- end custom content here -->
+<br>
+	<div class="button-row">
+		<input type="hidden" name="ac" value="prim">
+		~[submitbutton]
+	</div>
+</div>
+<br>
+<!-- end of content of bounding box -->
+
+~[wc:admin_footer_frame_css]
+</form>
+
+</body>
+</html><!-- end right frame -->

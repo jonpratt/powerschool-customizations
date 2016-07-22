@@ -1,0 +1,21 @@
+<html>
+<body>
+<form action="/admin/changesrecorded.white.html" method="POST">
+New major: <input type="text" name="[virtualtablesdata]user_defined_text" value="" size=70 /><br />
+<input type="hidden" name="[virtualtablesdata]related_to_table" value="postsecmajors" />
+<input type="hidden" name="[virtualtablesdata]linkto_def_id" value="513" />
+<div class="button-row"><input type="hidden" name="ac" value="prim">~[submitbutton]</div>
+</form>
+<table>
+~[tlist_sql;
+	SELECT user_defined_text major
+	FROM virtualtablesdata
+	WHERE related_to_table='postsecmajors'
+	ORDER BY major;]
+	<tr>
+		<td>~(major)</td>
+	</tr>
+[/tlist_sql]
+</table>
+</body>
+</html>
