@@ -478,7 +478,7 @@
             <h3>~([Students]First_Name)'s Emergency Agreement</h3>
             
             ~[if#emergencyagree.~([Students.U_Student_Demographics]Emergency_Agree)=1]
-            <b><p>Emergency Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Emergency Agreement has been submitted and is on file.</p></b>
             [else#emergencyagree]
         
             <table class="grid" id="EmergencyAgreement">
@@ -520,7 +520,7 @@
             <h3>~([Students]First_Name)'s Clinic Agreement</h3>
             
             ~[if#clinicagree.~([Students.U_Student_Demographics]Clinic_Agree)=1]
-            <b><p>Clinic Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Clinic Agreement has been submitted and is on file.</p></b>
             [else#clinicagree]
         
             <table class="grid" id="ClinicAgreement">
@@ -562,7 +562,7 @@
             <h3>~([Students]First_Name)'s Bus Agreement</h3>
             
             ~[if#busagree.~([Students.U_Student_Demographics]Bus_Agree)=1]
-            <b><p>Bus Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Bus Agreement has been submitted and is on file.</p></b>
             [else#busagree]
         
             <table class="grid" id="BusAgreement">
@@ -618,7 +618,7 @@
             <h3>~([Students]First_Name)'s Student Handbook Agreement</h3>
             
             ~[if#handbookagree.~([Students.U_Student_Demographics]Handbook_Agree)=1]
-            <b><p>Student Handbook Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Student Handbook Agreement has been submitted and is on file.</p></b>
             [else#handbookagree]
         
             <table class="grid" id="handbookAgreement">
@@ -674,7 +674,7 @@
             <h3>~([Students]First_Name)'s iPad Agreement</h3>
             
             ~[if#ipadagree.~([Students.U_Student_Demographics]iPad_Agree)=1]
-            <b><p>iPad Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">iPad Agreement has been submitted and is on file.</p></b>
             [else#ipadagree]
         
             <table class="grid" id="iPadAgreement">
@@ -723,7 +723,7 @@
             <h3>~([Students]First_Name)'s Enrollment Agreement</h3>
             
             ~[if#enrollmentagree.~([Students.U_Student_Demographics]Enrollment_Agree)=1]
-            <b><p>Enrollment Agreement has been submitted and is on file.</p></b>
+            <b><p class="feedback-confirm">Enrollment Agreement has been submitted and is on file.</p></b>
             [else#enrollmentagree]
         
             <table class="grid" id="enrollmentAgreement">
@@ -782,6 +782,8 @@
             </table>
         
             [/if#enrollmentagree]
+        
+        	<p>Click here to indicate that all forms are complete: <input id="formsComplete" type="checkbox" name="[Students.U_Student_Demographics]forms_complete" value=""></p>
         
     </div>
     
