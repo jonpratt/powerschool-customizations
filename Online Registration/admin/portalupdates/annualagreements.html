@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Annual Agreements</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+    <style>
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display:none !important;
+        }
+        .octet {
+            width:25px;
+            text-align:right;
+        }
+    </style>
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+    <!-- breadcrumb start -->
+    <a href="/admin/home.html" target="_top">Start Page</a>
+    &gt; Annual Agreements
+    <!-- breadcrumb end --> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+	<h1>Annual Agreements</h1> 
+<!-- start of content area --> 
+	<div ng-cloak class="box-round" ng-controller="annualagreementsCtrl" id="annualagreementsCtrlDiv"> 
+		 <h2>Annual Agreements</h2> 
+		 <p> 
+		 	This table provides the status for each Annual Agreement for each currently enrolled student.
+		 </p>
+        <div id="ngannualagreementsTable" data-pss-grid-widget data-data="annualagreementsList" data-filtered-data="annualagreementsListFilt" data-client-side-pagination="true">
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th data-pss-sort-fields="studentsDCID|number">Edit Agreements</th>
+                    <th data-pss-sort-fields="studentsName">Student Name</th>
+                    <th data-pss-sort-fields="studentsGradeLevel|number">Student Grade Level</th>
+                    <th data-pss-sort-fields="advisor">Advisor</th>
+                    <th data-pss-sort-fields="emergencyValue|number">Emergency</th>
+                    <th data-pss-sort-fields="clinicValue|number">Clinic</th>
+                    <th data-pss-sort-fields="busValue|number">Bus</th>
+                    <th data-pss-sort-fields="handbookValue|number">Handbook</th>
+                    <th data-pss-sort-fields="ipadValue|number">iPad</th>
+                    <th data-pss-sort-fields="enrollmentValue|number">Enrollment</th>
+                    <th data-pss-sort-fields="formsCompleteValue|number">Forms Complete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in annualagreementsListFilt">
+                    <td><a href="agreementupdate.html?frn=001{{item.studentsDCID}}" class="dialogM dockedDialog" title="Update Annual Agreements">Edit</a></td>
+                    <td><a href="https://foxcroftacademy.powerschool.com/admin/students/home.html?frn=001{{item.studentsDCID}}" title="Student Page">{{item.studentsName}}</a></td>
+                    <td>{{item.studentsGradeLevel}}</td>
+                    <td>{{item.advisor}}</td>
+                    <td>{{item.emergencyValue}}</td>
+                    <td>{{item.clinicValue}}</td>
+                    <td>{{item.busValue}}</td>
+                    <td>{{item.handbookValue}}</td>
+                    <td>{{item.ipadValue}}</td>
+                    <td>{{item.enrollmentValue}}</td>
+                    <td>{{item.formsCompleteValue}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+	</div>
+    
+<!-- end of content area --> 
+	~[wc:admin_footer_css]
+    <script>
+        require(['angular', 'portalupdates/annualagreements'], function(angular) {
+           angular.bootstrap(document, ['annualagreementsApp']); 
+        });
+    </script>
+</body> 
+</html>
