@@ -32,7 +32,7 @@ ORDER BY
   students.grade_level, students.lastfirst
   ]
   {"studentsDCID":~(studentsDCID;js),
-  "studentsName":"~(studentsName;js)",
+  "studentsName":"~(studentsName)",
   "studentsGradeLevel":~(studentsGradeLevel;js),
   "advisor":"~(advisor)",
   "emergencyValue":~(emergencyValue;js),
